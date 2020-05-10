@@ -3,7 +3,7 @@ body {
   background-size: cover; }
 
 .c-login {
-  width: 600px;
+  width: calc(100% - 30%);
   background-color: #262626;
   display: flex;
   justify-content: center;
@@ -12,12 +12,15 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%); }
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 768px) {
     .c-login {
-      width: 80%; } }
+      width: 70%; } }
 
 .c-login-container {
   width: 70%; }
+  @media only screen and (max-width: 768px) {
+    .c-login-container {
+      width: 100%; } }
 
 .c-login__greeting {
   color: #ffffff;

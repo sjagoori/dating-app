@@ -10,7 +10,7 @@ body {
 }
 
 .c-login {
-  width: 600px;
+  width: calc(100% - 30%);
   // background-color: rgba($color-secondary, .95);
   background-color: $color-secondary;
   display: flex;
@@ -23,7 +23,7 @@ body {
   transform: translate(-50%, -50%);
 
   @include screen-tablet-portrait-and-smaller {
-    width: 80%;
+    width: 70%;
   }
 }
 
@@ -31,7 +31,12 @@ body {
 
 .c-login-container {
   width: 70%;
+
+  @include screen-tablet-portrait-and-smaller {
+    width: 100%;
+  }
 }
+
 
 .c-login__greeting {
   color: $color-white;

@@ -1,5 +1,5 @@
 @mixin screen-tablet-portrait-and-smaller {
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 768px) {
     @content
   }
 }
