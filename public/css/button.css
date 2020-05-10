@@ -23,7 +23,7 @@
       background-color: #0d0d0d;
       border-color: #0d0d0d; }
   .button--ghost {
-    background-color: #ffffff;
+    background-color: transparent;
     border: 3px solid #262626;
     color: #262626; }
     .button--ghost:hover {

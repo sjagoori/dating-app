@@ -7,7 +7,11 @@ router.get('/express', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.render('loginView');
+  res.render('homepage');
+});
+
+router.get('/register', (req, res) => {
+  res.render('register');
 });
 
 module.exports = router;
