@@ -1,0 +1,51 @@
+@import 'scss/_colors.scss';
+
+.button {
+  display: block;
+  width: 100px;
+  height: 40px;
+  border-radius: 7px;
+  color: white;
+
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--primary {
+    background-color: $color-primary;
+    border: 3px solid $color-primary;
+
+    &:hover {
+      transition: .3s;
+      background-color: darken($color-primary, 10%);
+      border-color: darken($color-primary, 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    border: 3px solid $color-secondary;
+
+    &:hover {
+      transition: .3s;
+      background-color: darken($color-secondary, 10%);
+      border-color: darken($color-secondary, 10%);
+    }
+  }
+
+  &--ghost {
+    background-color: $color-white;
+    border: 3px solid $color-secondary;
+    color: $color-secondary;
+
+    &:hover {
+      transition: .3s;
+      background-color: darken($color-secondary, 10%);
+      color: $color-white;
+    }
+  }
+
+
+}
