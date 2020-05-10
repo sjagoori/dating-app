@@ -1,0 +1,31 @@
+<link href="/css/register.css" rel="stylesheet" type="text/css">
+
+<div class="c-register">
+  <div class="c-register-container">
+    <h1 class="c-register__greeting">Register here!</h1>
+    <div class="c-register__input-container">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" autocomplete="off" >
+      <label for="pass">Password:</label>
+      <input type="password" name="pass" id="pass">
+    </div>
+    <div class="c-register__button-container">
+      <%- include('partials/button', 
+      {
+        classes: "c-register__register-button",
+        type: "secondary", 
+        label: "back", 
+        url:"/"
+      }  
+    )%>
+      <%- include('partials/button', 
+        {
+          classes: "c-register__register-button",
+          type: "primary", 
+          label: "Sign up", 
+          url:"#"
+        }  
+      )%>
+    </div>
+  </div>
+</div>
