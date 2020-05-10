@@ -3,7 +3,7 @@ body {
   background-size: cover; }
 
 .c-login {
-  width: calc(100% - 30%);
+  width: calc(100% - 70%);
   background-color: #262626;
   display: flex;
   justify-content: center;
@@ -14,7 +14,7 @@ body {
   transform: translate(-50%, -50%); }
   @media only screen and (max-width: 768px) {
     .c-login {
-      width: 70%; } }
+      width: 80%; } }
 
 .c-login-container {
   width: 70%; }
