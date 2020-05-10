@@ -1,5 +1,10 @@
 @import 'scss/_colors.scss';
 
+body {
+  background: url(https://media.giphy.com/media/3ov9jKSjGDn1bMWlcQ/giphy.gif) no-repeat center center fixed;
+  background-size: cover;
+}
+
 .c-login {
   width: 600px;
   background-color: $color-secondary;
