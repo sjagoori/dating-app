@@ -1,0 +1,22 @@
+{
+  "name": "week-1",
+  "version": "1.0.0",
+  "description": "Week 1",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/sjagoori/be"
+  },
+  "author": "Shabier Jagoori",
+  "license": "ISC",
+  "dependencies": {
+    "camelcase": "^6.0.0",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "fkill": "^7.0.0"
+  }
+}
