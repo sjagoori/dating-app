@@ -1,21 +1,3 @@
-<!--
-  Simple macro button
-
-  Usage:
-    <%- include('partials/button', 
-        {
-          type: "primary", 
-          label: "login", 
-          url:"#"
-        }
-    )%>
-
-  Options: 
-      type (String)            - button variant
-      label   (String)            - button label
-      url     (String)            - url to redirect to
--->
-
 <link href="/css/button.css" rel="stylesheet" type="text/css">
 
-<a class="button button--<%= type %>" href="<%= url %>"><span><%= label %></span></a>
+<a class="button button--<%= type %> <%= classes %> " href="<%= url %>"><span><%= label %></span></a>
