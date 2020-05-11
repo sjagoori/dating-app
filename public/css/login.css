@@ -1,0 +1,49 @@
+body {
+  background: url(https://media.giphy.com/media/3ov9jKSjGDn1bMWlcQ/giphy.gif) no-repeat center center fixed;
+  background-size: cover; }
+
+.c-login {
+  width: calc(100% - 70%);
+  background-color: #262626;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+  @media only screen and (max-width: 768px) {
+    .c-login {
+      width: 80%; } }
+
+.c-login-container {
+  width: 70%; }
+  @media only screen and (max-width: 768px) {
+    .c-login-container {
+      width: 100%; } }
+
+.c-login__greeting {
+  color: #ffffff;
+  text-align: center; }
+
+.c-login__input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .c-login__input-container input {
+    width: 100%;
+    background-color: transparent;
+    margin: 10px;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid #ffffff;
+    color: #ffffff; }
+  .c-login__input-container label {
+    align-self: flex-start;
+    color: #ffffff; }
+
+.c-login__button-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between; }
