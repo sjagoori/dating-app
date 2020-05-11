@@ -8,6 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
+}
+
+.button:focus {
+  border: 2px solid #ffffff90;
 }
 
 .button--primary {
