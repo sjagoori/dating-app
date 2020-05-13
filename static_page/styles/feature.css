@@ -44,6 +44,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }
 
 input,
@@ -78,7 +79,7 @@ label {
   justify-content: space-between;
 }
 
-.c-login__gender-container {
+.c-login__radio-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -96,7 +97,7 @@ label[for^="checkbox"] {
   width: max-content;
 }
 
-input[name$="gender"] {
+input[type="radio"] {
   display: none;
 }
 
