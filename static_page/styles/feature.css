@@ -4,7 +4,7 @@ body {
 }
 
 .c-login {
-  width: calc(100% - 70%);
+  width: calc(100% - 60%);
   background-color: #FFFFFF;
   display: flex;
   justify-content: center;
@@ -55,7 +55,6 @@ textarea {
   padding: 5px;
   border: 0;
   border-bottom: 1px solid #4C4D6B;
-  /* color: #ffffff; */
   resize: none;
   outline: none;
 }
@@ -70,7 +69,6 @@ textarea:focus {
 
 label {
   align-self: flex-start;
-  /* color: #ffffff; */
 }
 
 .c-login__button-container {
@@ -92,8 +90,8 @@ label[for^="checkbox"] {
   border-radius: 7px;
   padding: 15px;
   text-align: center;
+  min-width: 70px;
   cursor: pointer;
-  /* color: #ffffff; */
   width: max-content;
 }
 
