@@ -4,7 +4,7 @@ body {
 }
 
 .c-login {
-  width: calc(100% - 60%);
+  width: calc(100% - 70%);
   background-color: #FFFFFF;
   display: flex;
   justify-content: center;
