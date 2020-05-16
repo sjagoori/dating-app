@@ -6,6 +6,11 @@ router.get('/express', (req, res) => {
   res.render('indexView', { query: query });
 });
 
+router.post('/login', (req, res) => {
+  const query = req.body
+  console.log(query)
+});
+
 router.get('/', (req, res) => {
   res.render('homepage');
 });
