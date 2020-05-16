@@ -1,17 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<link href="/css/login.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link href="/css/main.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-
-  <%- include('partials/login') %>
-
-</body>
-
-</html>
+<div class="c-login">
+  <div class="c-login-container">
+    <h1 class="c-login__greeting">Hi there!</h1>
+    <div class="c-login__input-container">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" autocomplete="off" >
+      <label for="pass">Password:</label>
+      <input type="password" name="pass" id="pass">
+    </div>
+    <div class="c-login__button-container">
+      <%- include('partials/button', 
+        {
+          classes: "c-login__register-button",
+          type: "secondary", 
+          label: "Sign up", 
+          url:"register"
+        }  
+      )%>
+      <%- include('partials/button', 
+        {
+          classes: "c-login__login-button",
+          type: "primary", 
+          label: "Login", 
+          url:"#"
+        }  
+      )%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<link href="/css/login.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<div class="c-login">
+  <div class="c-login-container">
+    <h1 class="c-login__greeting">Register here!</h1>
+    <div class="c-login__input-container">
+      <label for="fname">Name:</label>
+      <input type="text" name="fname" id="fname" autocomplete="off" >
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" autocomplete="off" >
+      <label for="pass">Password:</label>
+      <input type="password" name="pass" id="pass">
+    </div>
+    <div class="c-login__button-container">
+      <%- include('partials/button', 
+      {
+        classes: "c-login__login-button",
+        type: "secondary", 
+        label: "back", 
+        url:"/"
+      }  
+    )%>
+      <%- include('partials/button', 
+        {
+          classes: "c-login__register-button",
+          type: "primary", 
+          label: "Sign up", 
+          url:"#"
+        }  
+      )%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="styles/button.css" rel="stylesheet" type="text/css">
+  <link href="styles/feature.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <title>Register</title>
+</head>
+
+<body>
+  <main>
+    <div class="c-login">
+      <form action="#" method="POST" class="c-login-container">
+
+        <h1 class="c-login__greeting">Let's get to know you.</h1>
+
+        <div class="c-login__input-container">
+          <h2 class="c-login__subheader">Do you like sports?</h2>
+          <div class="c-login__radio-container">
+            <div>
+              <input type="radio" name="checkbox-sports" id="checkbox-sports-yes">
+              <label for="checkbox-sports-yes">Yes</label>
+            </div>
+            <div>
+              <input type="radio" name="checkbox-sports" id="checkbox-sports-no">
+            </div>
+            <label for="checkbox-sports-no">No</label>
+            <div>
+              <input type="radio" name="checkbox-sports" id="checkbox-sports-sometimes">
+              <label for="checkbox-sports-sometimes">Sometimes</label>
+            </div>
+          </div>
+
+          <h2 class="c-login__subheader">Do prefer movies or tv-shows?</h2>
+          <div class="c-login__radio-container">
+            <div>
+              <input type="radio" name="checkbox-movies" id="checkbox-movies-yes">
+              <label for="checkbox-movies-yes">Movies</label>
+            </div>
+            <div>
+              <input type="radio" name="checkbox-movies" id="checkbox-movies-no">
+              <label for="checkbox-movies-no">Tv-shows</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-login__input-container">
+          <label for="fdesc">Describe yourself</label>
+          <textarea name="fdesc" id="fdesc" cols="80" rows="10"></textarea>
+        </div>
+
+        <div class="c-login__button-container">
+          <a class="button button--secondary c-login__register-button " href="followup.html">Back</a>
+          <a class="button button--primary c-login__login-button " href="#">Register</a>
+        </div>
+
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+body {
+  background-color: #EBF0F8;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.c-login {
+  width: calc(100% - 70%);
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .c-login {
+    width: 80%;
+  }
+}
+
+.c-login-container {
+  width: 90%;
+}
+
+@media only screen and (max-width: 768px) {
+  .c-login-container {
+    width: 100%;
+  }
+}
+
+.c-login__greeting,
+.c-login__subheader {
+  color: #4C4D6B;
+  text-align: center;
+}
+
+
+.c-login__input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+input,
+textarea {
+  width: 100%;
+  background-color: transparent;
+  margin: 10px;
+  padding: 5px;
+  border: 0;
+  border-bottom: 1px solid #4C4D6B;
+  resize: none;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  transition: .3s;
+  border-bottom: 0;
+  border: 1px solid #4C4D6B;
+  border-radius: 3px;
+}
+
+label {
+  align-self: flex-start;
+}
+
+.c-login__button-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-login__radio-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+label[for^="checkbox"] {
+  display: block;
+  margin-right: 15px;
+  border: 1px solid #4C4D6B;
+  border-radius: 7px;
+  padding: 15px;
+  text-align: center;
+  min-width: 70px;
+  cursor: pointer;
+  width: max-content;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked+label[for^="checkbox"] {
+  transition: .3s;
+  background-color: #466aeb;
+  border-color: #466aeb;
+  color: #FFFFFF;
+}
