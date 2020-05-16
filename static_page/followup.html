@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="styles/button.css" rel="stylesheet" type="text/css">
   <link href="styles/feature.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <title>Register</title>
 </head>
 
@@ -13,43 +14,54 @@
   <main>
     <div class="c-login">
       <form action="#" method="POST" class="c-login-container">
-
         <h1 class="c-login__greeting">First things first.</h1>
 
         <div class="c-login__input-container">
           <label for="fname">First name:</label>
-          <input type="text" name="fname" id="fname" autocomplete="off">
+          <input type="text" name="fname" id="fname">
           <label for="lname">Last name:</label>
-          <input type="text" name="lname" id="lname" autocomplete="off">
-
+          <input type="text" name="lname" id="lname">
           <label for="bday">Date of birth:</label>
-          <input type="date" name="bday" id="bday" autocomplete="off">
+          <input type="date" name="bday" id="bday">
 
-
-          <h2 class="c-login__subheader">Which of the following are you?</h2>
-
-          <div class="c-login__gender-container">
-            <div class="c-login__gender-radio-button">
+          <h2 class="c-login__subheader">What are you?</h2>
+          <div class="c-login__radio-container">
+            <div>
               <input type="radio" name="gender" id="checkbox-female">
               <label for="checkbox-female">Female</label>
             </div>
-            <div class="c-login__gender-radio-button">
+            <div>
               <input type="radio" name="gender" id="checkbox-male">
               <label for="checkbox-male">Male</label>
             </div>
-            <div class="c-login__gender-radio-button">
+            <div>
               <input type="radio" name="gender" id="checkbox-binairy">
               <label for="checkbox-binairy">Non-binairy</label>
             </div>
           </div>
 
-
+          <h2 class="c-login__subheader">What are you looking for?</h2>
+          <div class="c-login__radio-container">
+            <div>
+              <input type="radio" name="target-gender" id="checkbox-target-female">
+              <label for="checkbox-target-female">Female</label>
+            </div>
+            <div>
+              <input type="radio" name="target-gender" id="checkbox-target-male">
+              <label for="checkbox-target-male">Male</label>
+            </div>
+            <div>
+              <input type="radio" name="target-gender" id="checkbox-target-binairy">
+              <label for="checkbox-target-binairy">Non-binairy</label>
+            </div>
+          </div>
 
         </div>
 
         <div class="c-login__button-container">
-          <a class="button button--secondary c-login__register-button " href="register.html"><span>Back</span></a>
-          <a class="button button--primary c-login__login-button " href="final.html"><span>Next</span></a>
+          <a class="button button--secondary c-login__register-button " href="register.html">Back</a>
+          <a class="button button--primary c-login__login-button " href="final.html">Next</a>
+          <!-- <button class="button button--primary" type="submit" onclick="window.location.href='final.html';">Next</button> -->
         </div>
 
       </form>

@@ -1,11 +1,11 @@
 body {
-  background: url(https://media.giphy.com/media/3ov9jKSjGDn1bMWlcQ/giphy.gif) no-repeat center center fixed;
-  background-size: cover;
+  background-color: #EBF0F8;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .c-login {
   width: calc(100% - 70%);
-  background-color: #262626;
+  background-color: #FFFFFF;
   display: flex;
   justify-content: center;
   padding: 40px;
@@ -13,6 +13,7 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -22,7 +23,7 @@ body {
 }
 
 .c-login-container {
-  width: 70%;
+  width: 90%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -33,7 +34,7 @@ body {
 
 .c-login__greeting,
 .c-login__subheader {
-  color: #ffffff;
+  color: #4C4D6B;
   text-align: center;
 }
 
@@ -43,6 +44,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }
 
 input,
@@ -52,8 +54,7 @@ textarea {
   margin: 10px;
   padding: 5px;
   border: 0;
-  border-bottom: 1px solid #ffffff;
-  color: #ffffff;
+  border-bottom: 1px solid #4C4D6B;
   resize: none;
   outline: none;
 }
@@ -62,13 +63,12 @@ input:focus,
 textarea:focus {
   transition: .3s;
   border-bottom: 0;
-  border: 1px solid #ffffff90;
+  border: 1px solid #4C4D6B;
   border-radius: 3px;
 }
 
 label {
   align-self: flex-start;
-  color: #ffffff;
 }
 
 .c-login__button-container {
@@ -77,7 +77,7 @@ label {
   justify-content: space-between;
 }
 
-.c-login__gender-container {
+.c-login__radio-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -86,21 +86,22 @@ label {
 label[for^="checkbox"] {
   display: block;
   margin-right: 15px;
-  border: 1px solid #9a008c;
+  border: 1px solid #4C4D6B;
   border-radius: 7px;
   padding: 15px;
   text-align: center;
+  min-width: 70px;
   cursor: pointer;
-  color: #ffffff;
   width: max-content;
 }
 
-input[name="gender"] {
+input[type="radio"] {
   display: none;
 }
 
 input[type="radio"]:checked+label[for^="checkbox"] {
   transition: .3s;
-  background-color: #9a008c;
-  border-color: #67005e;
+  background-color: #466aeb;
+  border-color: #466aeb;
+  color: #FFFFFF;
 }
