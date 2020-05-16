@@ -7,7 +7,23 @@ router.get('/express', (req, res) => {
   res.render('indexView', { query: query });
 });
 
+
 router.post('/login', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+
+  User.findOne(
+    {
+      email: email,
+      password: password
+    },
+    (err, user) => {
+      err ? res.status(500) : (!user ? res.status(404).send() : res.status(200).send())
+    }
+  )
+})
+
+router.post('/register', (req, res) => {
   const query = req.body
   const email = req.body.email
   const password = req.body.password
@@ -16,14 +32,8 @@ router.post('/login', (req, res) => {
   newUser.password = password;
   newUser.email = email;
   newUser.save(function (err, savedUser) {
-    if (err) {
-      console.log(err)
-      return res.status(500).send();
-    }
-    return res.status(200).send();
+    err ? res.status(500).send() : (savedUser ? res.status(406).send() : res.status(200).send())
   })
-
-  console.log(query)
 });
 
 router.get('/', (req, res) => {
