@@ -1,7 +1,7 @@
 {
-  "name": "week-1",
+  "name": "Project-tech",
   "version": "1.0.0",
-  "description": "Week 1",
+  "description": "Application for project-tech",
   "main": "index.js",
   "scripts": {
     "start": "nodemon",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/sjagoori/be"
+    "url": "https://github.com/sjagoori/project-tech"
   },
   "author": "Shabier Jagoori",
   "license": "ISC",
