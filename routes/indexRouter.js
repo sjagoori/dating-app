@@ -80,4 +80,12 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
+router.get('/register/2', (req, res) => {
+  // console.log(req.body)
+  req.session.register = req.body
+
+  console.log(req.session.register)
+  // res.render('register2')
+})
+
 module.exports = router;
