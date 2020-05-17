@@ -28,11 +28,24 @@ router.post('/login', (req, res) => {
       }
 
       console.log(user)
-
-      return res.render('login', { query: user });
+      req.session.user = user;
+      return res.render('profile', { query: user });
     }
   )
-  // console.log(query)
+})
+
+router.get('/profile', (req, res) => {
+
+  if (!req.session.user) {
+    return res.render('indexView');
+  }
+
+  return res.render('profile', { query: user });
+})
+
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+  return res.render('indexView');
 })
 
 router.post('/register', (req, res) => {
@@ -50,13 +63,10 @@ router.post('/register', (req, res) => {
   newUser.email = email;
   newUser.password = password;
   newUser.pref = pref;
-  newUser.save(function (err, savedUser) {
+  newUser.save(err => {
     if (err) {
       console.log(err)
       return res.status(500).send();
-    }
-    if (savedUser) {
-      return res.status(406).send();
     }
     return res.status(200).send();
   })
