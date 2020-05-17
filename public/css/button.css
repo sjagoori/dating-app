@@ -1,7 +1,19 @@
+button {
+  width: 110px;
+  height: 50px;
+  border-radius: 7px;
+  font-size: 1em;
+  color: white;
+  cursor: pointer;
+  background-color: #1946E5;
+  transition: .3s; }
+  button:hover {
+    background-color: #1438b7; }
+
 .button {
   display: block;
-  width: 100px;
-  height: 40px;
+  width: 110px;
+  height: 50px;
   border-radius: 7px;
   color: white;
   text-decoration: none;
@@ -9,24 +21,20 @@
   align-items: center;
   justify-content: center; }
   .button--primary {
-    background-color: #9a008c;
-    border: 3px solid #9a008c; }
+    background-color: #1946E5; }
     .button--primary:hover {
       transition: .3s;
-      background-color: #67005e;
-      border-color: #67005e; }
+      background-color: #1438b7; }
   .button--secondary {
-    background-color: #262626;
-    border: 3px solid #262626; }
+    background-color: #7388A6; }
     .button--secondary:hover {
       transition: .3s;
-      background-color: #0d0d0d;
-      border-color: #0d0d0d; }
+      background-color: #596e8d; }
   .button--ghost {
     background-color: transparent;
-    border: 3px solid #262626;
-    color: #262626; }
+    border: 3px solid #7388A6;
+    color: #7388A6; }
     .button--ghost:hover {
       transition: .3s;
-      background-color: #0d0d0d;
+      background-color: #596e8d;
       color: #ffffff; }

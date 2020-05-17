@@ -12,7 +12,7 @@ router.post('/login', (req, res) => {
   let query = req.body
   let email = req.body.email
   let password = req.body.password
-
+  console.log(query)
   User.findOne(
     {
       email: email,
@@ -45,7 +45,7 @@ router.get('/profile', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy();
-  return res.render('indexView');
+  return res.render('homepage');
 })
 
 router.post('/register', (req, res) => {
