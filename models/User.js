@@ -3,8 +3,11 @@ var mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let userScheme = new Schema({
+  firstName: String,
+  lastName: String,
   email: String,
-  password: String
+  password: String,
+  pref: String
 })
 
 let User = mongoose.model('users', userScheme)

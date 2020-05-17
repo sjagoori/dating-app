@@ -9,8 +9,9 @@ router.get('/express', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
+  let query = req.body
+  let email = req.body.email
+  let password = req.body.password
 
   User.findOne(
     {
@@ -18,21 +19,46 @@ router.post('/login', (req, res) => {
       password: password
     },
     (err, user) => {
-      err ? res.status(500) : (!user ? res.status(404).send() : res.status(200).send())
+      if (err) {
+        console.log(err)
+        return res.status(500).send()
+      }
+      if (!user) {
+        return res.status(404).send();
+      }
+
+      console.log(user)
+
+      return res.render('login', { query: user });
     }
   )
+  // console.log(query)
 })
 
 router.post('/register', (req, res) => {
-  const query = req.body
-  const email = req.body.email
-  const password = req.body.password
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = req.body.email;
+  let password = req.body.password;
+  let pref = req.body.pref;
+  // Mind that bodyparser indexes the name attribute of a HTML element.
+
 
   let newUser = new User();
-  newUser.password = password;
+  newUser.firstName = firstName;
+  newUser.lastName = lastName;
   newUser.email = email;
+  newUser.password = password;
+  newUser.pref = pref;
   newUser.save(function (err, savedUser) {
-    err ? res.status(500).send() : (savedUser ? res.status(406).send() : res.status(200).send())
+    if (err) {
+      console.log(err)
+      return res.status(500).send();
+    }
+    if (savedUser) {
+      return res.status(406).send();
+    }
+    return res.status(200).send();
   })
 });
 
