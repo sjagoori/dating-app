@@ -10,12 +10,10 @@ router.get('/express', (req, res) => {
 });
 
 
-router.post('/login', (req, res) => {
-  // const query = req.body;
+router.post('/profile', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  // console.log(query);
   User.findOne(
       {
         email: email,
@@ -41,10 +39,10 @@ router.post('/login', (req, res) => {
 
 router.get('/profile', (req, res) => {
   if (!req.session.user) {
-    return res.render('indexView');
+    return res.status(401).send('youre not logged in');
   }
 
-  return res.render('profile', {query: session.user});
+  return res.render('profile', {query: user});
 });
 
 router.get('/logout', (req, res) => {
@@ -58,8 +56,6 @@ router.post('/register', (req, res) => {
   const email = req.body.email;
   const password = bcrypt.hashSync(req.body.password, salt);
   const pref = req.body.pref;
-  // Mind that bodyparser indexes the name attribute of a HTML element.
-
 
   const newUser = new User();
   newUser.firstName = firstName;
@@ -77,6 +73,9 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+  if (req.session.user) {
+    res.render('profile', {query: req.session.user});
+  }
   res.render('homepage');
 });
 
