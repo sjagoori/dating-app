@@ -107,6 +107,6 @@ dist
 
 .vscode/
 
-.data/
+.data
 
 .env
