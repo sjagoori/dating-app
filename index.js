@@ -4,11 +4,17 @@ const app = express();
 
 const indexRouter = require('./routes/indexRouter');
 const bodyParser = require('body-parser');
-const mangoose = require('mongoose');
+const mongoose = require('mongoose');
 const session = require('express-session');
 require('dotenv').config();
 
-mangoose.connect(process.env.DB_URL);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
+mongoose.connect(process.env.DB_URL);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

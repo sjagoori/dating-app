@@ -11,28 +11,30 @@ router.get('/express', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-  const query = req.body;
+  // const query = req.body;
   const email = req.body.email;
-  const password = bcrypt.hashSync(req.body.password, salt);
+  const password = req.body.password;
 
-  console.log(query);
+  // console.log(query);
   User.findOne(
       {
         email: email,
-        password: password,
       },
       (err, user) => {
         if (err) {
-          console.log(err);
-          return res.status(500).send();
-        }
-        if (!user) {
-          return res.status(404).send();
+          return res.status(500).send('couldn\'t connect to the database');
         }
 
-        console.log(user);
-        req.session.user = user;
-        return res.render('profile', {query: user});
+        if (!user) {
+          return res.status(404).send('email or password doesnt exist');
+        }
+
+        if (bcrypt.compareSync(password, user.password, salt)) {
+          req.session.user = user;
+          return res.render('profile', {query: user});
+        } else {
+          return res.status(404).send('email or password doesnt exist');
+        }
       },
   );
 });
@@ -42,7 +44,7 @@ router.get('/profile', (req, res) => {
     return res.render('indexView');
   }
 
-  return res.render('profile', {query: user});
+  return res.render('profile', {query: session.user});
 });
 
 router.get('/logout', (req, res) => {
