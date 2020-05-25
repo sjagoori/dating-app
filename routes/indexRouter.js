@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.js');
+const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(10);
 
 router.get('/express', (req, res) => {
   const query = req.query.query;
@@ -11,7 +13,8 @@ router.get('/express', (req, res) => {
 router.post('/login', (req, res) => {
   const query = req.body;
   const email = req.body.email;
-  const password = req.body.password;
+  const password = bcrypt.hashSync(req.body.password, salt);
+
   console.log(query);
   User.findOne(
       {
@@ -51,7 +54,7 @@ router.post('/register', (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  const password = req.body.password;
+  const password = bcrypt.hashSync(req.body.password, salt);
   const pref = req.body.pref;
   // Mind that bodyparser indexes the name attribute of a HTML element.
 
