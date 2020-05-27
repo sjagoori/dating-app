@@ -26,3 +26,9 @@ mongod
 ```
 
 If it returns an error, find it's PID `sudo lsof -iTCP -sTCP:LISTEN -n -P` and kill it `kill -9 PID`.
+
+**setup up your .env file**
+```env
+DB_URL=mongodb+srv:{ip}
+SESSION_SECRET={session_secret}
+```
