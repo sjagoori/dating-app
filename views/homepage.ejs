@@ -1,32 +1,40 @@
-<link href="/css/login.css" rel="stylesheet" type="text/css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="c-login">
-  <div class="c-login-container">
-    <h1 class="c-login__greeting">Hi there!</h1>
-    <div class="c-login__input-container">
-      <label for="email">Email:</label>
-      <input type="email" name="email" id="email" autocomplete="off" >
-      <label for="pass">Password:</label>
-      <input type="password" name="pass" id="pass">
-    </div>
-    <div class="c-login__button-container">
-      <%- include('partials/button', 
-        {
-          classes: "c-login__register-button",
-          type: "secondary", 
-          label: "Sign up", 
-          url:"register"
-        }  
-      )%>
-      <%- include('partials/button', 
-        {
-          classes: "c-login__login-button",
-          type: "primary", 
-          label: "Login", 
-          url:"#"
-        }  
-      )%>
-    </div>
-  </div>
-</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/login.css" rel="stylesheet" type="text/css">
+  <title>Register</title>
+</head>
+
+<body>
+  <main>
+    <form action="/profile" method="POST" class="c-login">
+      <div class="c-login-container">
+        <h1 class="c-login__greeting">Hi there!</h1>
+        <div class="c-login__input-container">
+          <label for="lemail">email:</label>
+          <input type="email" name="email" id="lemail">
+          <label for="lpassword">password:</label>
+          <input type="password" name="password" id="lpassword">
+        </div>
+        <div class="c-login__button-container">
+
+          <%- include('partials/button', 
+            {
+              classes: "c-login__register-button",
+              type: "secondary", 
+              label: "Sign up", 
+              url:"register"
+            }  
+          )%>
+
+          <button type="submit">Login</button>
+        </div>
+      </div>
+    </form>
+  </main>
+</body>
+
+</html>

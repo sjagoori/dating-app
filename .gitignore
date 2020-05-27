@@ -106,3 +106,7 @@ dist
 .DS_Store
 
 .vscode/
+
+.data
+
+.env

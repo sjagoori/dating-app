@@ -5,14 +5,12 @@ $breakpoint-tablet-portrait: 768px;
 
 
 body {
-  background: url(https://media.giphy.com/media/3ov9jKSjGDn1bMWlcQ/giphy.gif) no-repeat center center fixed;
-  background-size: cover;
+  background-color: $color-off-white;
 }
 
 .c-login {
   width: calc(100% - 70%);
-  // background-color: rgba($color-secondary, .95);
-  background-color: $color-secondary;
+  background-color: $color-white;
   display: flex;
   justify-content: center;
   padding: 40px;
@@ -21,16 +19,15 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 
   @include screen-tablet-portrait-and-smaller {
     width: 80%;
   }
 }
 
-
-
 .c-login-container {
-  width: 70%;
+  width: 90%;
 
   @include screen-tablet-portrait-and-smaller {
     width: 100%;
@@ -38,31 +35,42 @@ body {
 }
 
 
-.c-login__greeting {
-  color: $color-white;
+
+
+.c-login__greeting,
+.c-login__subheader {
+  color: $color-text;
   text-align: center;
 }
-
 
 .c-login__input-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 
-  input {
+  input,
+  textarea {
     width: 100%;
     background-color: transparent;
     margin: 10px;
     padding: 5px;
     border: 0;
-    border-bottom: 1px solid $color-white;
-    color: $color-white
+    border-bottom: 1px solid $color-border;
+    resize: none;
+    outline: none;
+
+    &:focus {
+      transition: .3s;
+      border-bottom: 0;
+      border: 1px solid $color-border;
+      border-radius: 3px;
+    }
   }
 
   label {
     align-self: flex-start;
-    color: $color-white;
   }
 }
 
@@ -70,4 +78,33 @@ body {
   margin-top: 40px;
   display: flex;
   justify-content: space-between;
+}
+
+.c-login__radio-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-right: 15px;
+    border: 1px solid $color-border;
+    border-radius: 7px;
+    padding: 15px;
+    text-align: center;
+    min-width: 70px;
+    cursor: pointer;
+    width: max-content;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="radio"]:checked+label {
+    transition: .3s;
+    background-color: #466aeb;
+    border-color: #466aeb;
+    color: #FFFFFF;
+  }
 }
