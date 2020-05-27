@@ -89,6 +89,7 @@ router.post('/update', (req, res) => {
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
         }
+        req.session.user = user;
         return res.render('profile', {query: user});
       });
 });
@@ -103,7 +104,7 @@ router.post('/update', (req, res) => {
  */
 router.get('/profile', (req, res) => {
   if (!req.session.user) {
-    return res.render('homepage');
+    return res.redirect('/');
   }
 
   return res.render('profile', {query: req.session.user});
