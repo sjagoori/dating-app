@@ -24,6 +24,7 @@ const User = require('../models/user.js');
  */
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
+const data = require('../data/data.json');
 
 /**
  * Test env. Keep in project.
@@ -34,7 +35,7 @@ const salt = bcrypt.genSaltSync(10);
  */
 router.get('/express', (req, res) => {
   const query = req.query.query;
-  res.render('indexView', {query: query});
+  res.render('indexView', {query: query, data: data});
 });
 
 /**
