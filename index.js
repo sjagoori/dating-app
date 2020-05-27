@@ -2,7 +2,7 @@ const port = 3001;
 const express = require('express');
 const app = express();
 
-const indexRouter = require('./routes/indexRouter');
+const userRouter = require('./routes/userRouter');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -31,6 +31,6 @@ app.use(
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
-app.use('/', indexRouter);
+app.use('/', userRouter);
 
 app.listen(port);
