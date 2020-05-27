@@ -26,6 +26,7 @@ router.post('/profile', (req, res) => {
         if (!user) {
           return res.status(404).send('email or password doesnt exist');
         }
+        console.log(user);
 
         if (bcrypt.compareSync(password, user.password, salt)) {
           req.session.user = user;
@@ -37,12 +38,29 @@ router.post('/profile', (req, res) => {
   );
 });
 
+
+router.post('/update', (req, res) => {
+  const pref = req.body.prefs;
+
+  if (pref != '') {
+    User.findOneAndUpdate({email: req.session.user.email},
+        {$set: {pref: pref}},
+        {new: true},
+        (err, user) => {
+          if (err) {
+            return res.status(500).send('couldn\'t connect to the database');
+          }
+          return res.render('profile', {query: user});
+        });
+  }
+});
+
 router.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.status(401).send('youre not logged in');
   }
 
-  return res.render('profile', {query: user});
+  return res.render('profile', {query: req.session.user});
 });
 
 router.get('/logout', (req, res) => {

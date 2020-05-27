@@ -8,15 +8,20 @@
 </head>
 
 <body>
+
+  <form action="/update" method="post">
   <h1>Hello <%- query.firstName %> <%- query.lastName %></h1>
-  <ul>
-    <li>
-      Your prefences are: <strong> <%- query.pref %></strong>
-    </li>
-    <li>
+  <p>
+    Your prefences are: <strong> <%- query.pref %></strong>
+  </p>
+  <label for="prefs">Change preference:</label>
+  <input type="text" id="prefs" name="prefs" placeholder="Your new preference" required>
+  <button type="submit">Change</button>
+    
+    <p>
       Your email is: <strong> <%- query.email %></strong>
-    </li>
-  </ul>
+    </p>
+  </form>
 
   <a href="/logout">Log out</a>
 </body>
