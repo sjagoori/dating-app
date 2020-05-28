@@ -1,34 +1,28 @@
-✨ Welcome to the Project Tech Dating App repo
+# Welcome to Project Tech's Dating App!
+For Project Tech we were asked to develop a dating app. In this repo you'll find the dating app along with it's documentation in the repo's wiki. 
 
-Start off by installing all dependencies
+## Setup
+This project has a few dependendcies, make sure you have them installed: 
+* node (includes npm out of the box)
+```bash
+node -v && npm -v
 ```
-npm install 
-```
-
-Run the project
-```
-npm run start 
-```
-
-This project uses MangoDB, you can use their [installation guide](https://docs.mongodb.com/guides/server/install/) or, if you use homebrew, use
-```
-brew tap mongodb/brew && brew install mongodb-community@4.2  
+* nodemon, to start the project, monitor changes and restart the server
+```bash
+npm i nodemon && nodemon -v
 ```
 
-Dont forget to start the database if it doesnt automatically
-```
-brew services start mongodb-community@4.2
-```
-
-Access the database by a 3rd party client, or by terminal:
-```
-mongod
+* an .env file, you can use the example or enter the following in the project root
+```bash
+echo "DB_URL=<The url to your MongoDB>\nSESSION_SECRET=<Your session secret>" > .env
 ```
 
-If it returns an error, find it's PID `sudo lsof -iTCP -sTCP:LISTEN -n -P` and kill it `kill -9 PID`.
+* project dependencies
+```bash 
+npm install
+```
 
-**setup up your .env file**
-```env
-DB_URL=mongodb+srv:{ip}
-SESSION_SECRET={session_secret}
+* at last, you can run the project with
+```bash
+npm run start
 ```

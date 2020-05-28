@@ -1,1 +1,68 @@
-<h1>You entered <%= query %></h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="/profile">check status</a>
+  <form action="/login" method="post">
+    <h1>Login</h1>
+    <label for="lemail">email:</label>
+    <input type="email" name="email" id="lemail">
+    <label for="lpassword">password:</label>
+    <input type="password" name="password" id="lpassword">
+    <button type="submit">Login</button>
+  </form>
+
+  <form action="/register" method="post">
+    <h1>Register</h1>
+
+    <label for="firstName">First name:</label>
+    <input type="text" name="firstName" id="firstName">
+
+    <label for="lastName">Last name:</label>
+    <input type="text" name="lastName" id="lastName">
+
+    <label for="remail">email:</label>
+    <input type="email" name="email" id="remail">
+
+    <label for="rpassword">password:</label>
+    <input type="password" name="password" id="rpassword">
+
+    <label for="pref">pref:</label>
+    <input type="text" name="pref" id="pref">
+
+    <button type="submit">Register</button>
+  </form>
+
+  <ul>
+    <% data.users.forEach(function(user){ %>
+      <li><%= user.name %></li>
+      <li><%= user.age %></li>
+      <li><%= user.gender %></li>
+      <li><%= user.latitude %></li>
+      <li><%= user.longitude %></li>
+      <li><%= user.longitude %></li>
+      
+      <% user.preferences.forEach(function(pref){ %>
+        <li>wants to smash: <%= pref.sexPref %></li>
+        <li>no younger than: <%= pref.minAge %></li>
+        <li>no older than: <%= pref.maxAge %></li>
+
+          <% pref.movieInterest.forEach(function(genre){ %>
+              <li> likes the genre: <%= genre %></li>
+          <% }); %>
+          
+      <% }); %>
+
+    <% }); %>
+
+  </ul>
+
+</body>
+
+</html>
