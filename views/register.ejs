@@ -37,13 +37,17 @@
 </body>
   <script>
     function validateForm(){
-      var x = document.forms["registerForm"]["password"].value;
-      var y = document.forms["registerForm"]["rpassword"].value;
+      let x = document.forms["registerForm"]["password"];
+      let y = document.forms["registerForm"]["rpassword"];
 
-      if (x === y){
+      let errorMessage = document.createElement("span");
+      errorMessage.textContent = 'Password does not match.'
+      errorMessage.style.color = '#FF0000'
+
+      if (x.value === y.value){
         return
       }else{
-        alert("passwords dont match")
+        y.after(errorMessage)
         return false
       }
     }
