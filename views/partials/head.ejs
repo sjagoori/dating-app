@@ -1,7 +1,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="/css/<%= css %>.css" rel="stylesheet" type="text/css">
+  <% if (typeof css != 'undefined') { %>
+    <link href="/css/<%= css %>.css" rel="stylesheet" type="text/css">
+  <% } %>
   <title><%= title %></title>
 </head>
 
