@@ -35,7 +35,7 @@ const data = require('../data/data.json');
  */
 router.get('/express', (req, res) => {
   const query = req.query.query;
-  res.render('indexView', {query: query, data: data});
+  return res.render('indexView', {query: query, data: data});
 });
 
 /**
@@ -105,7 +105,6 @@ router.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-
   return res.render('profile', {query: req.session.user});
 });
 
@@ -173,13 +172,13 @@ router.get('/deleteme', (req, res) =>{
  */
 router.get('/', (req, res) => {
   if (req.session.user) {
-    res.render('profile', {query: req.session.user});
+    return res.render('profile', {query: req.session.user});
   }
-  res.render('homepage');
+  return res.render('homepage');
 });
 
 router.get('/register', (req, res) => {
-  res.render('register');
+  return res.render('register');
 });
 
 /**
@@ -191,7 +190,7 @@ router.get('/register', (req, res) => {
  *
  */
 router.get('*', (req, res) => {
-  res.redirect('/');
+  return res.redirect('/');
 });
 
 /**
