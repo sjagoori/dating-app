@@ -2,27 +2,37 @@
 <html lang="en">
 
 <%- include('partials/head', {
-  title: "Logged in"
+  title: "Profile",
+  css: "login"
 })%>
 
 <body>
-
-  <form action="/update" method="post">
-  <h1>Hello <%- query.firstName %> <%- query.lastName %></h1>
-  <p>
-    Your prefences are: <strong> <%- query.pref %></strong>
-  </p>
-  <label for="prefs">Change preference:</label>
-  <input type="text" id="prefs" name="prefs" placeholder="Your new preference" required>
-  <button type="submit">Change</button>
-    
-    <p>
-      Your email is: <strong> <%- query.email %></strong>
-    </p>
-  </form>
-
-  <a href="/logout">Log out</a>
-  <a href="/deleteme">Delete account</a>
+  <main class="c-login">
+    <form action="/update" method="post">
+        <div class="c-login-container">
+          <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
+          <p>Your email adress is: <%- query.email %></p>
+          <div class="c-login__input-container">
+            <h2>Do you want to change your password?</h2>
+            <label for="opassword">Enter your old password:</label>
+            <input type="password" name="opassword" id="opassword" placeholder="Old password" required>
+            <label for="npassword">Enter your new password:</label>
+            <input type="password" name="npassword" id="npassword" placeholder="New password" required>
+          </div>
+          <div class="c-login__button-container">
+          <%- include('partials/button', 
+            {
+              classes: "c-login__register-button",
+              type: "secondary", 
+              label: "Back", 
+              url:"/"
+            }  
+          )%>
+            <button class="c-login__register-button" type="submit">Change</button>
+          </div>
+        </div>
+    </form>
+  </main>
 </body>
 
 </html>
