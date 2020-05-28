@@ -48,7 +48,6 @@ router.get('/express', (req, res) => {
 router.post('/profile', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   User.findOne(
       {
         email: email,
@@ -61,11 +60,10 @@ router.post('/profile', (req, res) => {
         if (!user) {
           return res.status(404).send('email or password doesnt exist');
         }
-        console.log(user);
 
         if (bcrypt.compareSync(password, user.password, salt)) {
           req.session.user = user;
-          return res.render('profile', {query: user});
+          return res.redirect('/');
         } else {
           return res.status(404).send('email or password doesnt exist');
         }
@@ -145,15 +143,25 @@ router.post('/register', (req, res) => {
   newUser.email = email;
   newUser.password = password;
   newUser.pref = pref;
-  newUser.save((err) => {
+  newUser.save((err, user) => {
     if (err) {
-      console.log(err);
       return res.status(500).send();
     }
-    return res.status(200).send();
+
+    req.session.user = user;
+    return res.redirect('/');
   });
 });
 
+router.get('/deleteme', (req, res) =>{
+  User.findOneAndRemove({email: req.session.user.email}, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    return res.redirect('/');
+  });
+});
 
 /**
  * Function redirects user to @see {@link get/profile}.

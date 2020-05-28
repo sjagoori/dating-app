@@ -59,9 +59,6 @@ app.use(
     }),
 );
 
-// userRouter
-app.use('/', userRouter);
-
 // body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -72,5 +69,8 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.DB_URL);
+
+// userRouter
+app.use('/', userRouter);
 
 app.listen(port);
