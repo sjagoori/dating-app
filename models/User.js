@@ -1,7 +1,22 @@
-const mongoose = require('mongoose');
+/**
+ * @module User
+ * @requires mongoose
+ */
 
+
+/**
+ * Mongoose module
+ * @const
+ */
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * Function allows the creation of structs/models.
+ * @name userScheme
+ * @function
+ * @returns {User}
+ */
 const userScheme = new Schema({
   firstName: String,
   lastName: String,
@@ -13,10 +28,3 @@ const userScheme = new Schema({
 const User = mongoose.model('users', userScheme);
 
 module.exports = User;
-
-/*
-show dbs //how dbs
-use admin //select db
-show collections //show collections
-db.users.find().pretty() //print collection -> db.collection.find().pretty(). DB = used db (context)
-*/
