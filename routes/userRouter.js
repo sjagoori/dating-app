@@ -201,12 +201,20 @@ router.get('*', (req, res) => {
  * @param {callback} middleware - Express middleware
  *
  */
-router.get('/register/2', (req, res) => {
-  // console.log(req.body)
+router.post('/register/2', (req, res) => {
+  // const email = req.body.email;
+  // const password = bcrypt.hashSync(req.body.rpassword, salt);
+  delete req.body.rpassword;
   req.session.register = req.body;
 
   console.log(req.session.register);
-  // res.render('register2')
+  res.render('register2', {query: req.session.register});
+});
+
+
+router.post('/register/final', (req, res)=>{
+  req.session.register.preferences = req.body;
+  console.log(req.session.register);
 });
 
 module.exports = router;

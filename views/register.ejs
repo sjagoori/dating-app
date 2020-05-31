@@ -8,10 +8,14 @@
 
 <body>
   <main>
-    <form onsubmit="return validateForm()" method="POST" name="registerForm" class="c-login">
+    <form action="/register/2" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
         <h1 class="c-login__greeting">Register here!</h1>
         <div class="c-login__input-container">
+          <label for="fname">First name:</label>
+          <input type="text" name="fname" id="fname" autocomplete="off" required>
+          <label for="lname">Last name:</label>
+          <input type="text" name="lname" id="lname" autocomplete="off" required>
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" autocomplete="off" required>
           <label for="password">Password:</label>

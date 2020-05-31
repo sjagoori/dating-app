@@ -3,6 +3,7 @@ $button-height: 50px;
 $button-width: 110px;
 
 button {
+  border: 0;
   width: $button-width;
   height: $button-height;
   border-radius: 7px;
