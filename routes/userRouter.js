@@ -79,10 +79,14 @@ router.post('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/update', (req, res) => {
-  const pref = req.body.prefs;
+  const newPassword = bcrypt.hashSync(req.body.npassword, salt);
+
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
 
   User.findOneAndUpdate({email: req.session.user.email},
-      {$set: {pref: pref}},
+      {$set: {password: newPassword}},
       {new: true},
       (err, user) => {
         if (err) {
@@ -126,7 +130,7 @@ router.get('/deleteme', (req, res) =>{
     if (err) {
       return res.status(500).send(err);
     }
-
+    req.session.destroy();
     return res.redirect('/');
   });
 });

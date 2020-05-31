@@ -61,5 +61,14 @@ button {
     }
   }
 
+  &--danger {
+    background-color: $color-red;
+
+    &:hover {
+      transition: .3s;
+      background-color: darken($color-red, 20%);
+    }
+  }
+
 
 }

@@ -39,3 +39,8 @@ button {
       transition: .3s;
       background-color: #596e8d;
       color: #ffffff; }
+  .button--danger {
+    background-color: #ff4d4d; }
+    .button--danger:hover {
+      transition: .3s;
+      background-color: #e60000; }

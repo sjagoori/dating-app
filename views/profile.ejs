@@ -24,8 +24,16 @@
             {
               classes: "c-login__register-button",
               type: "secondary", 
-              label: "Back", 
+              label: "Logout", 
               url:"/logout"
+            }  
+          )%>
+                    <%- include('partials/button', 
+            {
+              classes: "c-login__register-button",
+              type: "danger", 
+              label: "Delete account", 
+              url:"/deleteme"
             }  
           )%>
             <button class="c-login__register-button" type="submit">Change</button>
