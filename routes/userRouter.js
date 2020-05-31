@@ -184,7 +184,8 @@ router.post('/register/:step', (req, res)=>{
     const password = bcrypt.hashSync(req.session.register.password, salt);
     const age = req.session.register.personal.age;
     const gender = req.session.register.personal.gender;
-    const targetGender = req.session.register.personal.targetGender;
+    const targetGender = req.session.register.preferences.targetGender;
+    const ageDiff = 'not working';
 
     const newUser = new User();
     newUser.firstName = firstName;
@@ -192,12 +193,12 @@ router.post('/register/:step', (req, res)=>{
     newUser.email = email;
     newUser.password = password;
     newUser.personal = {age: age, gender: gender};
-    newUser.preferences = {ageDiff: 'ded rn', targetGender: targetGender};
+    newUser.preferences = {ageDiff: ageDiff, targetGender: targetGender};
     newUser.save((err, user) =>{
       if (err) {
         return res.status(500).send();
       }
-
+      console.log(user);
       req.session.user = user;
       return res.redirect('/');
     });
