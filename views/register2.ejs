@@ -8,33 +8,28 @@
 
 <body>
   <main>
-    <form action="/register/final" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+    <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
-        <h1 class="c-login__greeting">Let's get to know you.</h1>
+        <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
         <div class="c-login__input-container">
-          
+          <label for="age">How old are you?</label>
+          <input type="text" name="age" id="age" required>
 
-        <h2 class="c-login__greeting">What are you looking for?</h2>
-        <div class="c-login__radio-container">
-          <div>
-            <input type="radio" name="gender" value="male" id="male">
-            <label for="male">Male</label>
+          <p>What do you identify as?</p>
+          <div class="c-login__radio-container">
+            <div>
+              <input type="radio" name="gender" value="male" id="male">
+              <label for="male">Male</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="female" id="female">
+              <label for="female">Female</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="non binary" id="non-binary">
+              <label for="non-binary">Non binary</label>
+            </div>
           </div>
-          <div>
-            <input type="radio" name="gender" value="female" id="female">
-            <label for="female">Female</label>
-          </div>
-          <div>
-            <input type="radio" name="gender" value="everything" id="everything">
-            <label for="everything">Both and more</label>
-          </div>
-        </div>
-
-
-        
-
-
-
         </div>
         <div class="c-login__button-container">
           <%- include('partials/button', 
@@ -45,7 +40,7 @@
               url:"/"
             }  
           )%>
-          <button type="submit">Register</button>
+          <button type="submit">Next</button>
         </div>
       </div>
     </form>
@@ -53,21 +48,22 @@
 
 </body>
   <script>
-    function validateForm(){
-      // let x = document.forms["registerForm"]["password"];
-      // let y = document.forms["registerForm"]["rpassword"];
+    navigator.geolocation.getCurrentPosition((position, err) =>{
+      let latitude = document.createElement("input");
+      let longitude = document.createElement("input");
+      let form = document.forms["registerForm"];
 
-      // let errorMessage = document.createElement("span");
-      // errorMessage.textContent = 'Password does not match.'
-      // errorMessage.style.color = '#FF0000'
+      latitude.setAttribute('type', 'hidden')
+      latitude.setAttribute('name', 'latitude')
+      latitude.value = position.coords.latitude
+      
+      longitude.setAttribute('type', 'hidden')
+      longitude.setAttribute('name', 'longitude')
+      longitude.value = position.coords.longitude
 
-      // if (x.value === y.value){
-      //   return
-      // }else{
-      //   y.after(errorMessage)
-      //   return false
-      // }
-    }
+      form.appendChild(latitude)
+      form.appendChild(longitude)
+    });
   </script>
 
 </html>

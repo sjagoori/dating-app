@@ -121,37 +121,6 @@ router.get('/logout', (req, res) => {
   return res.render('homepage');
 });
 
-/**
- * Function registers user.
- * @name post/register
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- *
- */
-router.post('/register', (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = bcrypt.hashSync(req.body.password, salt);
-  const pref = req.body.pref;
-
-  const newUser = new User();
-  newUser.firstName = firstName;
-  newUser.lastName = lastName;
-  newUser.email = email;
-  newUser.password = password;
-  newUser.pref = pref;
-  newUser.save((err, user) => {
-    if (err) {
-      return res.status(500).send();
-    }
-
-    req.session.user = user;
-    return res.redirect('/');
-  });
-});
-
 router.get('/deleteme', (req, res) =>{
   User.findOneAndRemove({email: req.session.user.email}, (err) => {
     if (err) {
@@ -182,6 +151,60 @@ router.get('/register', (req, res) => {
 });
 
 /**
+ * Function registers user.
+ * @name post/register
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ *
+ */
+router.post('/register/:step', (req, res)=>{
+  const step = req.params.step;
+
+  if (step == '2') {
+    delete req.body.rpassword;
+    req.session.register = req.body;
+
+    console.log(req.session.register);
+    return res.render('register2', {query: req.session.register});
+  }
+  if (step == '3') {
+    req.session.register.personal = req.body;
+    console.log(req.session.register);
+
+    return res.render('register3');
+  }
+  if (step == 'final') {
+    req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
+    console.log(req.session.register);
+
+    const firstName = req.session.register.fname;
+    const lastName = req.session.register.lname;
+    const email = req.session.register.email;
+    const password = bcrypt.hashSync(req.session.register.password, salt);
+    const age = req.session.register.personal.age;
+    const gender = req.session.register.personal.gender;
+    const targetGender = req.session.register.personal.targetGender;
+
+    const newUser = new User();
+    newUser.firstName = firstName;
+    newUser.lastName = lastName;
+    newUser.email = email;
+    newUser.password = password;
+    newUser.personal = {age: age, gender: gender};
+    newUser.preferences = {ageDiff: 'ded rn', targetGender: targetGender};
+    newUser.save((err, user) =>{
+      if (err) {
+        return res.status(500).send();
+      }
+
+      req.session.user = user;
+      return res.redirect('/');
+    });
+  }
+});
+
+/**
  * Function redirects unmatched routes to @see {@link get/homepage}.
  * @name *
  * @function
@@ -193,28 +216,5 @@ router.get('*', (req, res) => {
   return res.redirect('/');
 });
 
-/**
- * [WIP] - Function iterates through registration..
- * @name get/regiser/22
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- *
- */
-router.post('/register/2', (req, res) => {
-  // const email = req.body.email;
-  // const password = bcrypt.hashSync(req.body.rpassword, salt);
-  delete req.body.rpassword;
-  req.session.register = req.body;
-
-  console.log(req.session.register);
-  res.render('register2', {query: req.session.register});
-});
-
-
-router.post('/register/final', (req, res)=>{
-  req.session.register.preferences = req.body;
-  console.log(req.session.register);
-});
 
 module.exports = router;

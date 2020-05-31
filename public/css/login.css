@@ -31,7 +31,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   margin-top: 30px; }
   .c-login__input-container input,
   .c-login__input-container textarea {
