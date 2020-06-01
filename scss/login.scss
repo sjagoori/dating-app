@@ -59,7 +59,7 @@ body {
     resize: none;
     outline: none;
 
-    &[type="text"]{
+    &[type="text"],&[type="password"]{
       border-bottom: 1px solid $color-border;
     }
 
@@ -80,7 +80,7 @@ body {
     
     &[for="profilepicture"]{
       color: #FFF;
-      background-color: #466aeb;
+      background-color: $color-off-blue;
       padding: 15px;
       border-radius: 7px;
       margin-top: 10px;
@@ -118,8 +118,8 @@ body {
 
   input[type="radio"]:checked+label {
     transition: .3s;
-    background-color: #466aeb;
-    border-color: #466aeb;
+    background-color: $color-off-blue;
+    border-color: $color-off-blue;
     color: #FFFFFF;
   }
 }
