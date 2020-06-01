@@ -80,21 +80,46 @@ router.post('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/update', (req, res) => {
-  const newPassword = bcrypt.hashSync(req.body.npassword, salt);
+  const targetGender = req.body.targetGender;
+  const newPassword = req.body.npassword;
+  const minAge = req.body.minAge;
+  const maxAge = req.body.maxAge;
 
   if (!req.session.user) {
     return res.redirect('/');
   }
 
+  const buildBlock = {preferences: {}};
+
+
+  if (newPassword != '') {
+    buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  }
+
+  if (targetGender != undefined) {
+    buildBlock.preferences.targetGender = targetGender;
+  }
+
+  if (minAge != '' && maxAge != '') {
+    buildBlock.preferences.minAge = minAge;
+    buildBlock.preferences.maxAge = maxAge;
+  };
+
+  if (Object.keys(buildBlock.preferences).length == 0) {
+    delete buildBlock.preferences;
+  }
+
+  console.log(buildBlock);
+
   User.findOneAndUpdate({email: req.session.user.email},
-      {$set: {password: newPassword}},
+      {$set: buildBlock},
       {new: true},
       (err, user) => {
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
         }
         req.session.user = user;
-        return res.render('profile', {query: user});
+        return res.redirect('/');
       });
 });
 
