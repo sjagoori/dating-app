@@ -16,7 +16,7 @@ const router = express.Router();
  * User module
  * @const
  */
-const User = require('../models/user.js');
+const User = require('../models/User.js');
 
 /**
  * Bcrypt module
