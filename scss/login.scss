@@ -6,6 +6,8 @@ $breakpoint-tablet-portrait: 768px;
 
 body {
   background-color: $color-off-white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: .9em;
 }
 
 .c-login {
@@ -24,6 +26,10 @@ body {
   @include screen-tablet-portrait-and-smaller {
     width: 80%;
   }
+
+  @include screen-laptop-and-smaller {
+    width: 65%;
+  }
 }
 
 .c-login-container {
@@ -35,31 +41,44 @@ body {
 }
 
 
+.c-login__greeting{
+  text-align: center;
+}
 
+.c-login__subheader{
+  font-size: 1.2em;
+  font-weight: 500;
+  line-height: 1.8;
+}
 
 .c-login__greeting,
 .c-login__subheader {
   color: $color-text;
-  text-align: center;
 }
 
 .c-login__input-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   margin-top: 30px;
 
   input,
   textarea {
-    width: 100%;
     background-color: transparent;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 5px;
     border: 0;
-    border-bottom: 1px solid $color-border;
     resize: none;
     outline: none;
+
+    &[type="text"],&[type="password"],&[type="email"]{
+      border-bottom: 1px solid $color-border;
+    }
+
+    &[type="file"] {
+      display: none;
+    }
 
     &:focus {
       transition: .3s;
@@ -71,6 +90,15 @@ body {
 
   label {
     align-self: flex-start;
+    
+    &[for="profilepicture"]{
+      color: #FFF;
+      background-color: $color-off-blue;
+      padding: 15px;
+      border-radius: 7px;
+      // margin-top: 5px;
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -103,8 +131,21 @@ body {
 
   input[type="radio"]:checked+label {
     transition: .3s;
-    background-color: #466aeb;
-    border-color: #466aeb;
+    background-color: $color-off-blue;
+    border-color: $color-off-blue;
     color: #FFFFFF;
   }
+}
+
+.highlight{
+  background-image: linear-gradient(transparent 15px, rgba($color-off-blue, .3) 10px);
+  transition: .3s;
+
+  &:hover{
+    background-image: linear-gradient(transparent -15px, rgba($color-off-blue, .3) -10px);
+  }
+}
+
+.warning{
+  color: darken($color-red, 20%);
 }
