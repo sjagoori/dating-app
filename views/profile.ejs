@@ -12,7 +12,7 @@
         <div class="c-login-container">
           <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
           <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.age %></span> year old <span class="highlight"><%- query.personal.gender %></span> registered with the mail-adress: <span class="highlight"><%- query.email %></span>.</p>
-          <p class="c-login__subheader">You are looking for a <span class="highlight"><%- query.preferences.targetGender %></span> between the ages <span class="highlight"><%- query.preferences.minAge %></span> and <span class="highlight"><%- query.preferences.maxAge %></span> and .</p>
+          <p class="c-login__subheader">You are looking for a <span class="highlight"><%- query.preferences.targetGender %></span> between the ages <span class="highlight"><%- query.preferences.minAge %></span> and <span class="highlight"><%- query.preferences.maxAge %></span>.</p>
           <div class="c-login__input-container">
             <h2 class="c-login__subheader">Do you want to match with a different gender?</h2>
             <div class="c-login__radio-container">
@@ -32,9 +32,9 @@
 
             <h2 class="c-login__subheader">Do you want to look for other ages?</h2>
             <label for="minAge">At least:</label>
-            <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" autocomplete="off">
+            <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
             <label for="maxAge">But older than:</label>
-            <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" autocomplete="off">
+            <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
 
             <h2 class="c-login__subheader">Do you want to change your password?</h2>
             <label for="npassword">Enter your new password:</label>

@@ -92,7 +92,6 @@ router.post('/update', (req, res) => {
 
   const buildBlock = {preferences: {}};
 
-
   if (newPassword != '') {
     buildBlock.password = bcrypt.hashSync(newPassword, salt);
   }
