@@ -58,7 +58,8 @@ router.post('/profile', (req, res) => {
         }
 
         if (!user) {
-          return res.status(404).send('email or password doesnt exist');
+          return res.render('homepage', {query: {
+            errorMessage: 'Email or password doesnt exist'}});
         }
 
         if (bcrypt.compareSync(password, user.password, salt)) {
@@ -213,7 +214,7 @@ router.post('/register/:step', (req, res)=>{
         if (!user) {
           res.render('register2', {query: req.session.register});
         } else {
-          res.render('errorPage', {query: {
+          res.render('register', {query: {
             errorMessage: 'Email already in use',
           }});
         }

@@ -10,7 +10,11 @@
   <main>
     <form action="/register/2" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
-        <h1 class="c-login__greeting">Register here!</h1>
+        <% if (typeof query !== 'undefined') { %>
+          <h1 class="c-login__greeting warning"> <%= query.errorMessage %> </h1>
+        <% } else { %> 
+          <h1 class="c-login__greeting">Register here!</h1>
+        <% } %> 
         <div class="c-login__input-container">
           <label for="fname">First name:</label>
           <input type="text" name="fname" id="fname" autocomplete="off" required>

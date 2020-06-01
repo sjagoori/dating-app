@@ -48,9 +48,10 @@ body {
     border: 0;
     resize: none;
     outline: none; }
-    .c-login__input-container input[type="text"], .c-login__input-container input[type="password"],
+    .c-login__input-container input[type="text"], .c-login__input-container input[type="password"], .c-login__input-container input[type="email"],
     .c-login__input-container textarea[type="text"],
-    .c-login__input-container textarea[type="password"] {
+    .c-login__input-container textarea[type="password"],
+    .c-login__input-container textarea[type="email"] {
       border-bottom: 1px solid #4C4D6B; }
     .c-login__input-container input[type="file"],
     .c-login__input-container textarea[type="file"] {
@@ -103,3 +104,6 @@ body {
   padding-left: 7px;
   padding-right: 7px;
   border-radius: 3px; }
+
+.warning {
+  color: #e60000; }

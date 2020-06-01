@@ -66,7 +66,7 @@ body {
     resize: none;
     outline: none;
 
-    &[type="text"],&[type="password"]{
+    &[type="text"],&[type="password"],&[type="email"]{
       border-bottom: 1px solid $color-border;
     }
 
@@ -137,4 +137,8 @@ body {
   padding-left: 7px;
   padding-right: 7px;
   border-radius: 3px;
+}
+
+.warning{
+  color: darken($color-red, 20%);
 }
