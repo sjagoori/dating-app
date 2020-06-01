@@ -1,10 +1,10 @@
 button {
   border: 0;
-  width: 110px;
+  width: 120px;
   height: 50px;
   border-radius: 7px;
-  font-size: 1em;
   color: white;
+  font-size: 1em;
   cursor: pointer;
   background-color: #1946E5;
   transition: .3s; }
@@ -13,10 +13,12 @@ button {
 
 .button {
   display: block;
-  width: 110px;
+  width: 120px;
   height: 50px;
   border-radius: 7px;
   color: white;
+  padding-left: 3px;
+  padding-right: 3px;
   text-decoration: none;
   display: flex;
   align-items: center;

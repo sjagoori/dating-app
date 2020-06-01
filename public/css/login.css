@@ -1,5 +1,6 @@
 body {
-  background-color: #EBF0F8; }
+  background-color: #EBF0F8;
+  font-family: 'Open Sans', sans-serif; }
 
 .c-login {
   width: calc(100% - 70%);
@@ -15,6 +16,9 @@ body {
   @media only screen and (max-width: 768px) {
     .c-login {
       width: 80%; } }
+  @media only screen and (max-width: 1240px) {
+    .c-login {
+      width: 65%; } }
 
 .c-login-container {
   width: 90%; }

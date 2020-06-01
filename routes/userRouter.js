@@ -59,7 +59,7 @@ router.post('/profile', (req, res) => {
 
         if (!user) {
           return res.render('homepage', {query: {
-            errorMessage: 'Email or password doesnt exist'}});
+            errorMessage: 'Email or password is incorrect'}});
         }
 
         if (bcrypt.compareSync(password, user.password, salt)) {
@@ -67,7 +67,7 @@ router.post('/profile', (req, res) => {
           return res.redirect('/');
         } else {
           return res.render('homepage', {query: {
-            errorMessage: 'Email or password doesnt exist'}});
+            errorMessage: 'Email or password is incorrect'}});
         }
       },
   );

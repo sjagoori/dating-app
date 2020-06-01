@@ -6,6 +6,7 @@ $breakpoint-tablet-portrait: 768px;
 
 body {
   background-color: $color-off-white;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .c-login {
@@ -23,6 +24,10 @@ body {
 
   @include screen-tablet-portrait-and-smaller {
     width: 80%;
+  }
+
+  @include screen-laptop-and-smaller {
+    width: 65%;
   }
 }
 
