@@ -56,9 +56,16 @@ body {
     margin: 10px;
     padding: 5px;
     border: 0;
-    border-bottom: 1px solid $color-border;
     resize: none;
     outline: none;
+
+    &[type="text"]{
+      border-bottom: 1px solid $color-border;
+    }
+
+    &[type="file"] {
+      display: none;
+    }
 
     &:focus {
       transition: .3s;
@@ -70,6 +77,15 @@ body {
 
   label {
     align-self: flex-start;
+    
+    &[for="profilepicture"]{
+      color: #FFF;
+      background-color: #466aeb;
+      padding: 15px;
+      border-radius: 7px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
   }
 }
 

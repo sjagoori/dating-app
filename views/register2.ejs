@@ -12,6 +12,11 @@
       <div class="c-login-container">
         <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
         <div class="c-login__input-container">
+          
+          <span>Set a profile picture</span>
+          <label for="profilepicture">Upload</label>
+          <input type="file" accept=".png,.jpg,.jpeg" name="profilepicture" id="profilepicture" alt="profilepicture">
+
           <label for="age">How old are you?</label>
           <input type="text" name="age" id="age" required>
 
@@ -48,6 +53,13 @@
 
 </body>
   <script>
+    let fileUpload = document.getElementById("profilepicture");
+
+    fileUpload.addEventListener('change', e => {
+      fileUpload.previousElementSibling.style.transition = ".3s"
+      fileUpload.previousElementSibling.style.backgroundColor = "#008000"
+    })
+
     navigator.geolocation.getCurrentPosition((position, err) =>{
       let latitude = document.createElement("input");
       let longitude = document.createElement("input");

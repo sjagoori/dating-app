@@ -39,9 +39,14 @@ body {
     margin: 10px;
     padding: 5px;
     border: 0;
-    border-bottom: 1px solid #4C4D6B;
     resize: none;
     outline: none; }
+    .c-login__input-container input[type="text"],
+    .c-login__input-container textarea[type="text"] {
+      border-bottom: 1px solid #4C4D6B; }
+    .c-login__input-container input[type="file"],
+    .c-login__input-container textarea[type="file"] {
+      display: none; }
     .c-login__input-container input:focus,
     .c-login__input-container textarea:focus {
       transition: .3s;
@@ -50,6 +55,13 @@ body {
       border-radius: 3px; }
   .c-login__input-container label {
     align-self: flex-start; }
+    .c-login__input-container label[for="profilepicture"] {
+      color: #FFF;
+      background-color: #466aeb;
+      padding: 15px;
+      border-radius: 7px;
+      margin-top: 10px;
+      margin-bottom: 10px; }
 
 .c-login__button-container {
   margin-top: 40px;
