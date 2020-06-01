@@ -10,18 +10,21 @@
   <main>
     <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
+      <% if (query) { %>
         <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
+      <% } %>
+
         <div class="c-login__input-container">
           
-          <span>Set a profile picture</span>
+          <h2 class="c-login__subheader">Set a profile picture</h2>
           <label for="profilepicture">Upload</label>
           <input type="file" accept=".png,.jpg,.jpeg" name="profilepicture" id="profilepicture" alt="profilepicture">
 
-          <label for="age">How old are you?</label>
-          <input type="text" name="age" id="age" required>
+          <label class="c-login__subheader" for="age">How old are you?</label>
+          <input type="text" name="age" id="age" pattern="^1[8-9]|^[2-9]\d" required>
 
-          <p>What do you identify as?</p>
-          <div class="c-login__radio-container">
+          <h2 class="c-login__subheader">What do you identify as?</h2>
+          <div class="c-login__radio-container" require>
             <div>
               <input type="radio" name="gender" value="male" id="male">
               <label for="male">Male</label>
@@ -42,7 +45,7 @@
               classes: "c-login__login-button",
               type: "secondary", 
               label: "back", 
-              url:"/"
+              url:"/register/2"
             }  
           )%>
           <button type="submit">Next</button>

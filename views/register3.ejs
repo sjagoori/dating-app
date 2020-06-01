@@ -8,12 +8,12 @@
 
 <body>
   <main>
-    <form action="/register/final" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+    <form action="/register/4" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
         <h1 class="c-login__greeting">What are you looking for?</h1>
         <div class="c-login__input-container">
           
-        <p>Gender</p>
+        <h2 class="c-login__subheader">Gender</h2>
         <div class="c-login__radio-container">
           <div>
             <input type="radio" name="targetGender" value="male" id="male">
@@ -24,15 +24,18 @@
             <label for="female">Female</label>
           </div>
           <div>
-            <input type="radio" name="targetGender" value="everything" id="everything">
-            <label for="everything">Both and more</label>
+            <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
+            <label for="non-binairy">Non-binairy</label>
           </div>
         </div>
 
-        <-- https://codepen.io/sakamies/pen/qOEGLJ !-->
-        <p>Age</p>
-        <label for="happy" class="pull-left">Happy</label>
-        <label for="" class="pull-right">Sad</label>
+        <h2 class="c-login__subheader">What ages are you looking for?</h2>
+        <label for="minAge">At least:</label>
+        <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" required>
+        <label for="maxAge">But older than:</label>
+        <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" required>
+        
+
         <input type="range" min="0" max="10" value="5" id="fader">
         <span id="value"></span>
 
@@ -44,7 +47,7 @@
               classes: "c-login__login-button",
               type: "secondary", 
               label: "back", 
-              url:"/"
+              url:"/register/2"
             }  
           )%>
           <button type="submit">Register</button>

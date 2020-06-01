@@ -154,6 +154,21 @@ router.get('/register', (req, res) => {
   return res.render('register');
 });
 
+router.get('/register/:step', (req, res) => {
+  const step = req.params.step;
+  console.log(typeof step);
+  switch (step) {
+    case '1':
+      return res.render('register');
+    case '2':
+      return res.render('register2', {query: req.session.register});
+    case '3':
+      return res.render('register3', {query: req.session.register});
+    default:
+      return res.status(404).send();
+  };
+});
+
 /**
  * Function registers user.
  * @name post/register
@@ -164,48 +179,55 @@ router.get('/register', (req, res) => {
  */
 router.post('/register/:step', (req, res)=>{
   const step = req.params.step;
+  switch (step) {
+    case '2':
+      delete req.body.rpassword;
+      req.session.register = req.body;
 
-  if (step == '2') {
-    delete req.body.rpassword;
-    req.session.register = req.body;
+      console.log(req.session.register);
+      return res.render('register2', {query: req.session.register});
+    case '3':
+      req.session.register.personal = req.body;
+      console.log(req.session.register);
+      return res.render('register3');
+    case '4':
+      req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
+      console.log(req.session.register);
 
-    console.log(req.session.register);
-    return res.render('register2', {query: req.session.register});
-  }
-  if (step == '3') {
-    req.session.register.personal = req.body;
-    console.log(req.session.register);
+      const firstName = req.session.register.fname;
+      const lastName = req.session.register.lname;
+      const email = req.session.register.email;
+      const password = bcrypt.hashSync(req.session.register.password, salt);
+      const age = req.session.register.personal.age;
+      const gender = req.session.register.personal.gender;
+      const targetGender = req.session.register.preferences.targetGender;
+      const minAge = req.session.register.preferences.minAge;
+      const maxAge = req.session.register.preferences.maxAge;
 
-    return res.render('register3');
-  }
-  if (step == 'final') {
-    req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
-    console.log(req.session.register);
-
-    const firstName = req.session.register.fname;
-    const lastName = req.session.register.lname;
-    const email = req.session.register.email;
-    const password = bcrypt.hashSync(req.session.register.password, salt);
-    const age = req.session.register.personal.age;
-    const gender = req.session.register.personal.gender;
-    const targetGender = req.session.register.preferences.targetGender;
-    const ageDiff = 'not working';
-
-    const newUser = new User();
-    newUser.firstName = firstName;
-    newUser.lastName = lastName;
-    newUser.email = email;
-    newUser.password = password;
-    newUser.personal = {age: age, gender: gender};
-    newUser.preferences = {ageDiff: ageDiff, targetGender: targetGender};
-    newUser.save((err, user) =>{
-      if (err) {
-        return res.status(500).send();
-      }
-      console.log(user);
-      req.session.user = user;
-      return res.redirect('/');
-    });
+      const newUser = new User();
+      newUser.firstName = firstName;
+      newUser.lastName = lastName;
+      newUser.email = email;
+      newUser.password = password;
+      newUser.personal = {
+        age: age,
+        gender: gender,
+      };
+      newUser.preferences = {
+        minAge: minAge,
+        maxAge: maxAge,
+        targetGender: targetGender,
+      };
+      newUser.save((err, user) =>{
+        if (err) {
+          return res.status(500).send('user already exists');
+        }
+        console.log(user);
+        req.session.user = user;
+        return res.redirect('/');
+      });
+    default:
+      return res.status(500).send();
   }
 });
 

@@ -27,7 +27,8 @@ const userScheme = new Schema({
     gender: String,
   },
   preferences: {
-    ageDiff: String,
+    minAge: String,
+    maxAge: String,
     targetGender: String,
   },
 });

@@ -7,17 +7,33 @@
 })%>
 
 <body>
-  <main class="c-login">
-    <form action="/update" method="post">
+  <main>
+    <form action="/update" method="post" class="c-login">
         <div class="c-login-container">
           <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
-          <p>Your email adress is: <%- query.email %></p>
+          <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.age %></span> year old <span class="highlight"><%- query.personal.gender %></span> registered with the mail-adress: <span class="highlight"><%- query.email %></span>.</p>
           <div class="c-login__input-container">
-            <h2>Do you want to change your password?</h2>
+            <h2 class="c-login__subheader">Do you want to match with a different gender?</h2>
+            <div class="c-login__radio-container">
+              <div>
+                <input type="radio" name="targetGender" value="male" id="male">
+                <label for="male">Male</label>
+              </div>
+              <div>
+                <input type="radio" name="targetGender" value="female" id="female">
+                <label for="female">Female</label>
+              </div>
+              <div>
+                <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
+                <label for="non-binairy">Non-binairy</label>
+              </div>
+            </div>
+
+            <h2 class="c-login__subheader">Do you want to change your password?</h2>
             <label for="opassword">Enter your old password:</label>
-            <input type="password" name="opassword" id="opassword" placeholder="Old password" required>
+            <input type="password" name="opassword" id="opassword" placeholder="Old password">
             <label for="npassword">Enter your new password:</label>
-            <input type="password" name="npassword" id="npassword" placeholder="New password" required>
+            <input type="password" name="npassword" id="npassword" placeholder="New password">
           </div>
           <div class="c-login__button-container">
           <%- include('partials/button', 
