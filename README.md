@@ -26,3 +26,13 @@ npm install
 ```bash
 npm run start
 ```
+
+## Troubleshooting
+Getting issues during install? Your installation is probably outdated. 
+```
+npm update && npm install -g n && n latest
+```
+[Source](https://stackoverflow.com/a/52616913)
+
+Also dont forget to fill out the .env file and whitelist your IP on [Atlas](cloud.mongodb.com)
+
