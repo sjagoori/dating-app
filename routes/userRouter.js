@@ -65,7 +65,8 @@ router.post('/profile', (req, res) => {
           req.session.user = user;
           return res.redirect('/');
         } else {
-          return res.status(404).send('email or password doesnt exist');
+          return res.render('homepage', {query: {
+            errorMessage: 'Email or password doesnt exist'}});
         }
       },
   );
@@ -156,7 +157,6 @@ router.get('/register', (req, res) => {
 
 router.get('/register/:step', (req, res) => {
   const step = req.params.step;
-  console.log(typeof step);
   switch (step) {
     case '1':
       return res.render('register');
@@ -179,17 +179,26 @@ router.get('/register/:step', (req, res) => {
  */
 router.post('/register/:step', (req, res)=>{
   const step = req.params.step;
+
   switch (step) {
     case '2':
       delete req.body.rpassword;
-      req.session.register = req.body;
-
-      console.log(req.session.register);
-      return res.render('register2', {query: req.session.register});
+      req.session.register = JSON.parse(JSON.stringify(req.body));
+      User.findOne({email: req.session.register.email}, (err, user)=>{
+        if (!user) {
+          res.render('register2', {query: req.session.register});
+        } else {
+          res.render('errorPage', {query: {
+            errorMessage: 'Email already in use',
+          }});
+        }
+      });
+      break;
     case '3':
-      req.session.register.personal = req.body;
-      console.log(req.session.register);
-      return res.render('register3');
+      req.session.register.personal = JSON.parse(JSON.stringify(req.body));
+      // console.log(req.session.register);
+      res.render('register3');
+      break;
     case '4':
       req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
       console.log(req.session.register);
@@ -224,10 +233,12 @@ router.post('/register/:step', (req, res)=>{
         }
         console.log(user);
         req.session.user = user;
-        return res.redirect('/');
+        res.redirect('/');
       });
+      break;
     default:
-      return res.status(500).send();
+      res.status(500).send();
+      break;
   }
 });
 

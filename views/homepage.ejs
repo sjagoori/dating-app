@@ -11,7 +11,11 @@
   <main>
     <form action="profile" method="POST" class="c-login">
       <div class="c-login-container">
+      <% if (typeof query !== 'undefined') { %>
+        <h1 class="c-login__greeting"> <%= query.errorMessage %> </h1>
+      <% } else { %> 
         <h1 class="c-login__greeting">Hi there!</h1>
+      <% } %> 
         <div class="c-login__input-container">
           <label for="lemail">email:</label>
           <input type="email" name="email" id="lemail" required>
