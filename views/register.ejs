@@ -8,39 +8,31 @@
 
 <body>
   <main>
-    <form action="/register/2" method="POST" class="c-login">
+    <form action="/register/2" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
       <div class="c-login-container">
-        <h1 class="c-login__greeting">Register here!</h1>
+        <% if (typeof query !== 'undefined') { %>
+          <h1 class="c-login__greeting warning"> <%= query.errorMessage %> </h1>
+        <% } else { %> 
+          <h1 class="c-login__greeting">Register here!</h1>
+        <% } %> 
         <div class="c-login__input-container">
-          <label for="fname">Name:</label>
+          <label for="fname">First name:</label>
           <input type="text" name="fname" id="fname" autocomplete="off" required>
+          <label for="lname">Last name:</label>
+          <input type="text" name="lname" id="lname" autocomplete="off" required>
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" autocomplete="off" required>
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" required>
-
-          <h2 class="c-login__subheader">Do you like sports?</h2>
-          <div class="c-login__radio-container">
-            <div>
-              <input type="radio" name="checkbox-sports" id="checkbox-sports-yes">
-              <label for="checkbox-sports-yes">Yes</label>
-            </div>
-            <div>
-              <input type="radio" name="checkbox-sports" id="checkbox-sports-no">
-              <label for="checkbox-sports-no">No</label>
-            </div>
-            <div>
-              <input type="radio" name="checkbox-sports" id="checkbox-sports-sometimes">
-              <label for="checkbox-sports-sometimes">Sometimes</label>
-            </div>
-          </div>
+          <label for="password">Repeat your password:</label>
+          <input type="password" name="rpassword" id="rpassword" required>
         </div>
         <div class="c-login__button-container">
           <%- include('partials/button', 
             {
               classes: "c-login__login-button",
               type: "secondary", 
-              label: "back", 
+              label: "Cancel", 
               url:"/"
             }  
           )%>
@@ -49,6 +41,24 @@
       </div>
     </form>
   </main>
+
 </body>
+  <script>
+    function validateForm(){
+      let x = document.forms["registerForm"]["password"];
+      let y = document.forms["registerForm"]["rpassword"];
+
+      let errorMessage = document.createElement("span");
+      errorMessage.textContent = 'Password does not match.'
+      errorMessage.style.color = '#FF0000'
+
+      if (x.value === y.value){
+        return
+      }else{
+        y.after(errorMessage)
+        return false
+      }
+    }
+  </script>
 
 </html>

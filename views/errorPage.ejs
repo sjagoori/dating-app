@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+  title: "Register",
+  css: "login"
+})%>
+
+<body>
+  <main>
+    <div class="c-login">
+
+      <div class="c-login-container">
+
+        <h1 class="c-login__greeting">Oh shit dude</h1>
+        <div class="c-login__input-container">
+          <%= query.errorMessage %>
+      </div>
+
+      <div class="c-login__button-container">
+        <%- include('partials/button', 
+            {
+              classes: "c-login__login-button",
+              type: "primary", 
+              label: "Home", 
+              url: "/",
+              position: "centered"
+            }  
+          )%>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

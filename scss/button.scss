@@ -1,13 +1,14 @@
 @import 'scss/_colors.scss';
 $button-height: 50px;
-$button-width: 110px;
+$button-width: 120px;
 
 button {
+  border: 0;
   width: $button-width;
   height: $button-height;
   border-radius: 7px;
-  font-size: 1em;
   color: white;
+  font-size: 1em;
   cursor: pointer;
   background-color: $color-primary;
   transition: .3s;
@@ -23,6 +24,8 @@ button {
   height: $button-height;
   border-radius: 7px;
   color: white;
+  padding-left: 3px;
+  padding-right: 3px;
 
   text-decoration: none;
 
@@ -57,6 +60,15 @@ button {
       transition: .3s;
       background-color: darken($color-secondary, 10%);
       color: $color-white;
+    }
+  }
+
+  &--danger {
+    background-color: $color-red;
+
+    &:hover {
+      transition: .3s;
+      background-color: darken($color-red, 20%);
     }
   }
 

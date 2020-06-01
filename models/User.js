@@ -22,7 +22,15 @@ const userScheme = new Schema({
   lastName: String,
   email: {type: String, unique: true},
   password: String,
-  pref: String,
+  personal: {
+    age: String,
+    gender: String,
+  },
+  preferences: {
+    minAge: String,
+    maxAge: String,
+    targetGender: String,
+  },
 });
 
 const User = mongoose.model('users', userScheme);

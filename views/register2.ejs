@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+  title: "Register",
+  css: "login"
+})%>
+
+<body>
+  <main>
+    <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+      <div class="c-login-container">
+      <% if (query) { %>
+        <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
+      <% } %>
+
+        <div class="c-login__input-container">
+          
+          <h2 class="c-login__subheader">Set a profile picture</h2>
+          <label for="profilepicture">Upload</label>
+          <input type="file" accept=".png,.jpg,.jpeg" name="profilepicture" id="profilepicture" alt="profilepicture">
+
+          <label class="c-login__subheader" for="age">How old are you?</label>
+          <input type="text" name="age" id="age" pattern="^1[8-9]|^[2-9]\d" required>
+
+          <h2 class="c-login__subheader">What do you identify as?</h2>
+          <div class="c-login__radio-container" require>
+            <div>
+              <input type="radio" name="gender" value="male" id="male">
+              <label for="male">Male</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="female" id="female">
+              <label for="female">Female</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="non binary" id="non-binary">
+              <label for="non-binary">Non binary</label>
+            </div>
+          </div>
+        </div>
+        <div class="c-login__button-container">
+          <%- include('partials/button', 
+            {
+              classes: "c-login__login-button",
+              type: "secondary", 
+              label: "back", 
+              url:"/register/1"
+            }  
+          )%>
+          <button type="submit">Next</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+</body>
+  <script>
+    let fileUpload = document.getElementById("profilepicture");
+
+    fileUpload.addEventListener('change', e => {
+      fileUpload.previousElementSibling.style.transition = ".3s"
+      fileUpload.previousElementSibling.style.backgroundColor = "#008000"
+    })
+
+    navigator.geolocation.getCurrentPosition((position, err) =>{
+      let latitude = document.createElement("input");
+      let longitude = document.createElement("input");
+      let form = document.forms["registerForm"];
+
+      latitude.setAttribute('type', 'hidden')
+      latitude.setAttribute('name', 'latitude')
+      latitude.value = position.coords.latitude
+      
+      longitude.setAttribute('type', 'hidden')
+      longitude.setAttribute('name', 'longitude')
+      longitude.value = position.coords.longitude
+
+      form.appendChild(latitude)
+      form.appendChild(longitude)
+    });
+  </script>
+
+</html>

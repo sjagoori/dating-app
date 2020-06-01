@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+  title: "Register",
+  css: "login"
+})%>
+
+<body>
+  <main>
+    <form action="/register/4" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+      <div class="c-login-container">
+        <h1 class="c-login__greeting">What are you looking for?</h1>
+        <div class="c-login__input-container">
+          
+        <h2 class="c-login__subheader">Gender</h2>
+        <div class="c-login__radio-container">
+          <div>
+            <input type="radio" name="targetGender" value="male" id="male">
+            <label for="male">Male</label>
+          </div>
+          <div>
+            <input type="radio" name="targetGender" value="female" id="female">
+            <label for="female">Female</label>
+          </div>
+          <div>
+            <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
+            <label for="non-binairy">Non-binairy</label>
+          </div>
+        </div>
+
+        <h2 class="c-login__subheader">What ages are you looking for?</h2>
+        <label for="minAge">At least:</label>
+        <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" required>
+        <label for="maxAge">But older than:</label>
+        <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d" required>
+
+        </div>
+        <div class="c-login__button-container">
+          <%- include('partials/button', 
+            {
+              classes: "c-login__login-button",
+              type: "secondary", 
+              label: "back", 
+              url:"/register/2"
+            }  
+          )%>
+          <button type="submit">Register</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+</body>
+  <script>
+      let errorMessage = document.getElementById('value')
+      let slider = document.getElementById('rangeInput')
+      slider.addEventListener("input", e => {
+        errorMessage.textContent = slider.value
+      })
+
+
+    function validateForm(){
+      // let x = document.forms["registerForm"]["password"];
+      // let y = document.forms["registerForm"]["rpassword"];
+
+      // let errorMessage = document.createElement("span");
+      // errorMessage.textContent = 'Password does not match.'
+      // errorMessage.style.color = '#FF0000'
+
+      // if (x.value === y.value){
+      //   return
+      // }else{
+      //   y.after(errorMessage)
+      //   return false
+      // }
+    }
+  </script>
+
+</html>

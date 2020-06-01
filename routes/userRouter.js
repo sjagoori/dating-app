@@ -35,7 +35,7 @@ const data = require('../data/data.json');
  */
 router.get('/express', (req, res) => {
   const query = req.query.query;
-  res.render('indexView', {query: query, data: data});
+  return res.render('indexView', {query: query, data: data});
 });
 
 /**
@@ -58,14 +58,16 @@ router.post('/profile', (req, res) => {
         }
 
         if (!user) {
-          return res.status(404).send('email or password doesnt exist');
+          return res.render('homepage', {query: {
+            errorMessage: 'Email or password is incorrect'}});
         }
 
         if (bcrypt.compareSync(password, user.password, salt)) {
           req.session.user = user;
           return res.redirect('/');
         } else {
-          return res.status(404).send('email or password doesnt exist');
+          return res.render('homepage', {query: {
+            errorMessage: 'Email or password is incorrect'}});
         }
       },
   );
@@ -79,17 +81,45 @@ router.post('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/update', (req, res) => {
-  const pref = req.body.prefs;
+  const targetGender = req.body.targetGender;
+  const newPassword = req.body.npassword;
+  const minAge = req.body.minAge;
+  const maxAge = req.body.maxAge;
+
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+
+  const buildBlock = {preferences: {}};
+
+  if (newPassword != '') {
+    buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  }
+
+  if (targetGender != undefined) {
+    buildBlock.preferences.targetGender = targetGender;
+  }
+
+  if (minAge != '' && maxAge != '') {
+    buildBlock.preferences.minAge = minAge;
+    buildBlock.preferences.maxAge = maxAge;
+  };
+
+  if (Object.keys(buildBlock.preferences).length == 0) {
+    delete buildBlock.preferences;
+  }
+
+  console.log(buildBlock);
 
   User.findOneAndUpdate({email: req.session.user.email},
-      {$set: {pref: pref}},
+      {$set: buildBlock},
       {new: true},
       (err, user) => {
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
         }
         req.session.user = user;
-        return res.render('profile', {query: user});
+        return res.redirect('/');
       });
 });
 
@@ -105,7 +135,6 @@ router.get('/profile', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-
   return res.render('profile', {query: req.session.user});
 });
 
@@ -122,43 +151,12 @@ router.get('/logout', (req, res) => {
   return res.render('homepage');
 });
 
-/**
- * Function registers user.
- * @name post/register
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- *
- */
-router.post('/register', (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = bcrypt.hashSync(req.body.password, salt);
-  const pref = req.body.pref;
-
-  const newUser = new User();
-  newUser.firstName = firstName;
-  newUser.lastName = lastName;
-  newUser.email = email;
-  newUser.password = password;
-  newUser.pref = pref;
-  newUser.save((err, user) => {
-    if (err) {
-      return res.status(500).send();
-    }
-
-    req.session.user = user;
-    return res.redirect('/');
-  });
-});
-
 router.get('/deleteme', (req, res) =>{
   User.findOneAndRemove({email: req.session.user.email}, (err) => {
     if (err) {
       return res.status(500).send(err);
     }
-
+    req.session.destroy();
     return res.redirect('/');
   });
 });
@@ -173,13 +171,100 @@ router.get('/deleteme', (req, res) =>{
  */
 router.get('/', (req, res) => {
   if (req.session.user) {
-    res.render('profile', {query: req.session.user});
+    return res.render('profile', {query: req.session.user});
   }
-  res.render('homepage');
+  return res.render('homepage');
 });
 
 router.get('/register', (req, res) => {
-  res.render('register');
+  return res.render('register');
+});
+
+router.get('/register/:step', (req, res) => {
+  const step = req.params.step;
+  switch (step) {
+    case '1':
+      return res.render('register');
+    case '2':
+      return res.render('register2', {query: req.session.register});
+    case '3':
+      return res.render('register3', {query: req.session.register});
+    default:
+      return res.status(404).send();
+  };
+});
+
+/**
+ * Function registers user.
+ * @name post/register
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ *
+ */
+router.post('/register/:step', (req, res)=>{
+  const step = req.params.step;
+
+  switch (step) {
+    case '2':
+      delete req.body.rpassword;
+      req.session.register = JSON.parse(JSON.stringify(req.body));
+      User.findOne({email: req.session.register.email}, (err, user)=>{
+        if (!user) {
+          res.render('register2', {query: req.session.register});
+        } else {
+          res.render('register', {query: {
+            errorMessage: 'Email already in use',
+          }});
+        }
+      });
+      break;
+    case '3':
+      req.session.register.personal = JSON.parse(JSON.stringify(req.body));
+      // console.log(req.session.register);
+      res.render('register3');
+      break;
+    case '4':
+      req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
+      console.log(req.session.register);
+
+      const firstName = req.session.register.fname;
+      const lastName = req.session.register.lname;
+      const email = req.session.register.email;
+      const password = bcrypt.hashSync(req.session.register.password, salt);
+      const age = req.session.register.personal.age;
+      const gender = req.session.register.personal.gender;
+      const targetGender = req.session.register.preferences.targetGender;
+      const minAge = req.session.register.preferences.minAge;
+      const maxAge = req.session.register.preferences.maxAge;
+
+      const newUser = new User();
+      newUser.firstName = firstName;
+      newUser.lastName = lastName;
+      newUser.email = email;
+      newUser.password = password;
+      newUser.personal = {
+        age: age,
+        gender: gender,
+      };
+      newUser.preferences = {
+        minAge: minAge,
+        maxAge: maxAge,
+        targetGender: targetGender,
+      };
+      newUser.save((err, user) =>{
+        if (err) {
+          return res.status(500).send('user already exists');
+        }
+        console.log(user);
+        req.session.user = user;
+        res.redirect('/');
+      });
+      break;
+    default:
+      res.status(500).send();
+      break;
+  }
 });
 
 /**
@@ -191,23 +276,8 @@ router.get('/register', (req, res) => {
  *
  */
 router.get('*', (req, res) => {
-  res.redirect('/');
+  return res.redirect('/');
 });
 
-/**
- * [WIP] - Function iterates through registration..
- * @name get/regiser/22
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- *
- */
-router.get('/register/2', (req, res) => {
-  // console.log(req.body)
-  req.session.register = req.body;
-
-  console.log(req.session.register);
-  // res.render('register2')
-});
 
 module.exports = router;
