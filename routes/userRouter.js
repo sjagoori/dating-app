@@ -1,4 +1,5 @@
-/** Express router providing user related routes
+/**
+ * Express router providing user related routes
  * @module router/userRouter
  * @requires express
  * @requires User
@@ -8,6 +9,7 @@
 /**
  * Express module
  * @const
+ * @source https://expressjs.com/en/api.html
  */
 const express = require('express');
 const router = express.Router();
@@ -21,9 +23,14 @@ const User = require('../models/User.js');
 /**
  * Bcrypt module
  * @const
+ * @source https://github.com/kelektiv/node.bcrypt.js
  */
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
+
+/**
+ * Data file strictly used for testing.
+ */
 const data = require('../data/data.json');
 
 /**
@@ -44,6 +51,9 @@ router.get('/express', (req, res) => {
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html
+ * @source https://expressjs.com/en/api.html#res.redirect
+ * @source https://github.com/kelektiv/node.bcrypt.js#to-check-a-password
  */
 router.post('/profile', (req, res) => {
   const email = req.body.email;
@@ -79,6 +89,9 @@ router.post('/profile', (req, res) => {
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOneAndUpdate
+ * @source https://expressjs.com/en/api.html#res.redirect
+ * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
 router.post('/update', (req, res) => {
   const targetGender = req.body.targetGender;
@@ -144,13 +157,22 @@ router.get('/profile', (req, res) => {
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://github.com/expressjs/session#sessiondestroycallback
  */
 router.get('/logout', (req, res) => {
   req.session.destroy();
   return res.render('homepage');
 });
 
+/**
+ * Function deletes user-data and logs user out.
+ * @name get/deletme
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOneAndRemove
+ * @source https://github.com/expressjs/session#sessiondestroycallback
+ */
 router.get('/deleteme', (req, res) =>{
   User.findOneAndRemove({email: req.session.user.email}, (err) => {
     if (err) {
@@ -162,24 +184,12 @@ router.get('/deleteme', (req, res) =>{
 });
 
 /**
- * Function redirects user to @see {@link get/profile}.
- * @name get/homepage
+ * Function renders register page.
+ * @name get/register
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
  */
-router.get('/', (req, res) => {
-  if (req.session.user) {
-    return res.render('profile', {query: req.session.user});
-  }
-  return res.render('homepage');
-});
-
-router.get('/register', (req, res) => {
-  return res.render('register');
-});
-
 router.get('/register/:step', (req, res) => {
   const step = req.params.step;
   switch (step) {
@@ -198,13 +208,14 @@ router.get('/register/:step', (req, res) => {
  * Function registers user.
  * @name post/register
  * @function
- * @param {string} path - Express path
+ * @param {string} path - Express param path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOne
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model-save
+ * @source https://expressjs.com/en/api.html#res.redirect
  */
 router.post('/register/:step', (req, res)=>{
   const step = req.params.step;
-
   switch (step) {
     case '2':
       delete req.body.rpassword;
@@ -221,12 +232,10 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '3':
       req.session.register.personal = JSON.parse(JSON.stringify(req.body));
-      // console.log(req.session.register);
       res.render('register3');
       break;
     case '4':
       req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
-      console.log(req.session.register);
 
       const firstName = req.session.register.fname;
       const lastName = req.session.register.lname;
@@ -268,12 +277,26 @@ router.post('/register/:step', (req, res)=>{
 });
 
 /**
+ * Function redirects user to @see {@link get/profile}.
+ * @name get/homepage
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/', (req, res) => {
+  if (req.session.user) {
+    return res.render('profile', {query: req.session.user});
+  }
+  return res.render('homepage');
+});
+
+/**
  * Function redirects unmatched routes to @see {@link get/homepage}.
  * @name *
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://expressjs.com/en/api.html#res.redirect
  */
 router.get('*', (req, res) => {
   return res.redirect('/');
