@@ -46,6 +46,21 @@ router.get('/express', (req, res) => {
 });
 
 /**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/profile
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/profile', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('profile', {query: req.session.user});
+});
+
+/**
  * Login function, redirects to profile on success.
  * @name post/profile
  * @function
@@ -58,6 +73,7 @@ router.get('/express', (req, res) => {
 router.post('/profile', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+
   User.findOne(
       {
         email: email,
@@ -98,12 +114,11 @@ router.post('/update', (req, res) => {
   const newPassword = req.body.npassword;
   const minAge = req.body.minAge;
   const maxAge = req.body.maxAge;
+  const buildBlock = {preferences: {}};
 
   if (!req.session.user) {
     return res.redirect('/');
   }
-
-  const buildBlock = {preferences: {}};
 
   if (newPassword != '') {
     buildBlock.password = bcrypt.hashSync(newPassword, salt);
@@ -134,21 +149,6 @@ router.post('/update', (req, res) => {
         req.session.user = user;
         return res.redirect('/');
       });
-});
-
-/**
- * Function renders profile from session data,
- * redirects to homepage if not logged in.
- * @name get/profile
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.get('/profile', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/');
-  }
-  return res.render('profile', {query: req.session.user});
 });
 
 /**
@@ -192,6 +192,7 @@ router.get('/deleteme', (req, res) =>{
  */
 router.get('/register/:step', (req, res) => {
   const step = req.params.step;
+
   switch (step) {
     case '1':
       return res.render('register');
@@ -216,6 +217,7 @@ router.get('/register/:step', (req, res) => {
  */
 router.post('/register/:step', (req, res)=>{
   const step = req.params.step;
+
   switch (step) {
     case '2':
       delete req.body.rpassword;
