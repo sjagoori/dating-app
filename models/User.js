@@ -24,6 +24,8 @@ const userScheme = new Schema({
   email: {type: String, unique: true},
   password: String,
   personal: {
+    latitude: String,
+    longitude: String,
     age: String,
     gender: String,
   },

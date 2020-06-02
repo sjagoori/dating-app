@@ -243,6 +243,8 @@ router.post('/register/:step', (req, res)=>{
       const password = bcrypt.hashSync(req.session.register.password, salt);
       const age = req.session.register.personal.age;
       const gender = req.session.register.personal.gender;
+      const latitude = req.session.register.personal.latitude;
+      const longitude = req.session.register.personal.longitude;
       const targetGender = req.session.register.preferences.targetGender;
       const minAge = req.session.register.preferences.minAge;
       const maxAge = req.session.register.preferences.maxAge;
@@ -253,6 +255,8 @@ router.post('/register/:step', (req, res)=>{
       newUser.email = email;
       newUser.password = password;
       newUser.personal = {
+        latitude: latitude,
+        longitude: longitude,
         age: age,
         gender: gender,
       };
