@@ -265,7 +265,6 @@ router.post('/register/:step', (req, res)=>{
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
         }
-        console.log(user);
         req.session.user = user;
         res.redirect('/');
       });

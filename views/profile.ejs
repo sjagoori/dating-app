@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('partials/head', {
-  title: "Profile",
-  css: "login"
-})%>
+  <%- include('partials/head', {
+    title: "Profile",
+    css: "login"
+  })%>
 
-<body>
-  <main>
-    <form action="/update" method="post" class="c-login">
-        <div class="c-login-container">
-          <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
-          <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.age %></span> year old <span class="highlight"><%- query.personal.gender %></span> registered with the mail-adress: <span class="highlight"><%- query.email %></span>.</p>
-          <p class="c-login__subheader">You are looking for a <span class="highlight"><%- query.preferences.targetGender %></span> between the ages <span class="highlight"><%- query.preferences.minAge %></span> and <span class="highlight"><%- query.preferences.maxAge %></span>.</p>
-          <div class="c-login__input-container">
-            <h2 class="c-login__subheader">Do you want to match with a different gender?</h2>
-            <div class="c-login__radio-container">
-              <div>
-                <input type="radio" name="targetGender" value="male" id="male">
-                <label for="male">Male</label>
+  <body>
+    <main>
+      <form action="/update" method="post" class="c-login">
+          <div class="c-login-container">
+            <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
+            <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.age %></span> year old <span class="highlight"><%- query.personal.gender %></span> registered with the mail-adress: <span class="highlight"><%- query.email %></span>.</p>
+            <p class="c-login__subheader">You are looking for a <span class="highlight"><%- query.preferences.targetGender %></span> between the ages <span class="highlight"><%- query.preferences.minAge %></span> and <span class="highlight"><%- query.preferences.maxAge %></span>.</p>
+            <div class="c-login__input-container">
+              <h2 class="c-login__subheader">Do you want to match with a different gender?</h2>
+              <div class="c-login__radio-container">
+                <div>
+                  <input type="radio" name="targetGender" value="male" id="male">
+                  <label for="male">Male</label>
+                </div>
+                <div>
+                  <input type="radio" name="targetGender" value="female" id="female">
+                  <label for="female">Female</label>
+                </div>
+                <div>
+                  <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
+                  <label for="non-binairy">Non-binairy</label>
+                </div>
               </div>
-              <div>
-                <input type="radio" name="targetGender" value="female" id="female">
-                <label for="female">Female</label>
-              </div>
-              <div>
-                <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
-                <label for="non-binairy">Non-binairy</label>
-              </div>
+
+              <h2 class="c-login__subheader">Do you want to look for other ages?</h2>
+              <label for="minAge">At least:</label>
+              <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
+              <label for="maxAge">But older than:</label>
+              <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
+
+              <h2 class="c-login__subheader">Do you want to change your password?</h2>
+              <label for="npassword">Enter your new password:</label>
+              <input type="password" name="npassword" id="npassword" placeholder="New password">
             </div>
-
-            <h2 class="c-login__subheader">Do you want to look for other ages?</h2>
-            <label for="minAge">At least:</label>
-            <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
-            <label for="maxAge">But older than:</label>
-            <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
-
-            <h2 class="c-login__subheader">Do you want to change your password?</h2>
-            <label for="npassword">Enter your new password:</label>
-            <input type="password" name="npassword" id="npassword" placeholder="New password">
+            <div class="c-login__button-container">
+            <%- include('partials/button', 
+              {
+                classes: "c-login__register-button",
+                type: "secondary", 
+                label: "Logout", 
+                url:"/logout"
+              }  
+            )%>
+                      <%- include('partials/button', 
+              {
+                classes: "c-login__register-button",
+                type: "danger", 
+                label: "Delete account", 
+                url:"/deleteme"
+              }  
+            )%>
+              <button class="c-login__register-button" type="submit">Change</button>
+            </div>
           </div>
-          <div class="c-login__button-container">
-          <%- include('partials/button', 
-            {
-              classes: "c-login__register-button",
-              type: "secondary", 
-              label: "Logout", 
-              url:"/logout"
-            }  
-          )%>
-                    <%- include('partials/button', 
-            {
-              classes: "c-login__register-button",
-              type: "danger", 
-              label: "Delete account", 
-              url:"/deleteme"
-            }  
-          )%>
-            <button class="c-login__register-button" type="submit">Change</button>
-          </div>
-        </div>
-    </form>
-  </main>
-</body>
+      </form>
+    </main>
+  </body>
 
 </html>
