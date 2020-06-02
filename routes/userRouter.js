@@ -98,18 +98,18 @@ router.post('/update', (req, res) => {
 
   if (targetGender != undefined) {
     buildBlock.preferences.targetGender = targetGender;
+  } else {
+    // eslint-disable-next-line max-len
+    buildBlock.preferences.targetGender = req.session.user.preferences.targetGender;
   }
 
   if (minAge != '' && maxAge != '') {
     buildBlock.preferences.minAge = minAge;
     buildBlock.preferences.maxAge = maxAge;
-  };
-
-  if (Object.keys(buildBlock.preferences).length == 0) {
-    delete buildBlock.preferences;
+  } else {
+    buildBlock.preferences.minAge = req.session.user.preferences.minAge;
+    buildBlock.preferences.maxAge = req.session.user.preferences.maxAge;
   }
-
-  console.log(buildBlock);
 
   User.findOneAndUpdate({email: req.session.user.email},
       {$set: buildBlock},
@@ -154,7 +154,7 @@ router.get('/logout', (req, res) => {
 router.get('/deleteme', (req, res) =>{
   User.findOneAndRemove({email: req.session.user.email}, (err) => {
     if (err) {
-      return res.status(500).send(err);
+      return res.status(500).send('couldn\'t connect to the database');
     }
     req.session.destroy();
     return res.redirect('/');
@@ -254,7 +254,7 @@ router.post('/register/:step', (req, res)=>{
       };
       newUser.save((err, user) =>{
         if (err) {
-          return res.status(500).send('user already exists');
+          return res.status(500).send('couldn\'t connect to the database');
         }
         console.log(user);
         req.session.user = user;
@@ -262,7 +262,7 @@ router.post('/register/:step', (req, res)=>{
       });
       break;
     default:
-      res.status(500).send();
+      res.status(500).send('couldn\'t connect to the database');
       break;
   }
 });
