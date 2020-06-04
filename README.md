@@ -1,6 +1,21 @@
 # Welcome to Project Tech's Dating App!
 For Project Tech we were asked to develop a dating app. In this repo you'll find the dating app along with it's documentation in the repo's wiki. 
 
+![](https://raw.githubusercontent.com/sjagoori/project-tech/master/images/icon.png)
+
+## Table of contents
+- [Job story](#job-story)
+- [Feature](#feature)
+- [Setup](#setup)
+- [Troubleshooting](#troubleshooting)
+- [Sources](#sources)
+
+## Job story
+_When I feel the need to make use of a dating app, I want to be able to create an account where I can provide information that describes and defines me along with my preferences, so I can be able to create a personalised profile._
+
+## Feature
+This repo will have a working login and registration system as well as a profile page where the user, once logged in, can update their preferences or delete their account.
+
 ## Setup
 This project has a few dependendcies, make sure you have them installed: 
 * node (includes npm out of the box)
