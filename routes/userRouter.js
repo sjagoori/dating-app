@@ -61,6 +61,21 @@ router.get('/profile', (req, res) => {
 });
 
 /**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/discover', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('discover', {query: req.session.user});
+});
+
+/**
  * Login function, redirects to profile on success.
  * @name post/profile
  * @function

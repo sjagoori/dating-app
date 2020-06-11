@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+  title: "discover",
+  css: "discover"
+})%>
+
+<body>
+    <main class="discover-main">
+        <section class="discover-section">
+            <article>
+                <input class="search-bar" type="text" placeholder="/ remfilter php">
+            </article>
+    
+            <article class="discover-info">
+                <h2>Voornaam Achternaam</h2>
+                <p>Professional Fullstack Developer</p>
+            </article>
+    
+            <article class="discover-language">
+                <article class="language-option">
+                    <p>Languages I know:</p>
+                    <div>
+                        <button>Javascript</button>
+                        <button class="green-btn">Python</button>
+                    </div>
+                </article>
+
+                <article class="language-option">
+                    <p>Languages I am interested in:</p>
+                    <div>
+                        <button class="green-btn">Javascript</button>
+                        <button>Python</button>
+                        <button class="green-btn">.NET</button>
+                    </div>
+                </article>
+            </article>
+
+            <article class="button-container">
+                <button>/ skip</button>
+                <button class="green-btn">/ match</button>
+            </article>    
+        </section>
+    </main>
+</body>
+</html>
