@@ -69,10 +69,76 @@ router.get('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.get('/discover', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/');
-  }
+  // if (!req.session.user) {
+  //   return res.redirect('/');
+  // }
   return res.render('discover', {query: req.session.user});
+});
+
+/**
+ * Function receives input command and checks against commandList. Runs command
+ * if it exists in commandList and command is entered correctly.
+ * @name post/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/discover', (req, res) => {
+  const commandList = {
+    addInterest: {
+      arguments: [
+        {
+          values: ['language', 'skillLevel', 'occupation'],
+        },
+        {
+          dependant: true,
+          values: [
+            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
+            ['amateur', 'intermediate', 'expert'],
+            ['frontend', 'backend', 'fullStack'],
+          ],
+        },
+      ],
+      function: function(args) {
+        console.log('Add Interest: ' + args[0] + '- ' + args[1]);
+      },
+    },
+  };
+  const input = req.body.command.split(' ');
+  const command = input.slice(0, 1);
+  const args = input.slice(1);
+
+  // Check if command exists in commandList
+  if (command in commandList) {
+    // If command exists, check for correct amount of arguments given
+    const chosenCommand = commandList[command];
+    if (args.length === chosenCommand.arguments.length) {
+      // If arguments amount are correct, check for correct argument values
+      let argsCorrect = true;
+      for ([i, argument] of args.entries()) {
+        if (argsCorrect) {
+          let valueList = chosenCommand.arguments[i].values;
+          // If argument is dependent of previous argument value,
+          // get index of value of dependant to choose which value list to check
+          if (chosenCommand.arguments[i].dependant) {
+            valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
+          }
+          if (!valueList.includes(argument)) {
+            console.error('Positional argument ' + i + ' contains invalid value "' + argument + '". Valid values: ' + valueList);
+            argsCorrect = false;
+          }
+        }
+      };
+      // If argument values are correct, run command function.
+      if (argsCorrect) {
+        chosenCommand.function(args);
+      }
+    } else {
+      console.error('Command: "' + command + '" takes ' + chosenCommand.arguments.length + ' arguments. Received: ' + args.length);
+    }
+  } else {
+    console.error('Command: "' + command + '" has not been found or does not exist');
+  }
 });
 
 /**

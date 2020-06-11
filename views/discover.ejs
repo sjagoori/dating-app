@@ -9,15 +9,16 @@
 <body>
     <main class="discover-main">
         <section class="discover-section">
-            <article>
-                <input class="search-bar" type="text" placeholder="/ remfilter php">
-            </article>
-    
+            <form>
+                <input name="command" class="command-bar" type="text" placeholder="/ remfilter php">
+                <button formmethod="post">run</button>
+            </form>
+
             <article class="discover-info">
                 <h2>Voornaam Achternaam</h2>
                 <p>Professional Fullstack Developer</p>
             </article>
-    
+
             <article class="discover-language">
                 <article class="language-option">
                     <p>Languages I know:</p>
@@ -40,7 +41,7 @@
             <article class="button-container">
                 <button>/ skip</button>
                 <button class="green-btn">/ match</button>
-            </article>    
+            </article>
         </section>
     </main>
 </body>
