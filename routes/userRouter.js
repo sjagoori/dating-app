@@ -82,35 +82,31 @@ router.post('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/update', (req, res) => {
-  const targetGender = req.body.targetGender;
+  const languages = req.body.languages;
   const newPassword = req.body.npassword;
-  const minAge = req.body.minAge;
-  const maxAge = req.body.maxAge;
 
   if (!req.session.user) {
     return res.redirect('/');
   }
 
-  const buildBlock = {preferences: {}};
+  const buildBlock = {
+    personal: {skillLevel: req.session.user.personal.skillLevel},
+    preferences: req.session.user.preferences,
+  };
 
   if (newPassword != '') {
     buildBlock.password = bcrypt.hashSync(newPassword, salt);
   }
 
-  if (targetGender != undefined) {
-    buildBlock.preferences.targetGender = targetGender;
+  if (languages != undefined) {
+    buildBlock.personal.languages = languages;
+  } else {
+    buildBlock.personal.languages = req.session.user.personal.languages;
   }
 
-  if (minAge != '' && maxAge != '') {
-    buildBlock.preferences.minAge = minAge;
-    buildBlock.preferences.maxAge = maxAge;
-  };
-
-  if (Object.keys(buildBlock.preferences).length == 0) {
-    delete buildBlock.preferences;
+  if (Object.keys(buildBlock.personal).length == 0) {
+    delete buildBlock.personal;
   }
-
-  console.log(buildBlock);
 
   User.findOneAndUpdate({email: req.session.user.email},
       {$set: buildBlock},

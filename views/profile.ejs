@@ -11,30 +11,36 @@
     <form action="/update" method="post" class="c-login">
         <div class="c-login-container">
           <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
-          <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.age %></span> year old <span class="highlight"><%- query.personal.gender %></span> registered with the mail-adress: <span class="highlight"><%- query.email %></span>.</p>
-          <p class="c-login__subheader">You are looking for a <span class="highlight"><%- query.preferences.targetGender %></span> between the ages <span class="highlight"><%- query.preferences.minAge %></span> and <span class="highlight"><%- query.preferences.maxAge %></span>.</p>
-          <div class="c-login__input-container">
-            <h2 class="c-login__subheader">Do you want to match with a different gender?</h2>
-            <div class="c-login__radio-container">
-              <div>
-                <input type="radio" name="targetGender" value="male" id="male">
-                <label for="male">Male</label>
-              </div>
-              <div>
-                <input type="radio" name="targetGender" value="female" id="female">
-                <label for="female">Female</label>
-              </div>
-              <div>
-                <input type="radio" name="targetGender" value="non-binairy" id="non-binairy">
-                <label for="non-binairy">Non-binairy</label>
-              </div>
-            </div>
+          <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.skillLevel %> <%- query.personal.occupation %></span> developer that writes in
+            <% query.personal.languages.forEach(function(language){ %>
+              <span class="highlight"><%= language %></span>
+            <% }); %>.</p>
 
-            <h2 class="c-login__subheader">Do you want to look for other ages?</h2>
-            <label for="minAge">At least:</label>
-            <input type="text" name="minAge" id="minAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
-            <label for="maxAge">But older than:</label>
-            <input type="text" name="maxAge" id="maxAge" placeholder="Age" pattern="^1[8-9]|^[2-9]\d">
+          <p class="c-login__subheader">You are registered with the email adress <span class="highlight"><%- query.email %></span>.</p>
+          <p class="c-login__subheader">You are currently looking for a <span class="highlight"><%- query.preferences.skillLevel %> <%- query.preferences.occupation %></span> developer that writes in 
+            <% query.preferences.languages.forEach(function(language){ %>
+              <span class="highlight"><%= language %></span>
+            <% }); %>
+          .</p>
+
+          <div class="c-login__input-container">
+            <h2 class="c-login__subheader">Have you learned new languages?</h2>
+            <div class="c-login__radio-container">
+              <input type="checkbox" name="languages" value="Javascript" id="javascript">
+              <label for="javascript">Javascript</label>
+              
+              <input type="checkbox" name="languages" value="Java" id="java">
+              <label for="java">Java</label>
+
+              <input type="checkbox" name="languages" value="C" id="c">
+              <label for="c">C</label>
+
+              <input type="checkbox" name="languages" value="Python"  id="python">
+              <label for="python">Python</label>
+
+              <input type="checkbox" name="languages" value=".NET" id=".NET">
+              <label for=".NET">.NET</label>
+            </div>
 
             <h2 class="c-login__subheader">Do you want to change your password?</h2>
             <label for="npassword">Enter your new password:</label>
