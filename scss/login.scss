@@ -125,11 +125,11 @@ body {
     width: max-content;
   }
 
-  input[type="radio"] {
+  input[type="radio"], input[type="checkbox"] {
     display: none;
   }
-
-  input[type="radio"]:checked+label {
+  
+  input[type="radio"]:checked+label, input[type="checkbox"]:checked+label {
     transition: .3s;
     background-color: $color-off-blue;
     border-color: $color-off-blue;

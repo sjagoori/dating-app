@@ -23,13 +23,14 @@ const userScheme = new Schema({
   email: {type: String, unique: true},
   password: String,
   personal: {
-    age: String,
-    gender: String,
+    skillLevel: String,
+    occupation: String,
+    languages: [],
   },
   preferences: {
-    minAge: String,
-    maxAge: String,
-    targetGender: String,
+    skillLevel: String,
+    occupation: String,
+    languages: [],
   },
 });
 

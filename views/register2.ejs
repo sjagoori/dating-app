@@ -6,79 +6,82 @@
   css: "login"
 })%>
 
-<body>
-  <main>
-    <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
-      <div class="c-login-container">
-      <% if (query) { %>
-        <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
-      <% } %>
+  <body>
+    <main>
+      <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+        <div class="c-login-container">
+        <% if (query) { %>
+          <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
+        <% } %>
 
-        <div class="c-login__input-container">
-          
-          <h2 class="c-login__subheader">Set a profile picture</h2>
-          <label for="profilepicture">Upload</label>
-          <input type="file" accept=".png,.jpg,.jpeg" name="profilepicture" id="profilepicture" alt="profilepicture">
+          <div class="c-login__input-container">
 
-          <label class="c-login__subheader" for="age">How old are you?</label>
-          <input type="text" name="age" id="age" pattern="^1[8-9]|^[2-9]\d" required>
+            <h2 class="c-login__subheader">What skill level?</h2>
+            <div class="c-login__radio-container">
+              <div>
+                <input type="radio" name="skillLevel" value="amateur" id="amateur">
+                <label for="amateur">Amateur</label>
+              </div>
+              <div>
+                <input type="radio" name="skillLevel" value="intermediate" id="intermediate">
+                <label for="intermediate">Intermediate</label>
+              </div>
+              <div>
+                <input type="radio" name="skillLevel" value="expert" id="expert">
+                <label for="expert">Expert</label>
+              </div>
+            </div>
 
-          <h2 class="c-login__subheader">What do you identify as?</h2>
-          <div class="c-login__radio-container" require>
-            <div>
-              <input type="radio" name="gender" value="male" id="male">
-              <label for="male">Male</label>
+            <h2 class="c-login__subheader">What is your occupation?</h2>
+            <div class="c-login__radio-container">
+              <div>
+                <input type="radio" name="occupation" value="frontend" id="frontend">
+                <label for="frontend">Front-end</label>
+              </div>
+              <div>
+                <input type="radio" name="occupation" value="backend" id="backend">
+                <label for="backend">Back-end</label>
+              </div>
+              <div>
+                <input type="radio" name="occupation" value="full-stack" id="full-stack">
+                <label for="full-stack">Full-stack</label>
+              </div>
             </div>
-            <div>
-              <input type="radio" name="gender" value="female" id="female">
-              <label for="female">Female</label>
+
+
+            <h2 class="c-login__subheader">What are your favorite languages?</h2>
+            <div class="c-login__radio-container">
+              <input type="checkbox" name="languages" value="javascript" id="javascript">
+              <label for="javascript">Javascript</label>
+              
+              <input type="checkbox" name="languages" value="java" id="java">
+              <label for="java">Java</label>
+
+              <input type="checkbox" name="languages" value="c" id="c">
+              <label for="c">C</label>
+
+              <input type="checkbox" name="languages"value="python"  id="python">
+              <label for="python">Python</label>
+
+              <input type="checkbox" name="languages" value=".NET" id=".NET">
+              <label for=".NET">.NET</label>
             </div>
-            <div>
-              <input type="radio" name="gender" value="non binary" id="non-binary">
-              <label for="non-binary">Non binary</label>
-            </div>
+
+          </div>
+          <div class="c-login__button-container">
+            <%- include('partials/button', 
+              {
+                classes: "c-login__login-button",
+                type: "secondary", 
+                label: "back", 
+                url:"/register/1"
+              }  
+            )%>
+            <button type="submit">Next</button>
           </div>
         </div>
-        <div class="c-login__button-container">
-          <%- include('partials/button', 
-            {
-              classes: "c-login__login-button",
-              type: "secondary", 
-              label: "back", 
-              url:"/register/1"
-            }  
-          )%>
-          <button type="submit">Next</button>
-        </div>
-      </div>
-    </form>
-  </main>
+      </form>
+    </main>
 
-</body>
-  <script>
-    let fileUpload = document.getElementById("profilepicture");
-
-    fileUpload.addEventListener('change', e => {
-      fileUpload.previousElementSibling.style.transition = ".3s"
-      fileUpload.previousElementSibling.style.backgroundColor = "#008000"
-    })
-
-    navigator.geolocation.getCurrentPosition((position, err) =>{
-      let latitude = document.createElement("input");
-      let longitude = document.createElement("input");
-      let form = document.forms["registerForm"];
-
-      latitude.setAttribute('type', 'hidden')
-      latitude.setAttribute('name', 'latitude')
-      latitude.value = position.coords.latitude
-      
-      longitude.setAttribute('type', 'hidden')
-      longitude.setAttribute('name', 'longitude')
-      longitude.value = position.coords.longitude
-
-      form.appendChild(latitude)
-      form.appendChild(longitude)
-    });
-  </script>
-
+  </body>
 </html>
