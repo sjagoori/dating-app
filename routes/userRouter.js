@@ -12,6 +12,7 @@
  * @source https://expressjs.com/en/api.html
  */
 const express = require('express');
+// eslint-disable-next-line new-cap
 const router = express.Router();
 
 /**
@@ -191,33 +192,30 @@ router.post('/profile', (req, res) => {
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
 router.post('/update', (req, res) => {
-  const targetGender = req.body.targetGender;
+  const languages = req.body.languages;
   const newPassword = req.body.npassword;
-  const minAge = req.body.minAge;
-  const maxAge = req.body.maxAge;
-  const buildBlock = {preferences: {}};
 
   if (!req.session.user) {
     return res.redirect('/');
   }
 
+  const buildBlock = {
+    personal: {skillLevel: req.session.user.personal.skillLevel},
+    preferences: req.session.user.preferences,
+  };
+
   if (newPassword != '') {
     buildBlock.password = bcrypt.hashSync(newPassword, salt);
   }
 
-  if (targetGender != undefined) {
-    buildBlock.preferences.targetGender = targetGender;
+  if (languages != undefined) {
+    buildBlock.personal.languages = languages;
   } else {
-    // eslint-disable-next-line max-len
-    buildBlock.preferences.targetGender = req.session.user.preferences.targetGender;
+    buildBlock.personal.languages = req.session.user.personal.languages;
   }
 
-  if (minAge != '' && maxAge != '') {
-    buildBlock.preferences.minAge = minAge;
-    buildBlock.preferences.maxAge = maxAge;
-  } else {
-    buildBlock.preferences.minAge = req.session.user.preferences.minAge;
-    buildBlock.preferences.maxAge = req.session.user.preferences.maxAge;
+  if (Object.keys(buildBlock.personal).length == 0) {
+    delete buildBlock.personal;
   }
 
   User.findOneAndUpdate({email: req.session.user.email},
@@ -315,6 +313,7 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '3':
       req.session.register.personal = JSON.parse(JSON.stringify(req.body));
+      console.log('body stap 3', req.session.register);
       res.render('register3');
       break;
     case '4':
@@ -324,13 +323,12 @@ router.post('/register/:step', (req, res)=>{
       const lastName = req.session.register.lname;
       const email = req.session.register.email;
       const password = bcrypt.hashSync(req.session.register.password, salt);
-      const age = req.session.register.personal.age;
-      const gender = req.session.register.personal.gender;
-      const latitude = req.session.register.personal.latitude;
-      const longitude = req.session.register.personal.longitude;
-      const targetGender = req.session.register.preferences.targetGender;
-      const minAge = req.session.register.preferences.minAge;
-      const maxAge = req.session.register.preferences.maxAge;
+      const skillLevel = req.session.register.personal.skillLevel;
+      const occupation = req.session.register.personal.occupation;
+      const languages = req.session.register.personal.languages;
+      const tskillLevel = req.session.register.preferences.skillLevel;
+      const toccupation = req.session.register.preferences.occupation;
+      const tlanguages = req.session.register.preferences.languages;
 
       const newUser = new User();
       newUser.firstName = firstName;
@@ -338,16 +336,16 @@ router.post('/register/:step', (req, res)=>{
       newUser.email = email;
       newUser.password = password;
       newUser.personal = {
-        latitude: latitude,
-        longitude: longitude,
-        age: age,
-        gender: gender,
+        skillLevel: skillLevel,
+        occupation: occupation,
+        languages: languages,
       };
       newUser.preferences = {
-        minAge: minAge,
-        maxAge: maxAge,
-        targetGender: targetGender,
+        skillLevel: tskillLevel,
+        occupation: toccupation,
+        languages: tlanguages,
       };
+
       newUser.save((err, user) =>{
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
