@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('partials/head', {
-  title: "Profile",
-  css: "login"
-})%>
+  <%- include('partials/head', {
+    title: "Profile",
+    css: "login"
+  })%>
 
 <body>
   <main>
@@ -17,7 +17,7 @@
             <% }); %>.</p>
 
           <p class="c-login__subheader">You are registered with the email adress <span class="highlight"><%- query.email %></span>.</p>
-          <p class="c-login__subheader">You are currently looking for a <span class="highlight"><%- query.preferences.skillLevel %> <%- query.preferences.occupation %></span> developer that writes in 
+          <p class="c-login__subheader">You are currently looking for a <span class="highlight"><%- query.preferences.skillLevel %> <%- query.preferences.occupation %></span> developer that writes in
             <% query.preferences.languages.forEach(function(language){ %>
               <span class="highlight"><%= language %></span>
             <% }); %>
@@ -28,7 +28,7 @@
             <div class="c-login__radio-container">
               <input type="checkbox" name="languages" value="Javascript" id="javascript">
               <label for="javascript">Javascript</label>
-              
+
               <input type="checkbox" name="languages" value="Java" id="java">
               <label for="java">Java</label>
 
@@ -42,32 +42,32 @@
               <label for=".NET">.NET</label>
             </div>
 
-            <h2 class="c-login__subheader">Do you want to change your password?</h2>
-            <label for="npassword">Enter your new password:</label>
-            <input type="password" name="npassword" id="npassword" placeholder="New password">
+              <h2 class="c-login__subheader">Do you want to change your password?</h2>
+              <label for="npassword">Enter your new password:</label>
+              <input type="password" name="npassword" id="npassword" placeholder="New password">
+            </div>
+            <div class="c-login__button-container">
+            <%- include('partials/button',
+              {
+                classes: "c-login__register-button",
+                type: "secondary",
+                label: "Logout",
+                url:"/logout"
+              }
+            )%>
+                      <%- include('partials/button',
+              {
+                classes: "c-login__register-button",
+                type: "danger",
+                label: "Delete account",
+                url:"/deleteme"
+              }
+            )%>
+              <button class="c-login__register-button" type="submit">Change</button>
+            </div>
           </div>
-          <div class="c-login__button-container">
-          <%- include('partials/button', 
-            {
-              classes: "c-login__register-button",
-              type: "secondary", 
-              label: "Logout", 
-              url:"/logout"
-            }  
-          )%>
-                    <%- include('partials/button', 
-            {
-              classes: "c-login__register-button",
-              type: "danger", 
-              label: "Delete account", 
-              url:"/deleteme"
-            }  
-          )%>
-            <button class="c-login__register-button" type="submit">Change</button>
-          </div>
-        </div>
-    </form>
-  </main>
-</body>
+      </form>
+    </main>
+  </body>
 
 </html>

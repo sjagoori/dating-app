@@ -16,6 +16,7 @@ const Schema = mongoose.Schema;
  * @name userScheme
  * @function
  * @returns {User}
+ * @source https://mongoosejs.com/docs/models.html
  */
 const userScheme = new Schema({
   firstName: String,

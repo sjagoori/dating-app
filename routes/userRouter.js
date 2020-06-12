@@ -1,4 +1,5 @@
-/** Express router providing user related routes
+/**
+ * Express router providing user related routes
  * @module router/userRouter
  * @requires express
  * @requires User
@@ -8,6 +9,7 @@
 /**
  * Express module
  * @const
+ * @source https://expressjs.com/en/api.html
  */
 const express = require('express');
 // eslint-disable-next-line new-cap
@@ -17,14 +19,19 @@ const router = express.Router();
  * User module
  * @const
  */
-const User = require('../models/user.js');
+const User = require('../models/User.js');
 
 /**
  * Bcrypt module
  * @const
+ * @source https://github.com/kelektiv/node.bcrypt.js
  */
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
+
+/**
+ * Data file strictly used for testing.
+ */
 const data = require('../data/data.json');
 
 /**
@@ -40,15 +47,115 @@ router.get('/express', (req, res) => {
 });
 
 /**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/profile
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/profile', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('profile', {query: req.session.user});
+});
+
+/**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/discover', (req, res) => {
+  // if (!req.session.user) {
+  //   return res.redirect('/');
+  // }
+  return res.render('discover', {query: req.session.user});
+});
+
+/**
+ * Function receives input command and checks against commandList. Runs command
+ * if it exists in commandList and command is entered correctly.
+ * @name post/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/discover', (req, res) => {
+  const commandList = {
+    addInterest: {
+      arguments: [
+        {
+          values: ['language', 'skillLevel', 'occupation'],
+        },
+        {
+          dependant: true,
+          values: [
+            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
+            ['amateur', 'intermediate', 'expert'],
+            ['frontend', 'backend', 'fullStack'],
+          ],
+        },
+      ],
+      function: function(args) {
+        console.log('Add Interest: ' + args[0] + '- ' + args[1]);
+      },
+    },
+  };
+  const input = req.body.command.split(' ');
+  const command = input.slice(0, 1);
+  const args = input.slice(1);
+
+  // Check if command exists in commandList
+  if (command in commandList) {
+    // If command exists, check for correct amount of arguments given
+    const chosenCommand = commandList[command];
+    if (args.length === chosenCommand.arguments.length) {
+      // If arguments amount are correct, check for correct argument values
+      let argsCorrect = true;
+      for ([i, argument] of args.entries()) {
+        if (argsCorrect) {
+          let valueList = chosenCommand.arguments[i].values;
+          // If argument is dependent of previous argument value,
+          // get index of value of dependant to choose which value list to check
+          if (chosenCommand.arguments[i].dependant) {
+            valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
+          }
+          if (!valueList.includes(argument)) {
+            console.error('Positional argument ' + i + ' contains invalid value "' + argument + '". Valid values: ' + valueList);
+            argsCorrect = false;
+          }
+        }
+      };
+      // If argument values are correct, run command function.
+      if (argsCorrect) {
+        chosenCommand.function(args);
+      }
+    } else {
+      console.error('Command: "' + command + '" takes ' + chosenCommand.arguments.length + ' arguments. Received: ' + args.length);
+    }
+  } else {
+    console.error('Command: "' + command + '" has not been found or does not exist');
+  }
+});
+
+/**
  * Login function, redirects to profile on success.
  * @name post/profile
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html
+ * @source https://expressjs.com/en/api.html#res.redirect
+ * @source https://github.com/kelektiv/node.bcrypt.js#to-check-a-password
  */
 router.post('/profile', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+
   User.findOne(
       {
         email: email,
@@ -80,6 +187,9 @@ router.post('/profile', (req, res) => {
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOneAndUpdate
+ * @source https://expressjs.com/en/api.html#res.redirect
+ * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
 router.post('/update', (req, res) => {
   const languages = req.body.languages;
@@ -121,37 +231,31 @@ router.post('/update', (req, res) => {
 });
 
 /**
- * Function renders profile from session data,
- * redirects to homepage if not logged in.
- * @name get/profile
- * @function
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.get('/profile', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/');
-  }
-  return res.render('profile', {query: req.session.user});
-});
-
-/**
  * Function logs user out; destorys session.
  * @name get/logout
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://github.com/expressjs/session#sessiondestroycallback
  */
 router.get('/logout', (req, res) => {
   req.session.destroy();
   return res.render('homepage');
 });
 
+/**
+ * Function deletes user-data and logs user out.
+ * @name get/deletme
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOneAndRemove
+ * @source https://github.com/expressjs/session#sessiondestroycallback
+ */
 router.get('/deleteme', (req, res) =>{
   User.findOneAndRemove({email: req.session.user.email}, (err) => {
     if (err) {
-      return res.status(500).send(err);
+      return res.status(500).send('couldn\'t connect to the database');
     }
     req.session.destroy();
     return res.redirect('/');
@@ -159,26 +263,15 @@ router.get('/deleteme', (req, res) =>{
 });
 
 /**
- * Function redirects user to @see {@link get/profile}.
- * @name get/homepage
+ * Function renders register page.
+ * @name get/register
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
  */
-router.get('/', (req, res) => {
-  if (req.session.user) {
-    return res.render('profile', {query: req.session.user});
-  }
-  return res.render('homepage');
-});
-
-router.get('/register', (req, res) => {
-  return res.render('register');
-});
-
 router.get('/register/:step', (req, res) => {
   const step = req.params.step;
+
   switch (step) {
     case '1':
       return res.render('register');
@@ -195,9 +288,11 @@ router.get('/register/:step', (req, res) => {
  * Function registers user.
  * @name post/register
  * @function
- * @param {string} path - Express path
+ * @param {string} path - Express param path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model.findOne
+ * @source https://mongoosejs.com/docs/api/model.html#model_Model-save
+ * @source https://expressjs.com/en/api.html#res.redirect
  */
 router.post('/register/:step', (req, res)=>{
   const step = req.params.step;
@@ -223,7 +318,6 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '4':
       req.session.register.preferences = JSON.parse(JSON.stringify(req.body));
-      console.log(req.session.register);
 
       const firstName = req.session.register.fname;
       const lastName = req.session.register.lname;
@@ -254,17 +348,30 @@ router.post('/register/:step', (req, res)=>{
 
       newUser.save((err, user) =>{
         if (err) {
-          return res.status(500).send('user already exists');
+          return res.status(500).send('couldn\'t connect to the database');
         }
-        console.log(user);
         req.session.user = user;
         res.redirect('/');
       });
       break;
     default:
-      res.status(500).send();
+      res.status(500).send('couldn\'t connect to the database');
       break;
   }
+});
+
+/**
+ * Function redirects user to @see {@link get/profile}.
+ * @name get/homepage
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/', (req, res) => {
+  if (req.session.user) {
+    return res.render('profile', {query: req.session.user});
+  }
+  return res.render('homepage');
 });
 
 /**
@@ -273,7 +380,7 @@ router.post('/register/:step', (req, res)=>{
  * @function
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
- *
+ * @source https://expressjs.com/en/api.html#res.redirect
  */
 router.get('*', (req, res) => {
   return res.redirect('/');

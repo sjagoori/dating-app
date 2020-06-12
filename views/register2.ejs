@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('partials/head', {
-  title: "Register",
-  css: "login"
-})%>
+  <%- include('partials/head', {
+    title: "Register",
+    css: "login"
+  })%>
 
   <body>
     <main>
@@ -53,7 +53,7 @@
             <div class="c-login__radio-container">
               <input type="checkbox" name="languages" value="javascript" id="javascript">
               <label for="javascript">Javascript</label>
-              
+
               <input type="checkbox" name="languages" value="java" id="java">
               <label for="java">Java</label>
 
@@ -69,13 +69,13 @@
 
           </div>
           <div class="c-login__button-container">
-            <%- include('partials/button', 
+            <%- include('partials/button',
               {
                 classes: "c-login__login-button",
-                type: "secondary", 
-                label: "back", 
+                type: "secondary",
+                label: "back",
                 url:"/register/1"
-              }  
+              }
             )%>
             <button type="submit">Next</button>
           </div>
