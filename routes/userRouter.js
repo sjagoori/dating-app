@@ -35,6 +35,11 @@ const salt = bcrypt.genSaltSync(10);
 const data = require('../data/data.json');
 
 /**
+ * CommandList containing all available CLI commands
+ */
+const commands = require('../public/commandList.js');
+
+/**
  * Test env. Keep in project.
  * @name get/express
  * @function
@@ -85,26 +90,7 @@ router.get('/discover', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/discover', (req, res) => {
-  const commandList = {
-    addInterest: {
-      arguments: [
-        {
-          values: ['language', 'skillLevel', 'occupation'],
-        },
-        {
-          dependant: true,
-          values: [
-            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
-            ['amateur', 'intermediate', 'expert'],
-            ['frontend', 'backend', 'fullStack'],
-          ],
-        },
-      ],
-      function: function(args) {
-        console.log('Add Interest: ' + args[0] + '- ' + args[1]);
-      },
-    },
-  };
+  const commandList = commands.getCommandList();
   const input = req.body.command.split(' ');
   const command = input.slice(0, 1);
   const args = input.slice(1);
@@ -132,7 +118,7 @@ router.post('/discover', (req, res) => {
       };
       // If argument values are correct, run command function.
       if (argsCorrect) {
-        chosenCommand.function(args);
+        chosenCommand.function(req, res, args);
       }
     } else {
       console.error('Command: "' + command + '" takes ' + chosenCommand.arguments.length + ' arguments. Received: ' + args.length);
