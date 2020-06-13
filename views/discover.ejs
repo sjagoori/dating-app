@@ -9,10 +9,15 @@
 <body>
     <main class="discover-main">
         <section class="discover-section">
-            <form>
-                <input name="command" class="command-bar" type="text" placeholder="/ remfilter php">
+            <form autocomplete="off">
+                <label for="command">/</label>
+                <input autocomplete="off" name="command" class="command-bar" type="text" placeholder="command">
                 <button formmethod="post">run</button>
             </form>
+
+            <% if (errorMessage) { %>
+              <p class="error"> <%= errorMessage %> </p>
+            <% } %>
 
             <article class="discover-info">
                 <h2>Voornaam Achternaam</h2>
