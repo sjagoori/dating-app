@@ -9,11 +9,9 @@
 <body>
     <main class="discover-main">
         <section class="discover-section">
-            <form autocomplete="off">
-                <label for="command">/</label>
-                <input autocomplete="off" name="command" class="command-bar" type="text" placeholder="command">
-                <button formmethod="post">run</button>
-            </form>
+            <script src="commandList.js"></script>
+            <script src="commandAutoComplete.js"></script>
+
 
             <% if (message) {
               if (message.type === 'success') { %>
@@ -21,6 +19,15 @@
             <% } else { %>
                 <p class="error"> <%= message.message %> </p>
             <% }} %>
+            <form autocomplete="off">
+                <label for="command-input">/</label>
+                <input autocomplete="off" name="command" id="command-input" class="command-bar" type="text" placeholder="command" oninput=showCommandList() onfocus=showCommandList() onblur=hideCommandList()>
+                <button formmethod="post">run</button>
+            </form>
+            <label for="command-input"><ol id="auto-complete"></ol></label>
+            <noscript>
+              JavaScript is disabled > implement something that works without js.
+            </noscript>
 
             <article class="discover-info">
                 <h2>Voornaam Achternaam</h2>
@@ -52,9 +59,5 @@
             </article>
         </section>
     </main>
-    <script src="commandList.js"></script>
-    <script>
-      console.log(getCommandList());
-    </script>
 </body>
 </html>

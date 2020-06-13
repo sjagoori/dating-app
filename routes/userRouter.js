@@ -110,7 +110,7 @@ router.post('/discover', (req, res) => {
           valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
         }
         if (!valueList.includes(argument)) {
-          error = `Positional argument: ${i + 1} contains invalid value "${argument}". Valid values: ${valueList}`;
+          error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
           res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
         }
       };
@@ -217,7 +217,7 @@ router.post('/update', (req, res) => {
 });
 
 /**
- * Function logs user out; destorys session.
+ * Function logs user out; destroys session.
  * @name get/logout
  * @function
  * @param {string} path - Express path
