@@ -4,7 +4,7 @@
  */
 function showCommandList() {
   const input = document.getElementById('command-input');
-  const inputValue = input.value
+  const inputValue = input.value;
   const commandList = getCommandList();
   const listElement = document.getElementById('auto-complete');
   listElement.innerHTML = '';
@@ -21,21 +21,24 @@ function showCommandList() {
    */
   function addListItem(key, value) {
     listItem = document.createElement('li');
-    listItem.innerHTML = '/' + key;
+    let commandPrototype = key;
+    for (argument of value.arguments) {
+      commandPrototype += ' {' + argument.label + '}';
+    }
+    listItem.innerHTML = '/' + commandPrototype;
     listItem.id = key;
+    listItem.onmousedown = setValue;
     listElement.appendChild(listItem);
-    document.getElementById(key).onmousedown = setValue;
     /**
      * Sets own value to input box
      * @function
      */
     function setValue() {
-      let newValue = key;
-      for (argument of value.arguments) {
-        newValue += ' <' + argument.label + '>';
-      }
-      input.value = newValue;
-      showCommandList();
+      input.value = key + ' ';
+      // Won't work without timeout
+      window.setTimeout(function() {
+        input.focus();
+      }, 0);
     }
   }
 }
