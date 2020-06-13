@@ -20,6 +20,9 @@ const getCommandList = function() {
       function: function(req, res, args) {
         console.log('Add Interest: ' + args[0] + ' - ' + args[1]);
       },
+      success: function(args) {
+        return `Succesfully added ${args[0]} interest: ${args[1]}`;
+      },
     },
   };
 };

@@ -15,9 +15,12 @@
                 <button formmethod="post">run</button>
             </form>
 
-            <% if (errorMessage) { %>
-              <p class="error"> <%= errorMessage %> </p>
-            <% } %>
+            <% if (message) {
+              if (message.type === 'success') { %>
+                <p class="succes"> <%= message.message %> </p>
+            <% } else { %>
+                <p class="error"> <%= message.message %> </p>
+            <% }} %>
 
             <article class="discover-info">
                 <h2>Voornaam Achternaam</h2>

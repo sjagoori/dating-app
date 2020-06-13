@@ -78,7 +78,7 @@ router.get('/discover', (req, res) => {
   // if (!req.session.user) {
   //   return res.redirect('/');
   // }
-  return res.render('discover', {query: req.session.user, errorMessage: ''});
+  return res.render('discover', {query: req.session.user, message: {}});
 });
 
 /**
@@ -103,28 +103,28 @@ router.post('/discover', (req, res) => {
     if (args.length === chosenCommand.arguments.length) {
       // If arguments amount are correct, check for correct argument values
       for ([i, argument] of args.entries()) {
-        if (argsCorrect) {
-          let valueList = chosenCommand.arguments[i].values;
-          // If argument is dependent of previous argument value,
-          // get index of value of dependant to choose which value list to check
-          if (chosenCommand.arguments[i].dependant) {
-            valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
-          }
-          if (!valueList.includes(argument)) {
-            error = `Positional argument: ${i + 1} contains invalid value "${argument}". Valid values: ${valueList}`;
-            res.render('discover', {query: req.session.user, errorMessage: error});
-          }
+        let valueList = chosenCommand.arguments[i].values;
+        // If argument is dependent of previous argument value,
+        // get index of value of dependant to choose which value list to check
+        if (chosenCommand.arguments[i].dependant) {
+          valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
+        }
+        if (!valueList.includes(argument)) {
+          error = `Positional argument: ${i + 1} contains invalid value "${argument}". Valid values: ${valueList}`;
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
         }
       };
       // If argument values are correct, run command function.
+      const success = chosenCommand.success(args);
+      res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
       chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
-      res.render('discover', {query: req.session.user, errorMessage: error});
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
     }
   } else {
     error = `Command: "${command}" has not been found or does not exist`;
-    res.render('discover', {query: req.session.user, errorMessage: error});
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
   }
 });
 
