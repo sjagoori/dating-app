@@ -92,7 +92,7 @@ router.get('/discover', (req, res) => {
 router.post('/discover', (req, res) => {
   const commandList = commands.getCommandList();
   const input = req.body.command.split(' ');
-  const command = input.slice(0, 1);
+  const command = input.slice(0, 1)[0];
   const args = input.slice(1);
   let error;
 
@@ -116,7 +116,9 @@ router.post('/discover', (req, res) => {
       };
       // If argument values are correct, run command function.
       const success = chosenCommand.success(args);
-      res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
+      if (command !== 'cd') {
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
+      }
       chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
