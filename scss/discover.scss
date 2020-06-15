@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .discover-main {
@@ -15,8 +16,10 @@
     p {
         color: #fff;
         padding: 0.3rem 0;
-        font-family: 'Roboto Mono', monospace;
         font-size: 0.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
     }
 
     button {
@@ -29,6 +32,53 @@
 
     .green-btn {
         background-color: #00FF00;
+    }
+
+    .error {
+        color: #FF0000;
+    }
+
+    form {
+        display: flex;
+        flex-direction: row;
+        background-color: #fff;
+        color: #222424;
+        align-items: baseline;
+        *, *:focus {
+            border: none;
+            outline: none;
+            font-size: 0.8rem;
+        }
+        label {
+            padding-left: 0.5rem;
+            color: #2F2F2F;
+        }
+        input {
+            padding-left: 0px;
+        }
+        button {
+            margin: 0px;
+            border-radius: 0px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darken(#DADADA, 10%)
+        }
+    }
+}
+
+#auto-complete {
+    background-color: #fff;
+    font-size: 0.8rem;
+    list-style: none;
+    position: absolute;
+    li {
+        padding: 0.5rem;
+        border-bottom: 1px solid #DADADA;
+        cursor: pointer;
+    }
+    li:hover {
+        background-color: darken(#fff, 10%)
     }
 }
 

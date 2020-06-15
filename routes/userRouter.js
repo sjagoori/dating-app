@@ -35,6 +35,11 @@ const salt = bcrypt.genSaltSync(10);
 const data = require('../data/data.json');
 
 /**
+ * CommandList containing all available CLI commands
+ */
+const commands = require('../public/commandList.js');
+
+/**
  * Test env. Keep in project.
  * @name get/express
  * @function
@@ -73,7 +78,7 @@ router.get('/discover', (req, res) => {
   // if (!req.session.user) {
   //   return res.redirect('/');
   // }
-  return res.render('discover', {query: req.session.user});
+  return res.render('discover', {query: req.session.user, message: {}});
 });
 
 /**
@@ -85,29 +90,11 @@ router.get('/discover', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.post('/discover', (req, res) => {
-  const commandList = {
-    addInterest: {
-      arguments: [
-        {
-          values: ['language', 'skillLevel', 'occupation'],
-        },
-        {
-          dependant: true,
-          values: [
-            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
-            ['amateur', 'intermediate', 'expert'],
-            ['frontend', 'backend', 'fullStack'],
-          ],
-        },
-      ],
-      function: function(args) {
-        console.log('Add Interest: ' + args[0] + '- ' + args[1]);
-      },
-    },
-  };
+  const commandList = commands.getCommandList();
   const input = req.body.command.split(' ');
-  const command = input.slice(0, 1);
+  const command = input.slice(0, 1)[0];
   const args = input.slice(1);
+  let error;
 
   // Check if command exists in commandList
   if (command in commandList) {
@@ -115,30 +102,31 @@ router.post('/discover', (req, res) => {
     const chosenCommand = commandList[command];
     if (args.length === chosenCommand.arguments.length) {
       // If arguments amount are correct, check for correct argument values
-      let argsCorrect = true;
       for ([i, argument] of args.entries()) {
-        if (argsCorrect) {
-          let valueList = chosenCommand.arguments[i].values;
-          // If argument is dependent of previous argument value,
-          // get index of value of dependant to choose which value list to check
-          if (chosenCommand.arguments[i].dependant) {
-            valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
-          }
-          if (!valueList.includes(argument)) {
-            console.error('Positional argument ' + i + ' contains invalid value "' + argument + '". Valid values: ' + valueList);
-            argsCorrect = false;
-          }
+        let valueList = chosenCommand.arguments[i].values;
+        // If argument is dependent of previous argument value,
+        // get index of value of dependant to choose which value list to check
+        if (chosenCommand.arguments[i].dependant) {
+          valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
+        }
+        if (!valueList.includes(argument)) {
+          error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
         }
       };
       // If argument values are correct, run command function.
-      if (argsCorrect) {
-        chosenCommand.function(args);
+      const success = chosenCommand.success(args);
+      if (command !== 'cd') {
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
       }
+      chosenCommand.function(req, res, args);
     } else {
-      console.error('Command: "' + command + '" takes ' + chosenCommand.arguments.length + ' arguments. Received: ' + args.length);
+      error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
     }
   } else {
-    console.error('Command: "' + command + '" has not been found or does not exist');
+    error = `Command: "${command}" has not been found or does not exist`;
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
   }
 });
 
@@ -231,7 +219,7 @@ router.post('/update', (req, res) => {
 });
 
 /**
- * Function logs user out; destorys session.
+ * Function logs user out; destroys session.
  * @name get/logout
  * @function
  * @param {string} path - Express path
