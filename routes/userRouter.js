@@ -4,6 +4,7 @@
  * @requires express
  * @requires User
  * @requires bcrypt
+ * @requires axios
  */
 
 /**
@@ -14,6 +15,13 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
+
+/**
+ * Axios module
+ * @const
+ * @source https://github.com/axios/axios
+ */
+const axios = require('axios');
 
 /**
  * User module
@@ -355,8 +363,13 @@ router.post('/register/:step', (req, res)=>{
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   if (req.session.user) {
+    await axios.get('http://quotes.stormconsultancy.co.uk/random.json').then((response) => {
+      req.session.user.quote = response.data.quote;
+      req.session.user.author = response.data.author;
+      req.session.user.permalink = response.data.permalink;
+    });
     return res.render('profile', {query: req.session.user});
   }
   return res.render('homepage');
@@ -373,6 +386,5 @@ router.get('/', (req, res) => {
 router.get('*', (req, res) => {
   return res.redirect('/');
 });
-
 
 module.exports = router;

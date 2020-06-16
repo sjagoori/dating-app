@@ -25,11 +25,12 @@
     "mongoose": "^5.9.14"
   },
   "devDependencies": {
+    "axios": "^0.19.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.20.2",
-    "nodemon": "^2.0.4",
-    "node-sass": "^4.14.1"
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4"
   }
 }
