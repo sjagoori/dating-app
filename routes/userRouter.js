@@ -4,6 +4,7 @@
  * @requires express
  * @requires User
  * @requires bcrypt
+ * @requires axios
  */
 
 /**
@@ -12,7 +13,23 @@
  * @source https://expressjs.com/en/api.html
  */
 const express = require('express');
+// eslint-disable-next-line new-cap
 const router = express.Router();
+
+/**
+ * Axios module
+ * @const
+ * @source https://github.com/axios/axios
+ */
+const axios = require('axios');
+
+/**
+ * Helmet module
+ * @const
+ * @source https://www.npmjs.com/package/helmet
+ */
+const helmet = require('helmet');
+router.use(helmet());
 
 /**
  * User module
@@ -32,6 +49,11 @@ const salt = bcrypt.genSaltSync(10);
  * Data file strictly used for testing.
  */
 const data = require('../data/data.json');
+
+/**
+ * CommandList containing all available CLI commands
+ */
+const commands = require('../public/commandList.js');
 
 /**
  * Test env. Keep in project.
@@ -58,6 +80,95 @@ router.get('/profile', (req, res) => {
     return res.redirect('/');
   }
   return res.render('profile', {query: req.session.user});
+});
+
+/**
+ * Function renders discover page,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/discover', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  const commandList = commands.getCommandList();
+  const commandPrototypeList = [];
+  for (command of Object.entries(commandList)) {
+    let commandPrototype = command[0];
+    for (argument of command[1]['arguments']) {
+      commandPrototype += ` {${argument.label}}`;
+    }
+    commandPrototypeList.push(commandPrototype);
+  }
+  console.log(commandPrototypeList);
+  return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
+});
+
+/**
+ * Function renders preferences page,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/preferences', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('preferences', {query: req.session.user});
+});
+
+/**
+ * Function receives input command and checks against commandList. Runs command
+ * if it exists in commandList and command is entered correctly.
+ * @name post/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/discover', (req, res) => {
+  const commandList = commands.getCommandList();
+  const input = req.body.command.split(' ');
+  const command = input.slice(0, 1)[0];
+  const args = input.slice(1);
+  let error;
+
+  // Check if command exists in commandList
+  if (command in commandList) {
+    // If command exists, check for correct amount of arguments given
+    const chosenCommand = commandList[command];
+    if (args.length === chosenCommand.arguments.length) {
+      // If arguments amount are correct, check for correct argument values
+      for ([i, argument] of args.entries()) {
+        let valueList = chosenCommand.arguments[i].values;
+        // If argument is dependent of previous argument value,
+        // get index of value of dependant to choose which value list to check
+        if (chosenCommand.arguments[i].dependant) {
+          valueList = valueList[chosenCommand.arguments[i-1].values.indexOf(args[i-1])];
+        }
+        if (!valueList.includes(argument)) {
+          error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+        }
+      };
+      // If argument values are correct, run command function.
+      const success = chosenCommand.success(args);
+      if (command !== 'cd') {
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
+      }
+      chosenCommand.function(req, res, args);
+    } else {
+      error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+    }
+  } else {
+    error = `Command: "${command}" has not been found or does not exist`;
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+  }
 });
 
 /**
@@ -110,33 +221,44 @@ router.post('/profile', (req, res) => {
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
 router.post('/update', (req, res) => {
-  const targetGender = req.body.targetGender;
+  const languages = req.body.languages;
   const newPassword = req.body.npassword;
-  const minAge = req.body.minAge;
-  const maxAge = req.body.maxAge;
-  const buildBlock = {preferences: {}};
+  const skill = req.body.skill;
+  const occupation = req.body.occupation;
 
   if (!req.session.user) {
     return res.redirect('/');
   }
 
+  const buildBlock = {
+    personal: {skillLevel: req.session.user.personal.skillLevel},
+    preferences: req.session.user.preferences,
+  };
+
   if (newPassword != '') {
     buildBlock.password = bcrypt.hashSync(newPassword, salt);
   }
 
-  if (targetGender != undefined) {
-    buildBlock.preferences.targetGender = targetGender;
+  if (languages != undefined) {
+    buildBlock.personal.languages = languages;
   } else {
-    // eslint-disable-next-line max-len
-    buildBlock.preferences.targetGender = req.session.user.preferences.targetGender;
+    buildBlock.personal.languages = req.session.user.personal.languages;
   }
 
-  if (minAge != '' && maxAge != '') {
-    buildBlock.preferences.minAge = minAge;
-    buildBlock.preferences.maxAge = maxAge;
+  if (skill != undefined) {
+    buildBlock.personal.skillLevel = skill;
   } else {
-    buildBlock.preferences.minAge = req.session.user.preferences.minAge;
-    buildBlock.preferences.maxAge = req.session.user.preferences.maxAge;
+    buildBlock.personal.skillLevel = req.session.user.personal.skillLevel;
+  }
+
+  if (occupation != undefined) {
+    buildBlock.personal.occupation = occupation;
+  } else {
+    buildBlock.personal.occupation = req.session.user.personal.occupation;
+  }
+
+  if (Object.keys(buildBlock.personal).length == 0) {
+    delete buildBlock.personal;
   }
 
   User.findOneAndUpdate({email: req.session.user.email},
@@ -152,7 +274,7 @@ router.post('/update', (req, res) => {
 });
 
 /**
- * Function logs user out; destorys session.
+ * Function logs user out; destroys session.
  * @name get/logout
  * @function
  * @param {string} path - Express path
@@ -234,6 +356,7 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '3':
       req.session.register.personal = JSON.parse(JSON.stringify(req.body));
+      console.log('body stap 3', req.session.register);
       res.render('register3');
       break;
     case '4':
@@ -243,13 +366,12 @@ router.post('/register/:step', (req, res)=>{
       const lastName = req.session.register.lname;
       const email = req.session.register.email;
       const password = bcrypt.hashSync(req.session.register.password, salt);
-      const age = req.session.register.personal.age;
-      const gender = req.session.register.personal.gender;
-      const latitude = req.session.register.personal.latitude;
-      const longitude = req.session.register.personal.longitude;
-      const targetGender = req.session.register.preferences.targetGender;
-      const minAge = req.session.register.preferences.minAge;
-      const maxAge = req.session.register.preferences.maxAge;
+      const skillLevel = req.session.register.personal.skillLevel;
+      const occupation = req.session.register.personal.occupation;
+      const languages = req.session.register.personal.languages;
+      const tskillLevel = req.session.register.preferences.skillLevel;
+      const toccupation = req.session.register.preferences.occupation;
+      const tlanguages = req.session.register.preferences.languages;
 
       const newUser = new User();
       newUser.firstName = firstName;
@@ -257,16 +379,16 @@ router.post('/register/:step', (req, res)=>{
       newUser.email = email;
       newUser.password = password;
       newUser.personal = {
-        latitude: latitude,
-        longitude: longitude,
-        age: age,
-        gender: gender,
+        skillLevel: skillLevel,
+        occupation: occupation,
+        languages: languages,
       };
       newUser.preferences = {
-        minAge: minAge,
-        maxAge: maxAge,
-        targetGender: targetGender,
+        skillLevel: tskillLevel,
+        occupation: toccupation,
+        languages: tlanguages,
       };
+
       newUser.save((err, user) =>{
         if (err) {
           return res.status(500).send('couldn\'t connect to the database');
@@ -288,8 +410,18 @@ router.post('/register/:step', (req, res)=>{
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   if (req.session.user) {
+    await axios.get('http://quotes.stormconsultancy.co.uk/random.json').then((response) => {
+      req.session.user.quote = response.data.quote;
+      req.session.user.author = response.data.author;
+      req.session.user.permalink = response.data.permalink;
+    }).catch( (error) => {
+      console.log(error);
+      req.session.user.quote = 'There is no right or wrong- but PHP is always wrong';
+      req.session.user.author = 'Dev team';
+      req.session.user.permalink = 'https://github.com/sjagoori/dating-app';
+    });
     return res.render('profile', {query: req.session.user});
   }
   return res.render('homepage');
@@ -306,6 +438,5 @@ router.get('/', (req, res) => {
 router.get('*', (req, res) => {
   return res.redirect('/');
 });
-
 
 module.exports = router;

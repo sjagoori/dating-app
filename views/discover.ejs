@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+  title: "discover",
+  css: "discover"
+})%>
+
+<body>
+  <header>
+    <a href="profile"><img src="icons/profile.svg">Profile</a>
+    <h1>Nerdr.match()</h1>
+    <a href="preferences"><img src="icons/settings.svg">Preferences</a>
+  </header>
+  <main>
+    <section class="command-bar">
+      <script src="commandList.js"></script>
+      <script src="commandAutoComplete.js"></script>
+      <% if (message) {
+            if (message.type === 'success') { %>
+      <p class="succes">
+        <%= message.message %>
+      </p>
+      <% } else { %>
+      <p class="error">
+        <%= message.message %>
+      </p>
+      <% }} %>
+      <form autocomplete="off">
+        <label for="command-input">/</label>
+        <input autocomplete="off" name="command" id="command-input" type="text" placeholder="command" oninput=showCommandList() onfocus=showCommandList() onblur=hideCommandList()>
+        <button formmethod="post" class="button--secondary">run</button>
+      </form>
+      <label for="command-input">
+        <ol id="auto-complete"></ol>
+      </label>
+      <noscript>
+        <aside>
+          Available commands:
+          <ul>
+            <% for (command of commands) { %>
+              <li><%= command %></li>
+            <% } %>
+          </ul>
+        </aside>
+      </noscript>
+    </section>
+
+    <article class="discover-info">
+      <h2>Voornaam Achternaam</h2>
+      <p>Professional Fullstack Developer</p>
+    </article>
+
+    <section class="discover-language">
+      <article class="language-option">
+        <p>Languages I know:</p>
+        <div class="language-container">
+          <p>Javascript</p>
+          <p class="language-match">Python</p>
+        </div>
+      </article>
+
+      <article class="language-option">
+        <p>Languages I am interested in:</p>
+        <div class="language-container">
+          <p class="language-match">Javascript</p>
+          <p>Python</p>
+          <p class="language-match">.NET</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="button-container">
+      <button class="button--secondary">/skip</button>
+      <button class="button--primary">/match</button>
+    </section>
+  </main>
+</body>
+
+</html>

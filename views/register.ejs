@@ -12,30 +12,27 @@
         <div class="c-login-container">
           <% if (typeof query !== 'undefined') { %>
             <h1 class="c-login__greeting warning"> <%= query.errorMessage %> </h1>
-          <% } else { %> 
+          <% } else { %>
             <h1 class="c-login__greeting">Register here!</h1>
-          <% } %> 
+          <% } %>
           <div class="c-login__input-container">
             <label for="fname">First name:</label>
             <input type="text" name="fname" id="fname" autocomplete="off" required>
+
             <label for="lname">Last name:</label>
             <input type="text" name="lname" id="lname" autocomplete="off" required>
+
             <label for="email">Email:</label>
             <input type="email" name="email" id="email" autocomplete="off" required>
+
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required>
+
             <label for="password">Repeat your password:</label>
             <input type="password" name="rpassword" id="rpassword" required>
           </div>
           <div class="c-login__button-container">
-            <%- include('partials/button', 
-              {
-                classes: "c-login__login-button",
-                type: "secondary", 
-                label: "Cancel", 
-                url:"/"
-              }  
-            )%>
+            <a class="button--secondary" href="/">Cancel</a>
             <button type="submit">Next</button>
           </div>
         </div>

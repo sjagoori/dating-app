@@ -1,103 +1,43 @@
-@import 'scss/_colors.scss';
-@import 'scss/_media.scss';
-
-$breakpoint-tablet-portrait: 768px;
-
+@import '_main.scss';
 
 body {
-  background-color: $color-off-white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: .9em;
+  max-width: 35rem;
 }
 
-.c-login {
-  width: calc(100% - 70%);
-  background-color: $color-white;
-  display: flex;
-  justify-content: center;
-  padding: 40px;
-
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-
-  @include screen-tablet-portrait-and-smaller {
-    width: 80%;
-  }
-
-  @include screen-laptop-and-smaller {
-    width: 65%;
-  }
+main {
+  margin-top: 0.5rem;
 }
 
 .c-login-container {
-  width: 90%;
-
-  @include screen-tablet-portrait-and-smaller {
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  blockquote {
+    margin-bottom: 0.8rem;
+  }
+  a {
+    margin-top: 0.5rem;
+    width: auto;
   }
 }
 
-
-.c-login__greeting{
-  text-align: center;
-}
-
-.c-login__subheader{
-  font-size: 1.2em;
-  font-weight: 500;
-  line-height: 1.8;
-}
-
-.c-login__greeting,
 .c-login__subheader {
-  color: $color-text;
+  margin-bottom: 0.8rem;
+  color: $color-white;
 }
 
 .c-login__input-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 30px;
 
   input,
   textarea {
-    background-color: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 5px;
     border: 0;
     resize: none;
     outline: none;
 
-    &[type="text"],&[type="password"],&[type="email"]{
-      border-bottom: 1px solid $color-border;
-    }
-
     &[type="file"] {
       display: none;
-    }
-
-    &:focus {
-      transition: .3s;
-      border-bottom: 0;
-      border: 1px solid $color-border;
-      border-radius: 3px;
-    }
-  }
-
-  label {
-    align-self: flex-start;
-    
-    &[for="profilepicture"]{
-      color: #FFF;
-      background-color: $color-off-blue;
-      padding: 15px;
-      border-radius: 7px;
-      // margin-top: 5px;
-      margin-bottom: 20px;
     }
   }
 }
@@ -111,41 +51,57 @@ body {
 .c-login__radio-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin-bottom: 1rem;
 
   label {
+    position: relative;
     display: block;
-    margin-right: 15px;
-    border: 1px solid $color-border;
-    border-radius: 7px;
-    padding: 15px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid $color-grey;
+    border-radius: 0.5rem;
+    padding: 1rem;
     text-align: center;
-    min-width: 70px;
     cursor: pointer;
-    width: max-content;
+
+    &:last-of-type {
+      margin-right: 0px;
+    }
+
+    &:hover {
+      background-color: lighten($color-grey-dark, 10%);
+    }
   }
 
-  input[type="radio"] {
+  input[type="radio"], input[type="checkbox"] {
     display: none;
   }
 
-  input[type="radio"]:checked+label {
+  input[type="radio"]:checked+label, input[type="checkbox"]:checked+label {
     transition: .3s;
-    background-color: $color-off-blue;
-    border-color: $color-off-blue;
-    color: #FFFFFF;
+    background-color: $color-green;
+    border-color: $color-green;
+    color: $color-black;
   }
 }
 
-.highlight{
-  background-image: linear-gradient(transparent 15px, rgba($color-off-blue, .3) 10px);
+.c-login__password {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight {
+  background-image: linear-gradient(transparent 15px, rgba($color-grey-dark, .3) 10px);
   transition: .3s;
+  font-weight: bold;
 
-  &:hover{
-    background-image: linear-gradient(transparent -15px, rgba($color-off-blue, .3) -10px);
+  &:hover {
+    background-image: linear-gradient(transparent -15px, rgba($color-grey-dark, .3) -10px);
   }
 }
 
-.warning{
-  color: darken($color-red, 20%);
+.warning {
+  color: $color-red;
 }

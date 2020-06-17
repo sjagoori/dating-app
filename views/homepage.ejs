@@ -13,27 +13,18 @@
       <div class="c-login-container">
       <% if (typeof query !== 'undefined') { %>
         <h1 class="c-login__greeting warning"> <%= query.errorMessage %> </h1>
-      <% } else { %> 
+      <% } else { %>
         <h1 class="c-login__greeting">Hi there!</h1>
-      <% } %> 
+      <% } %>
         <div class="c-login__input-container">
-          <label for="lemail">email:</label>
+          <label for="lemail">Your email:</label>
           <input type="email" name="email" id="lemail" required>
-          <label for="lpassword">password:</label>
+          <label for="lpassword">Your password:</label>
           <input type="password" name="password" id="lpassword" required>
         </div>
         <div class="c-login__button-container">
-
-          <%- include('partials/button', 
-            {
-              classes: "c-login__register-button",
-              type: "secondary", 
-              label: "Sign up", 
-              url:"register/1"
-            }  
-          )%>
-
-          <button type="submit">Login</button>
+          <a class="button--secondary" href="/register/1">Sign up</a>
+          <button type="submit" class="button--primary">Login</button>
         </div>
       </div>
     </form>
