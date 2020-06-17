@@ -1,0 +1,54 @@
+@import '_colors.scss';
+
+button, a {
+  border: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.3em;
+  color: $color-black;
+  text-decoration: none;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: $color-green;
+
+  &:hover {
+    background-color: darken($color-green, 10%);
+  }
+}
+
+.button {
+  &--primary {
+    background-color: $color-green;
+
+    &:hover {
+      background-color: darken($color-green, 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-grey;
+
+    &:hover {
+      background-color: darken($color-grey, 10%);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    border: 3px solid $color-grey;
+    color: $color-grey;
+
+    &:hover {
+      background-color: darken($color-grey, 10%);
+      color: $color-white;
+    }
+  }
+
+  &--danger {
+    color: $color-black;
+    background-color: lighten($color-red, 10%);
+
+    &:hover {
+      background-color: darken($color-red, 10%);
+    }
+  }
+}

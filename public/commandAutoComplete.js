@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 /**
  * Creates commandlist and populates it according to user input
  * @function
  */
 function showCommandList() {
+  /* eslint-enable no-unused-vars */
   const input = document.getElementById('command-input');
   const inputValue = input.value.split(' ');
   const inputCommand = inputValue.slice(0, 1)[0];
@@ -77,15 +79,13 @@ function showCommandList() {
   }
 }
 
+/* eslint-disable no-unused-vars */
 /**
  * Empties commandlist in html
  * @function
  */
 function hideCommandList() {
+  /* eslint-enable no-unused-vars */
   const listElement = document.getElementById('auto-complete');
   listElement.innerHTML = '';
-}
-
-function deepIncludes(array) {
-
 }

@@ -1,0 +1,66 @@
+@import '_colors.scss';
+@import '_buttons.scss';
+
+$width-content-max: 30em;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+}
+
+html {
+  background-color: $color-background;
+  color: $color-white;
+  font-size: calc(60% + 0.8vmin);
+}
+
+body {
+  margin: 0 auto;
+  max-width: $width-content-max;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+main {
+  padding: 2rem 0;
+  width: 100%;
+}
+
+main > * {
+  padding: 2rem;
+  background-color: $color-grey-dark;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: $color-green;
+  margin-bottom: 0.2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  color: $color-green;
+  margin-bottom: 0.2rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: $color-white;
+  margin-bottom: 0.2rem;
+}
+
+p {
+  color: $color-white;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  background-color: $color-white;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0;
+}

@@ -190,6 +190,8 @@ router.post('/profile', (req, res) => {
 router.post('/update', (req, res) => {
   const languages = req.body.languages;
   const newPassword = req.body.npassword;
+  const skill = req.body.skill;
+  const occupation = req.body.occupation;
 
   if (!req.session.user) {
     return res.redirect('/');
@@ -208,6 +210,18 @@ router.post('/update', (req, res) => {
     buildBlock.personal.languages = languages;
   } else {
     buildBlock.personal.languages = req.session.user.personal.languages;
+  }
+
+  if (skill != undefined) {
+    buildBlock.personal.skillLevel = skill;
+  } else {
+    buildBlock.personal.skillLevel = req.session.user.personal.skillLevel;
+  }
+
+  if (occupation != undefined) {
+    buildBlock.personal.occupation = occupation;
+  } else {
+    buildBlock.personal.occupation = req.session.user.personal.occupation;
   }
 
   if (Object.keys(buildBlock.personal).length == 0) {
