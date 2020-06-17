@@ -13,40 +13,32 @@
           <h1 class="c-login__greeting">What are you looking for?</h1>
           <div class="c-login__input-container">
 
-            <h2 class="c-login__subheader">What skill level?</h2>
+            <h2 class="c-login__subheader">Skill level</h2>
             <div class="c-login__radio-container">
-              <div>
-                <input type="radio" name="skillLevel" value="amateur" id="amateur">
-                <label for="amateur">Amateur</label>
-              </div>
-              <div>
-                <input type="radio" name="skillLevel" value="intermediate" id="intermediate">
-                <label for="intermediate">Intermediate</label>
-              </div>
-              <div>
-                <input type="radio" name="skillLevel" value="expert" id="expert">
-                <label for="expert">Expert</label>
-              </div>
+              <input type="radio" name="skillLevel" value="amateur" id="amateur">
+              <label for="amateur">Amateur</label>
+
+              <input type="radio" name="skillLevel" value="intermediate" id="intermediate">
+              <label for="intermediate">Intermediate</label>
+
+              <input type="radio" name="skillLevel" value="expert" id="expert">
+              <label for="expert">Expert</label>
             </div>
 
 
-            <h2 class="c-login__subheader">What is your occupation?</h2>
+            <h2 class="c-login__subheader">Occupation</h2>
             <div class="c-login__radio-container">
-              <div>
-                <input type="radio" name="occupation" value="frontend" id="frontend">
-                <label for="frontend">Front-end</label>
-              </div>
-              <div>
-                <input type="radio" name="occupation" value="backend" id="backend">
-                <label for="backend">Back-end</label>
-              </div>
-              <div>
-                <input type="radio" name="occupation" value="full-stack" id="full-stack">
-                <label for="full-stack">Full-stack</label>
-              </div>
+              <input type="radio" name="occupation" value="frontend" id="frontend">
+              <label for="frontend">Front-end</label>
+
+              <input type="radio" name="occupation" value="backend" id="backend">
+              <label for="backend">Back-end</label>
+
+              <input type="radio" name="occupation" value="full-stack" id="full-stack">
+              <label for="full-stack">Full-stack</label>
             </div>
 
-            <h2 class="c-login__subheader">What languages are you looking for?</h2>
+            <h2 class="c-login__subheader">Language(s)</h2>
             <div class="c-login__radio-container">
               <input type="checkbox" name="languages" value="javascript" id="javascript">
               <label for="javascript">javascript</label>
@@ -66,14 +58,7 @@
 
           </div>
           <div class="c-login__button-container">
-            <%- include('partials/button',
-              {
-                classes: "c-login__login-button",
-                type: "secondary",
-                label: "back",
-                url:"/register/2"
-              }
-            )%>
+            <a class="button--secondary" href="/register/2">Back</a>
             <button type="submit">Register</button>
           </div>
         </div>
