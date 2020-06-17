@@ -4,20 +4,24 @@ body {
   max-width: 35rem;
 }
 
-.c-login {
-  display: flex;
+main {
+  margin-top: 0.5rem;
 }
 
 .c-login-container {
-  width: 100%;
-}
-
-.c-login__greeting {
-  color: $color-white;
+  display: flex;
+  flex-direction: column;
+  blockquote {
+    margin-bottom: 0.8rem;
+  }
+  a {
+    margin-top: 0.5rem;
+    width: auto;
+  }
 }
 
 .c-login__subheader {
-  margin: 0.8rem 0;
+  margin-bottom: 0.8rem;
   color: $color-white;
 }
 
@@ -25,7 +29,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 2rem;
 
   input,
   textarea {
@@ -62,10 +65,14 @@ body {
     padding: 1rem;
     text-align: center;
     cursor: pointer;
-  }
 
-  label:last-of-type {
-    margin-right: 0px;
+    &:last-of-type {
+      margin-right: 0px;
+    }
+
+    &:hover {
+      background-color: lighten($color-grey-dark, 10%);
+    }
   }
 
   input[type="radio"], input[type="checkbox"] {

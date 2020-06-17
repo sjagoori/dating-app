@@ -10,37 +10,12 @@
   <header>
     <a href="discover"><img src="icons/compass.svg">Discover</a>
     <h1>Nerdr.match()</h1>
-    <a href="preferences"><img src="icons/settings.svg">Preferences</a>
+    <a href="profile"><img src="icons/profile.svg">Profile</a>
   </header>
   <main>
-    <section class="c-login-container">
-      <h2 class="c-login__greeting">Hi <%- query.firstName %>!</h2>
-      <blockquote cite="<%= query.permalink %>" class="c-login__greeting"><i><%- query.quote %></i> - <%- query.author %></blockquote>
-      <a href="discover" class="button--secondary">Find new matches</a>
-    </section>
-
-    <section class="c-login-container">
-      <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.skillLevel %> <%- query.personal.occupation %></span> developer that writes in
-        <% query.personal.languages.forEach(function(language){ %>
-          <span class="highlight"><%= language %></span>
-        <% }); %>.</p>
-
-      <p class="c-login__subheader">You are registered with the email adress <span class="highlight">
-          <%- query.email %></span>.</p>
-      <p class="c-login__subheader">You are currently looking for a <span class="highlight">
-          <%- query.preferences.skillLevel %>
-          <%- query.preferences.occupation %></span> developer that writes in
-        <% query.preferences.languages.forEach(function(language){ %>
-        <span class="highlight">
-          <%= language %></span>.
-        <% }); %>
-      </p>
-      <a href="preferences" class="button--secondary">Change your preferences</a>
-    </section>
-
     <form action="/update" method="post" class="c-login">
       <div class="c-login__input-container">
-        <h3 class="c-login__subheader">Have you changed your skill level?</h3>
+        <h3 class="c-login__subheader">What skill level are you looking for?</h3>
         <div class="c-login__radio-container">
           <input type="radio" name="skill" value="amateur" id="amateur">
           <label for="amateur">Amateur</label>
@@ -52,7 +27,7 @@
           <label for="expert">Expert</label>
         </div>
 
-        <h3 class="c-login__subheader">Have you changed your occupation?</h3>
+        <h3 class="c-login__subheader">What occupation are you looking for?</h3>
         <div class="c-login__radio-container">
           <input type="radio" name="occupation" value="frontEnd" id="frontEnd">
           <label for="frontEnd">Front-end</label>
@@ -64,7 +39,7 @@
           <label for="fullStack">Full-stack</label>
         </div>
 
-        <h3 class="c-login__subheader">Have you learned new languages?</h3>
+        <h3 class="c-login__subheader">What languages are you interested in?</h3>
         <div class="c-login__radio-container">
           <input type="checkbox" name="languages" value="Javascript" id="javascript">
           <label for="javascript">Javascript</label>
@@ -81,14 +56,7 @@
           <input type="checkbox" name="languages" value=".NET" id=".NET">
           <label for=".NET">.NET</label>
         </div>
-        <div class="c-login__password">
-          <h3 class="c-login__subheader">Do you want to change your password?</h3>
-          <label for="npassword">Enter your new password:</label>
-          <input type="password" name="npassword" id="npassword" placeholder="New password">
-        </div>
         <div class="c-login__button-container">
-          <a class="button--secondary" href="/logout">Logout</a>
-          <a class="button--danger" href="/deleteme">Delete</a>
           <button class="c-login__register-button" type="submit">Change</button>
         </div>
       </div>

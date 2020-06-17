@@ -4,6 +4,7 @@
  * @requires express
  * @requires User
  * @requires bcrypt
+ * @requires axios
  */
 
 /**
@@ -14,6 +15,21 @@
 const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
+
+/**
+ * Axios module
+ * @const
+ * @source https://github.com/axios/axios
+ */
+const axios = require('axios');
+
+/**
+ * Helmet module
+ * @const
+ * @source https://www.npmjs.com/package/helmet
+ */
+const helmet = require('helmet');
+router.use(helmet());
 
 /**
  * User module
@@ -67,7 +83,7 @@ router.get('/profile', (req, res) => {
 });
 
 /**
- * Function renders profile from session data,
+ * Function renders discover page,
  * redirects to homepage if not logged in.
  * @name get/discover
  * @function
@@ -75,9 +91,9 @@ router.get('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.get('/discover', (req, res) => {
-  // if (!req.session.user) {
-  //   return res.redirect('/');
-  // }
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
   const commandList = commands.getCommandList();
   const commandPrototypeList = [];
   for (command of Object.entries(commandList)) {
@@ -89,6 +105,21 @@ router.get('/discover', (req, res) => {
   }
   console.log(commandPrototypeList);
   return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
+});
+
+/**
+ * Function renders preferences page,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/preferences', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('preferences', {query: req.session.user});
 });
 
 /**
@@ -379,8 +410,18 @@ router.post('/register/:step', (req, res)=>{
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   if (req.session.user) {
+    await axios.get('http://quotes.stormconsultancy.co.uk/random.json').then((response) => {
+      req.session.user.quote = response.data.quote;
+      req.session.user.author = response.data.author;
+      req.session.user.permalink = response.data.permalink;
+    }).catch( (error) => {
+      console.log(error);
+      req.session.user.quote = 'There is no right or wrong- but PHP is always wrong';
+      req.session.user.author = 'Dev team';
+      req.session.user.permalink = 'https://github.com/sjagoori/dating-app';
+    });
     return res.render('profile', {query: req.session.user});
   }
   return res.render('homepage');
@@ -397,6 +438,5 @@ router.get('/', (req, res) => {
 router.get('*', (req, res) => {
   return res.redirect('/');
 });
-
 
 module.exports = router;
