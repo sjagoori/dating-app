@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="clip-settings">
+      <rect width="500" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="settings" clip-path="url(#clip-settings)">
+    <g id="settings-2" data-name="settings">
+      <path id="Line_1" data-name="Line 1" d="M0,0V400" transform="translate(100 50)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="50"/>
+      <circle id="Ellipse_2" data-name="Ellipse 2" cx="50" cy="50" r="50" transform="translate(50 125)" stroke-width="50" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" fill="#fff"/>
+      <path id="Line_1-2" data-name="Line 1" d="M0,0V400" transform="translate(250 50)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="50"/>
+      <circle id="Ellipse_3" data-name="Ellipse 3" cx="50" cy="50" r="50" transform="translate(200 275)" stroke-width="50" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" fill="#fff"/>
+      <path id="Line_1-3" data-name="Line 1" d="M0,0V400" transform="translate(400 50)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="50"/>
+      <circle id="Ellipse_4" data-name="Ellipse 4" cx="50" cy="50" r="50" transform="translate(350 150)" stroke-width="50" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" fill="#fff"/>
+    </g>
+  </g>
+</svg>

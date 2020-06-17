@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500">
+  <defs>
+    <clipPath id="clip-compass">
+      <rect width="500" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="compass" clip-path="url(#clip-compass)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="225" cy="225" r="225" transform="translate(25 25)" fill="none" stroke="#fff" stroke-width="50"/>
+    <path id="Path_4" data-name="Path 4" d="M8045,275l200-100L8145,375l-25-75Z" transform="translate(-7920)" fill="none" stroke="#fff" stroke-width="50"/>
+  </g>
+</svg>
