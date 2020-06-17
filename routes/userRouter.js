@@ -94,7 +94,17 @@ router.get('/discover', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  return res.render('discover', {query: req.session.user, message: {}});
+  const commandList = commands.getCommandList();
+  const commandPrototypeList = [];
+  for (command of Object.entries(commandList)) {
+    let commandPrototype = command[0];
+    for (argument of command[1]['arguments']) {
+      commandPrototype += ` {${argument.label}}`;
+    }
+    commandPrototypeList.push(commandPrototype);
+  }
+  console.log(commandPrototypeList);
+  return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
 });
 
 /**

@@ -7,7 +7,7 @@
   p {
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .error {
@@ -23,7 +23,7 @@
     *, *:focus {
       border: none;
       outline: none;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
 
     label {
@@ -35,6 +35,17 @@
       margin: 0;
       border-radius: 0;
       cursor: pointer;
+    }
+  }
+
+  aside {
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    li {
+      font-weight: normal;
+      font-size: 0.9rem;
+      list-style: none;
     }
   }
 }
