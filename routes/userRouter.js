@@ -75,7 +75,7 @@ router.get('/profile', (req, res) => {
 });
 
 /**
- * Function renders profile from session data,
+ * Function renders discover page,
  * redirects to homepage if not logged in.
  * @name get/discover
  * @function
@@ -83,10 +83,25 @@ router.get('/profile', (req, res) => {
  * @param {callback} middleware - Express middleware
  */
 router.get('/discover', (req, res) => {
-  // if (!req.session.user) {
-  //   return res.redirect('/');
-  // }
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
   return res.render('discover', {query: req.session.user, message: {}});
+});
+
+/**
+ * Function renders preferences page,
+ * redirects to homepage if not logged in.
+ * @name get/discover
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/preferences', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('preferences', {query: req.session.user});
 });
 
 /**
