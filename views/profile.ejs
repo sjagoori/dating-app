@@ -10,16 +10,13 @@
   <main>
     <form action="/update" method="post" class="c-login">
       <div class="c-login-container">
-        <h1 class="c-login__greeting">Hi
-          <%- query.firstName %>!</h1>
-        <p class="c-login__subheader">You are a <span class="highlight">
-            <%- query.personal.skillLevel %>
-            <%- query.personal.occupation %></span> developer that writes in
+        <h1 class="c-login__greeting">Hi <%- query.firstName %>!</h1>
+        <blockquote cite="<%= query.permalink %>" class="c-login__greeting"><i><%- query.quote %></i> - <%- query.author %></blockquote>
+
+        <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.skillLevel %> <%- query.personal.occupation %></span> developer that writes in
           <% query.personal.languages.forEach(function(language){ %>
-          <span class="highlight">
-            <%= language %></span>.
-          <% }); %>
-        </p>
+            <span class="highlight"><%= language %></span>
+          <% }); %>.</p>
 
         <p class="c-login__subheader">You are registered with the email adress <span class="highlight">
             <%- query.email %></span>.</p>
