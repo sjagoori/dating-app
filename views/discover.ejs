@@ -30,7 +30,14 @@
         <ol id="auto-complete"></ol>
       </label>
       <noscript>
-        JavaScript is disabled > implement something that works without js.
+        <aside>
+          Available commands:
+          <ul>
+            <% for (command of commands) { %>
+              <li><%= command %></li>
+            <% } %>
+          </ul>
+        </aside>
       </noscript>
     </section>
 
