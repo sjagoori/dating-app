@@ -369,6 +369,11 @@ router.get('/', async (req, res) => {
       req.session.user.quote = response.data.quote;
       req.session.user.author = response.data.author;
       req.session.user.permalink = response.data.permalink;
+    }).catch( (error) => {
+      console.log(error);
+      req.session.user.quote = 'There is no right or wrong- but PHP is always wrong';
+      req.session.user.author = 'Dev team';
+      req.session.user.permalink = 'https://github.com/sjagoori/dating-app';
     });
     return res.render('profile', {query: req.session.user});
   }
