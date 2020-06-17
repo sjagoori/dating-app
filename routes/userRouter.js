@@ -24,6 +24,14 @@ const router = express.Router();
 const axios = require('axios');
 
 /**
+ * Helmet module
+ * @const
+ * @source https://www.npmjs.com/package/helmet
+ */
+const helmet = require('helmet');
+router.use(helmet());
+
+/**
  * User module
  * @const
  */
