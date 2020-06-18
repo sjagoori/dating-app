@@ -46,11 +46,6 @@ const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 
 /**
- * Data file strictly used for testing.
- */
-const data = require('../data/data.json');
-
-/**
  * CommandList containing all available CLI commands
  */
 const commands = require('../public/commandList.js');
