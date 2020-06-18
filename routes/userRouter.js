@@ -220,11 +220,15 @@ router.post('/profile', (req, res) => {
  * @source https://expressjs.com/en/api.html#res.redirect
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
-router.post('/update', (req, res) => {
+router.post('/update', function (req, res) {
   const languages = req.body.languages;
-  const newPassword = req.body.npassword;
+  const newPassword = req.body.npassword;  
   const skill = req.body.skill;
   const occupation = req.body.occupation;
+
+  const prefSkill = req.body.skillLevel;
+  const prefOccupation = req.body.prefOccupation;
+  const prefLanguages = req.body.prefLanguages;
 
   if (!req.session.user) {
     return res.redirect('/');
@@ -235,9 +239,9 @@ router.post('/update', (req, res) => {
     preferences: req.session.user.preferences,
   };
 
-  if (newPassword != '') {
-    buildBlock.password = bcrypt.hashSync(newPassword, salt);
-  }
+  // if (newPassword != '') {
+  //   buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  // }
 
   if (languages != undefined) {
     buildBlock.personal.languages = languages;
@@ -256,6 +260,27 @@ router.post('/update', (req, res) => {
   } else {
     buildBlock.personal.occupation = req.session.user.personal.occupation;
   }
+
+
+  // preferences
+  if (prefSkill != undefined) {
+    buildBlock.preferences.skillLevel = prefSkill;
+  } else {
+    buildBlock.preferences.skillLevel = req.session.user.preferences.skillLevel;
+  }
+
+  if (prefOccupation != undefined) {
+    buildBlock.preferences.occupation = prefOccupation;
+  } else {
+    buildBlock.preferences.occupation = req.session.user.preferences.occupation;
+  }
+
+  if (prefLanguages != undefined) {
+    buildBlock.preferences.languages = prefLanguages;
+  } else {
+    buildBlock.preferences.languages = req.session.user.preferences.languages;
+  }
+
 
   if (Object.keys(buildBlock.personal).length == 0) {
     delete buildBlock.personal;
