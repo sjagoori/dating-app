@@ -46,11 +46,6 @@ const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 
 /**
- * Data file strictly used for testing.
- */
-const data = require('../data/data.json');
-
-/**
  * CommandList containing all available CLI commands
  */
 const commands = require('../public/commandList.js');
@@ -222,7 +217,7 @@ router.post('/profile', (req, res) => {
  */
 router.post('/update', function (req, res) {
   const languages = req.body.languages;
-  const newPassword = req.body.npassword;  
+  const newPassword = req.body.npassword;
   const skill = req.body.skill;
   const occupation = req.body.occupation;
 
