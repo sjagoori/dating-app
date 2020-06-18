@@ -54,6 +54,15 @@ const data = require('../data/data.json');
  * CommandList containing all available CLI commands
  */
 const commands = require('../public/commandList.js');
+const commandList = commands.getCommandList();
+const commandPrototypeList = [];
+for (command of Object.entries(commandList)) {
+  let commandPrototype = command[0];
+  for (argument of command[1]['arguments']) {
+    commandPrototype += ` {${argument.label}}`;
+  }
+  commandPrototypeList.push(commandPrototype);
+}
 
 /**
  * Test env. Keep in project.
@@ -94,16 +103,6 @@ router.get('/discover', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  const commandList = commands.getCommandList();
-  const commandPrototypeList = [];
-  for (command of Object.entries(commandList)) {
-    let commandPrototype = command[0];
-    for (argument of command[1]['arguments']) {
-      commandPrototype += ` {${argument.label}}`;
-    }
-    commandPrototypeList.push(commandPrototype);
-  }
-  console.log(commandPrototypeList);
   return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
 });
 
@@ -137,8 +136,9 @@ router.post('/discover', (req, res) => {
   const args = input.slice(1);
   let error;
 
-  // Check if command exists in commandList
-  if (command in commandList) {
+  if (input.includes('php')) {
+    res.redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  } else if (command in commandList) {
     // If command exists, check for correct amount of arguments given
     const chosenCommand = commandList[command];
     if (args.length === chosenCommand.arguments.length) {
@@ -152,22 +152,22 @@ router.post('/discover', (req, res) => {
         }
         if (!valueList.includes(argument)) {
           error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
-          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
         }
       };
       // If argument values are correct, run command function.
       const success = chosenCommand.success(args);
       if (command !== 'cd') {
-        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}, commands: commandPrototypeList});
       }
       chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
-      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
     }
   } else {
     error = `Command: "${command}" has not been found or does not exist`;
-    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
   }
 });
 
