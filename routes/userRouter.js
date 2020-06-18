@@ -118,6 +118,7 @@ router.get('/preferences', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
+  console.log(req.session.user.preferences.languages);
   return res.render('preferences', {query: req.session.user});
 });
 
@@ -220,10 +221,10 @@ router.post('/profile', (req, res) => {
  * @source https://expressjs.com/en/api.html#res.redirect
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
-router.post('/update', function (req, res) {
+router.post('/update', function(req, res) {
   const languages = req.body.languages;
-  const newPassword = req.body.npassword;  
-  const skill = req.body.skill;
+  const newPassword = req.body.npassword;
+  const skillLevel = req.body.skillLevel;
   const occupation = req.body.occupation;
 
   const prefSkill = req.body.skillLevel;
@@ -249,8 +250,8 @@ router.post('/update', function (req, res) {
     buildBlock.personal.languages = req.session.user.personal.languages;
   }
 
-  if (skill != undefined) {
-    buildBlock.personal.skillLevel = skill;
+  if (skillLevel != undefined) {
+    buildBlock.personal.skillLevel = skillLevel;
   } else {
     buildBlock.personal.skillLevel = req.session.user.personal.skillLevel;
   }
