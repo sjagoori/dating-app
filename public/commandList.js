@@ -65,7 +65,7 @@ const getCommandList = function() {
       function: function(req, res, args) {
       },
       success: function(args) {
-        return `Succesfully matched previous current user.`;
+        return `Succesfully matched previous user.`;
       },
     },
     skip: {
@@ -73,7 +73,7 @@ const getCommandList = function() {
       function: function(req, res, args) {
       },
       success: function(args) {
-        return `Succesfully skipped previous current user.`;
+        return `Succesfully skipped previous user.`;
       },
     },
   };
