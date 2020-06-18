@@ -220,11 +220,13 @@ router.post('/profile', (req, res) => {
  * @source https://expressjs.com/en/api.html#res.redirect
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
-router.post('/update', (req, res) => {
+router.post('/update', function (req, res) {
   const languages = req.body.languages;
   const newPassword = req.body.npassword;
   const skill = req.body.skill;
   const occupation = req.body.occupation;
+
+  const prefSkill = req.body.skillLevel;
 
   if (!req.session.user) {
     return res.redirect('/');
@@ -255,6 +257,14 @@ router.post('/update', (req, res) => {
     buildBlock.personal.occupation = occupation;
   } else {
     buildBlock.personal.occupation = req.session.user.personal.occupation;
+  }
+
+
+  // preferences
+  if (prefSkill != undefined) {
+    buildBlock.preferences.skillLevel = prefSkill;
+  } else {
+    buildBlock.preferences.skillLevel = req.session.user.preferences.skillLevel;
   }
 
   if (Object.keys(buildBlock.personal).length == 0) {

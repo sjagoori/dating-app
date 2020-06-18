@@ -1,0 +1,29 @@
+@import 'scss/_colors.scss';
+
+button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-right: 0.4rem;
+    color: $color-black;
+  }
+  
+  .green-btn {
+    background-color: #00FF00;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-right: 0.4rem;
+    color: $color-black;
+  }
+  
+  .gray-btn {
+    background-color: #DADADA;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-right: 0.4rem;
+    color: $color-black;
+  }
+  
+  
