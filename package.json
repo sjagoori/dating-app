@@ -1,7 +1,7 @@
 {
-  "name": "Project-tech",
+  "name": "Nerdr.match()",
   "version": "1.0.0",
-  "description": "Application for project-tech",
+  "description": "A dating platform for programmers",
   "main": "index.js",
   "scripts": {
     "start": "nodemon",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sjagoori/project-tech"
+    "url": "https://github.com/sjagoori/dating-app"
   },
   "author": "Shabier Jagoori",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
