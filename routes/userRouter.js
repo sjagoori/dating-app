@@ -472,7 +472,6 @@ router.get('/error', (req, res) => {
 router.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
-  // next(error);
   return res.render('error', {message: error.message, errorCode: error.status});
 });
 

@@ -53,16 +53,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 
-/**
- * Set view engine and include static folder.
- */
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
-
-/**
- * Set express-session along with it's secret.
- */
 app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -71,27 +64,15 @@ app.use(
     }),
 );
 
-/**
- * Set body-parser middleware.
- */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-/**
- * Set mongoose along with it's preferd settings.
- */
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.DB_URL);
 
-/**
- * Set router
- */
 app.use('/', userRouter);
 
-/**
- * Listen to port
- */
 app.listen(port);

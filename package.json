@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon",
-    "scss": "node-sass --watch scss -o public/css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scss": "node-sass --watch scss -o public/css"
   },
   "repository": {
     "type": "git",
