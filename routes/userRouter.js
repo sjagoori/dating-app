@@ -448,6 +448,37 @@ router.get('/', async (req, res) => {
 });
 
 /**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/error
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/error', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('error');
+});
+
+router.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  // next(error);
+  return res.render('error', {message : error.message, errorCode : error.status});
+});
+
+router.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  });
+});
+
+/**
  * Function redirects unmatched routes to @see {@link get/homepage}.
  * @name *
  * @function
