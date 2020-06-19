@@ -60,6 +60,12 @@ for (command of Object.entries(commandList)) {
 }
 
 /**
+ * Dummy content for discover page
+ */
+const dummy = require('../public/dummyContent.js');
+const dummyContent = dummy.getDummyContent();
+
+/**
  * Test env. Keep in project.
  * @name get/express
  * @function
@@ -98,7 +104,7 @@ router.get('/discover', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
+  return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList, dummy: dummyContent});
 });
 
 /**
@@ -148,22 +154,22 @@ router.post('/discover', (req, res) => {
         }
         if (!valueList.includes(argument)) {
           error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
-          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
         }
       };
       // If argument values are correct, run command function.
       const success = chosenCommand.success(args);
       if (command !== 'cd') {
-        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}, commands: commandPrototypeList});
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}, commands: commandPrototypeList, dummy: dummyContent});
       }
       chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
-      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
     }
   } else {
     error = `Command: "${command}" has not been found or does not exist`;
-    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
   }
 });
 
@@ -467,15 +473,15 @@ router.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
   // next(error);
-  return res.render('error', {message : error.message, errorCode : error.status});
+  return res.render('error', {message: error.message, errorCode: error.status});
 });
 
 router.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 
