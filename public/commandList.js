@@ -60,6 +60,22 @@ const getCommandList = function() {
         return `Succesfully redirected to ${args[0]}`;
       },
     },
+    match: {
+      arguments: [],
+      function: function(req, res, args) {
+      },
+      success: function(args) {
+        return `Succesfully matched previous user.`;
+      },
+    },
+    skip: {
+      arguments: [],
+      function: function(req, res, args) {
+      },
+      success: function(args) {
+        return `Succesfully skipped previous user.`;
+      },
+    },
   };
 };
 if (typeof module !== 'undefined' && module.exports) {

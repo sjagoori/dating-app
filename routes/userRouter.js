@@ -46,14 +46,18 @@ const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10);
 
 /**
- * Data file strictly used for testing.
- */
-const data = require('../data/data.json');
-
-/**
  * CommandList containing all available CLI commands
  */
 const commands = require('../public/commandList.js');
+const commandList = commands.getCommandList();
+const commandPrototypeList = [];
+for (command of Object.entries(commandList)) {
+  let commandPrototype = command[0];
+  for (argument of command[1]['arguments']) {
+    commandPrototype += ` {${argument.label}}`;
+  }
+  commandPrototypeList.push(commandPrototype);
+}
 
 /**
  * Test env. Keep in project.
@@ -94,16 +98,6 @@ router.get('/discover', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  const commandList = commands.getCommandList();
-  const commandPrototypeList = [];
-  for (command of Object.entries(commandList)) {
-    let commandPrototype = command[0];
-    for (argument of command[1]['arguments']) {
-      commandPrototype += ` {${argument.label}}`;
-    }
-    commandPrototypeList.push(commandPrototype);
-  }
-  console.log(commandPrototypeList);
   return res.render('discover', {query: req.session.user, message: {}, commands: commandPrototypeList});
 });
 
@@ -119,6 +113,7 @@ router.get('/preferences', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
+  console.log(req.session.user.preferences.languages);
   return res.render('preferences', {query: req.session.user});
 });
 
@@ -137,8 +132,9 @@ router.post('/discover', (req, res) => {
   const args = input.slice(1);
   let error;
 
-  // Check if command exists in commandList
-  if (command in commandList) {
+  if (input.includes('php')) {
+    res.redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  } else if (command in commandList) {
     // If command exists, check for correct amount of arguments given
     const chosenCommand = commandList[command];
     if (args.length === chosenCommand.arguments.length) {
@@ -152,22 +148,22 @@ router.post('/discover', (req, res) => {
         }
         if (!valueList.includes(argument)) {
           error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
-          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
         }
       };
       // If argument values are correct, run command function.
       const success = chosenCommand.success(args);
       if (command !== 'cd') {
-        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}});
+        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}, commands: commandPrototypeList});
       }
       chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
-      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
     }
   } else {
     error = `Command: "${command}" has not been found or does not exist`;
-    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}});
+    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList});
   }
 });
 
@@ -220,11 +216,15 @@ router.post('/profile', (req, res) => {
  * @source https://expressjs.com/en/api.html#res.redirect
  * @source https://github.com/kelektiv/node.bcrypt.js#to-hash-a-password
  */
-router.post('/update', (req, res) => {
+router.post('/update', function(req, res) {
   const languages = req.body.languages;
   const newPassword = req.body.npassword;
-  const skill = req.body.skill;
+  const skillLevel = req.body.skillLevel;
   const occupation = req.body.occupation;
+
+  const prefSkill = req.body.skillLevel;
+  const prefOccupation = req.body.prefOccupation;
+  const prefLanguages = req.body.prefLanguages;
 
   if (!req.session.user) {
     return res.redirect('/');
@@ -235,9 +235,9 @@ router.post('/update', (req, res) => {
     preferences: req.session.user.preferences,
   };
 
-  if (newPassword != '') {
-    buildBlock.password = bcrypt.hashSync(newPassword, salt);
-  }
+  // if (newPassword != '') {
+  //   buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  // }
 
   if (languages != undefined) {
     buildBlock.personal.languages = languages;
@@ -245,8 +245,8 @@ router.post('/update', (req, res) => {
     buildBlock.personal.languages = req.session.user.personal.languages;
   }
 
-  if (skill != undefined) {
-    buildBlock.personal.skillLevel = skill;
+  if (skillLevel != undefined) {
+    buildBlock.personal.skillLevel = skillLevel;
   } else {
     buildBlock.personal.skillLevel = req.session.user.personal.skillLevel;
   }
@@ -256,6 +256,27 @@ router.post('/update', (req, res) => {
   } else {
     buildBlock.personal.occupation = req.session.user.personal.occupation;
   }
+
+
+  // preferences
+  if (prefSkill != undefined) {
+    buildBlock.preferences.skillLevel = prefSkill;
+  } else {
+    buildBlock.preferences.skillLevel = req.session.user.preferences.skillLevel;
+  }
+
+  if (prefOccupation != undefined) {
+    buildBlock.preferences.occupation = prefOccupation;
+  } else {
+    buildBlock.preferences.occupation = req.session.user.preferences.occupation;
+  }
+
+  if (prefLanguages != undefined) {
+    buildBlock.preferences.languages = prefLanguages;
+  } else {
+    buildBlock.preferences.languages = req.session.user.preferences.languages;
+  }
+
 
   if (Object.keys(buildBlock.personal).length == 0) {
     delete buildBlock.personal;
@@ -425,6 +446,37 @@ router.get('/', async (req, res) => {
     return res.render('profile', {query: req.session.user});
   }
   return res.render('homepage');
+});
+
+/**
+ * Function renders profile from session data,
+ * redirects to homepage if not logged in.
+ * @name get/error
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/error', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('error');
+});
+
+router.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  // next(error);
+  return res.render('error', {message : error.message, errorCode : error.status});
+});
+
+router.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  });
 });
 
 /**
