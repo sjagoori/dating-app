@@ -473,15 +473,15 @@ router.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;
   // next(error);
-  return res.render('error', {message : error.message, errorCode : error.status});
+  return res.render('error', {message: error.message, errorCode: error.status});
 });
 
 router.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 
