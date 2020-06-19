@@ -46,34 +46,67 @@
       </noscript>
     </section>
 
+    <% firstName = dummy.firstNames[Math.floor(Math.random() * dummy.firstNames.length)] %>
+    <% lastName = dummy.lastNames[Math.floor(Math.random() * dummy.lastNames.length)] %>
+    <% skillLevel = query.preferences.skillLevel.charAt(0).toUpperCase() + query.preferences.skillLevel.slice(1) %>
+    <% occupation = query.preferences.occupation.charAt(0).toUpperCase() + query.preferences.occupation.slice(1) %>
+    <% knownLanguages = [] %>
+    <% interestLanguages = [] %>
+    <% for (language of dummy.languages) {
+         if (Math.random() < 0.5) {
+           knownLanguages.push(language);
+         }
+         if (Math.random() < 0.5) {
+           interestLanguages.push(language);
+         }
+       }
+       if (knownLanguages.length === 0) {
+         knownLanguages.push(dummy.languages[Math.floor(Math.random() * dummy.languages.length)])
+       }
+       if (interestLanguages.length === 0) {
+         interestLanguages.push(dummy.languages[Math.floor(Math.random() * dummy.languages.length)])
+       } %>
+
     <article class="discover-info">
-      <h2>Voornaam Achternaam</h2>
-      <p>Professional Fullstack Developer</p>
+      <h2>
+        <%= firstName %>
+        <%= lastName %>
+      </h2>
+      <p>
+        <%= skillLevel %>
+        <%= occupation %>
+        Developer
+      </p>
     </article>
 
     <section class="discover-language">
       <article class="language-option">
-        <p>Languages I know:</p>
+        <p>Languages <%= firstName %> knows:</p>
         <div class="language-container">
-          <p>Javascript</p>
-          <p class="language-match">Python</p>
+          <% for (language of knownLanguages) { %>
+            <p<% if (query.preferences.languages.includes(language)) { %> class="language-match" <% } %>>
+              <%= language %>
+            </p>
+          <% } %>
         </div>
       </article>
 
       <article class="language-option">
-        <p>Languages I am interested in:</p>
+        <p>Languages <%= firstName %> is interested in:</p>
         <div class="language-container">
-          <p class="language-match">Javascript</p>
-          <p>Python</p>
-          <p class="language-match">.NET</p>
+          <% for (language of interestLanguages) { %>
+            <p<% if (query.personal.languages.includes(language)) { %> class="language-match" <% } %>>
+              <%= language %>
+            </p>
+          <% } %>
         </div>
       </article>
     </section>
 
-    <section class="button-container">
+    <form class="button-container">
       <button class="button--secondary">/skip</button>
       <button class="button--primary">/match</button>
-    </section>
+    </form>
   </main>
 </body>
 
