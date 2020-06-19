@@ -15,26 +15,26 @@
 
             <h2 class="c-login__subheader">Skill level</h2>
             <div class="c-login__radio-container">
-              <input type="radio" name="skillLevel" value="amateur" id="amateur">
+              <input type="radio" name="skillLevel" value="amateur" id="amateur" required>
               <label for="amateur">Amateur</label>
 
-              <input type="radio" name="skillLevel" value="intermediate" id="intermediate">
+              <input type="radio" name="skillLevel" value="intermediate" id="intermediate" required>
               <label for="intermediate">Intermediate</label>
 
-              <input type="radio" name="skillLevel" value="expert" id="expert">
+              <input type="radio" name="skillLevel" value="expert" id="expert" required>
               <label for="expert">Expert</label>
             </div>
 
 
             <h2 class="c-login__subheader">Occupation</h2>
             <div class="c-login__radio-container">
-              <input type="radio" name="occupation" value="frontEnd" id="frontEnd">
+              <input type="radio" name="occupation" value="frontEnd" id="frontEnd" required>
               <label for="frontEnd">Front-end</label>
 
-              <input type="radio" name="occupation" value="backEnd" id="backEnd">
+              <input type="radio" name="occupation" value="backEnd" id="backEnd" required>
               <label for="backEnd">Back-end</label>
 
-              <input type="radio" name="occupation" value="fullStack" id="fullStack">
+              <input type="radio" name="occupation" value="fullStack" id="fullStack" required>
               <label for="fullStack">Full-stack</label>
             </div>
 
@@ -66,4 +66,14 @@
     </main>
 
   </body>
+  <script>
+    function validateForm(){
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    let counter = 0
+    checkboxes.forEach(i => {
+      return !i.checked ? counter++ : true
+    })
+    return counter == checkboxes.length ? false : true
+    }
+  </script>
 </html>
