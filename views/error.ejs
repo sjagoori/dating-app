@@ -1,0 +1,27 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+    title: "Error",
+    css: "login"
+  })%>
+
+<body>
+  <header>
+    <a href="discover"><img src="icons/compass.svg">Discover</a>
+    
+    <h1>Nerdr.preferences()</h1>
+  </header>
+  <main>
+    <section>
+      <h1>Error code: <%= errorCode %> <%= message %></h1>
+
+      <p class="padding-bottom-2">An <%= errorCode %> error has occurred, please return to the homepage.</p>
+      <a href="/">Back</a>
+    </section>
+  </main>
+</body>
+
+</html>
