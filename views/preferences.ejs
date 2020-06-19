@@ -17,43 +17,54 @@
       <div class="c-login__input-container">
         <h3 class="c-login__subheader">What skill level are you looking for?</h3>
         <div class="c-login__radio-container">
-          <input type="radio" name="skillLevel" value="amateur" id="amateur">
+          <input type="radio" name="skillLevel" value="amateur" id="amateur"
+          <% if (query.preferences.skillLevel === 'amateur') { %> checked <% } %>>
           <label for="amateur">Amateur</label>
 
-          <input type="radio" name="skillLevel" value="intermediate" id="intermediate">
+          <input type="radio" name="skillLevel" value="intermediate" id="intermediate"
+          <% if (query.preferences.skillLevel === 'intermediate') { %> checked <% } %>>
           <label for="intermediate">Intermediate</label>
 
-          <input type="radio" name="skillLevel" value="expert" id="expert">
+          <input type="radio" name="skillLevel" value="expert" id="expert"
+          <% if (query.preferences.skillLevel === 'expert') { %> checked <% } %>>
           <label for="expert">Expert</label>
         </div>
 
         <h3 class="c-login__subheader">What occupation are you looking for?</h3>
         <div class="c-login__radio-container">
-          <input type="radio" name="prefOccupation" value="frontEnd" id="frontEnd">
+          <input type="radio" name="prefOccupation" value="frontEnd" id="frontEnd"
+          <% if (query.preferences.occupation === 'frontEnd') { %> checked <% } %>>
           <label for="frontEnd">Front-end</label>
 
-          <input type="radio" name="prefOccupation" value="backEnd" id="backEnd">
+          <input type="radio" name="prefOccupation" value="backEnd" id="backEnd"
+          <% if (query.preferences.occupation === 'backEnd') { %> checked <% } %>>
           <label for="backEnd">Back-end</label>
 
-          <input type="radio" name="prefOccupation" value="fullStack" id="fullStack">
+          <input type="radio" name="prefOccupation" value="fullStack" id="fullStack"
+          <% if (query.preferences.occupation === 'fullStack') { %> checked <% } %>>
           <label for="fullStack">Full-stack</label>
         </div>
 
         <h3 class="c-login__subheader">What languages are you interested in?</h3>
         <div class="c-login__radio-container">
-          <input type="checkbox" name="prefLanguages" value="Javascript" id="javascript">
+          <input type="checkbox" name="prefLanguages" value="Javascript" id="javascript"
+          <% if (query.preferences.languages.includes('Javascript')) { %> checked <% } %>>
           <label for="javascript">Javascript</label>
 
-          <input type="checkbox" name="prefLanguages" value="Java" id="java">
+          <input type="checkbox" name="prefLanguages" value="Java" id="java"
+          <% if (query.preferences.languages.includes('Java')) { %> checked <% } %>>
           <label for="java">Java</label>
 
-          <input type="checkbox" name="prefLanguages" value="C" id="c">
+          <input type="checkbox" name="prefLanguages" value="C" id="c"
+          <% if (query.preferences.languages.includes('C')) { %> checked <% } %>>
           <label for="c">C</label>
 
-          <input type="checkbox" name="prefLanguages" value="Python" id="python">
+          <input type="checkbox" name="prefLanguages" value="Python" id="python"
+          <% if (query.preferences.languages.includes('Python')) { %> checked <% } %>>
           <label for="python">Python</label>
 
-          <input type="checkbox" name="prefLanguages" value=".NET" id=".NET">
+          <input type="checkbox" name="prefLanguages" value=".NET" id=".NET"
+          <% if (query.preferences.languages.includes('.NET')) { %> checked <% } %>>
           <label for=".NET">.NET</label>
         </div>
         <div class="c-login__button-container">

@@ -30,29 +30,29 @@
 
             <h2 class="c-login__subheader">What is your occupation?</h2>
             <div class="c-login__radio-container">
-              <input type="radio" name="occupation" value="frontend" id="frontend" required>
-              <label for="frontend">Front-end</label>
+              <input type="radio" name="occupation" value="frontEnd" id="frontEnd" required>
+              <label for="frontEnd">Front-end</label>
 
-              <input type="radio" name="occupation" value="backend" id="backend" required>
-              <label for="backend">Back-end</label>
-              
-              <input type="radio" name="occupation" value="full-stack" id="full-stack" required>
-              <label for="full-stack">Full-stack</label>
+              <input type="radio" name="occupation" value="backEnd" id="backEnd" required>
+              <label for="backEnd">Back-end</label>
+
+              <input type="radio" name="occupation" value="fullStack" id="fullStack" required>
+              <label for="fullStack">Full-stack</label>
             </div>
 
 
             <h2 class="c-login__subheader">What are your favorite languages?</h2>
             <div class="c-login__radio-container">
-              <input type="checkbox" name="languages" value="javascript" id="javascript">
+              <input type="checkbox" name="languages" value="Javascript" id="javascript">
               <label for="javascript">Javascript</label>
 
-              <input type="checkbox" name="languages" value="java" id="java">
+              <input type="checkbox" name="languages" value="Java" id="java">
               <label for="java">Java</label>
 
-              <input type="checkbox" name="languages" value="c" id="c">
-              <label for="c">C</label> 
+              <input type="checkbox" name="languages" value="C" id="c">
+              <label for="c">C</label>
 
-              <input type="checkbox" name="languages"value="python"  id="python">
+              <input type="checkbox" name="languages"value="Python"  id="python">
               <label for="python">Python</label>
 
               <input type="checkbox" name="languages" value=".NET" id=".NET">
@@ -73,11 +73,11 @@
   <script>
     function validateForm(){
     const checkboxes = document.querySelectorAll('input[type=checkbox]');
-    let counter = 0 
+    let counter = 0
     checkboxes.forEach(i => {
       return !i.checked ? counter++ : true
     })
-    return counter == checkboxes.length ? false : true 
+    return counter == checkboxes.length ? false : true
     }
   </script>
 </html>
