@@ -3,6 +3,17 @@ _A dating platform designed and made to help programmers meet other programmers 
 
 ![](https://i.ibb.co/n0GNPNZ/Screenshot-2020-06-19-at-16-40-05.png)
 
+<table style="margin-left: auto; margin-right: auto;">
+    <tr>
+        <td align="center"><a href="#-features">🚀 Features<a></td>
+        <td align="center"><a href="#-topics">✍ Topics<a></td>
+        <td align="center"><a href="#-installation">📝 Installation<a></td>
+        <td align="center"><a href="#-contributors">🤝 Contributors<a></td>
+        <td align="center"><a href="#-dependencies">🤖 Dependencies<a></td>
+        <td align="center"><a href="#-license">📝 License<a></td>
+    </tr>
+</table>
+
 ## 🚀 Features
 Nerdr.match() is designed with programmers in mind so apart from its nerdy design it has has the following features:
 * Registration and login system - Users can make a custom profile using their personal information and preferences
