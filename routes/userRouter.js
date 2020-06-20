@@ -241,9 +241,9 @@ router.post('/update', function(req, res) {
     preferences: req.session.user.preferences,
   };
 
-  // if (newPassword != '') {
-  //   buildBlock.password = bcrypt.hashSync(newPassword, salt);
-  // }
+  if (newPassword == '') {
+    buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  }
 
   if (languages != undefined) {
     buildBlock.personal.languages = languages;
