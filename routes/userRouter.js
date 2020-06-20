@@ -119,7 +119,6 @@ router.get('/preferences', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  console.log(req.session.user.preferences.languages);
   return res.render('preferences', {query: req.session.user});
 });
 
@@ -383,7 +382,6 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '3':
       req.session.register.personal = JSON.parse(JSON.stringify(req.body));
-      console.log('body stap 3', req.session.register);
       res.render('register3');
       break;
     case '4':
