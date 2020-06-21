@@ -1,49 +1,77 @@
 const getCommandList = function() {
   return {
-    addInterest: {
+    setOwn: {
       arguments: [
         {
           label: 'interest',
-          values: ['language', 'skillLevel', 'occupation'],
+          values: ['languages', 'skillLevel', 'occupation'],
         },
         {
           label: 'value',
           dependant: true,
           values: [
-            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
+            ['Java', 'C', 'Python', 'Javascript', '.NET'],
             ['amateur', 'intermediate', 'expert'],
-            ['frontend', 'backend', 'fullStack'],
+            ['frontEnd', 'backEnd', 'fullStack'],
           ],
         },
       ],
-      function: function(req, res, args) {
-        console.log('Add Interest: ' + args[0] + ' - ' + args[1]);
+      function: function(req, res, args, userModel) {
+        const personal = req.session.user.personal;
+        if (args[0] === 'languages') {
+          personal[args[0]].push(args[1]);
+        } else {
+          personal[args[0]] = args[1];
+        }
+        userModel.findOneAndUpdate({email: req.session.user.email},
+            {$set: {personal}},
+            {new: true},
+            (err) => {
+              if (err) {
+                return res.status(500).send('couldn\'t connect to the database');
+              }
+            },
+        );
       },
       success: function(args) {
-        return `Succesfully added ${args[0]} interest: ${args[1]}`;
+        return `Succesfully set own ${args[0]} to ${args[1]}`;
       },
     },
-    remInterest: {
+    setPref: {
       arguments: [
         {
           label: 'interest',
-          values: ['language', 'skillLevel', 'occupation'],
+          values: ['languages', 'skillLevel', 'occupation'],
         },
         {
           label: 'value',
           dependant: true,
           values: [
-            ['Java', 'C', 'Python', 'JavaScript', '.NET'],
+            ['Java', 'C', 'Python', 'Javascript', '.NET'],
             ['amateur', 'intermediate', 'expert'],
-            ['frontend', 'backend', 'fullStack'],
+            ['frontEnd', 'backEnd', 'fullStack'],
           ],
         },
       ],
-      function: function(req, res, args) {
-        console.log('Remove Interest: ' + args[0] + ' - ' + args[1]);
+      function: function(req, res, args, userModel) {
+        const preferences = req.session.user.preferences;
+        if (args[0] === 'languages') {
+          preferences[args[0]].push(args[1]);
+        } else {
+          preferences[args[0]] = args[1];
+        }
+        userModel.findOneAndUpdate({email: req.session.user.email},
+            {$set: {preferences}},
+            {new: true},
+            (err) => {
+              if (err) {
+                return res.status(500).send('couldn\'t connect to the database');
+              }
+            },
+        );
       },
       success: function(args) {
-        return `Succesfully removed ${args[0]} interest: ${args[1]}`;
+        return `Succesfully set ${args[0]} preference to ${args[1]}`;
       },
     },
     cd: {
@@ -53,7 +81,7 @@ const getCommandList = function() {
           values: ['discover', 'profile', 'preferences'],
         },
       ],
-      function: function(req, res, args) {
+      function: function(req, res, args, userModel) {
         res.redirect(args[0]);
       },
       success: function(args) {
@@ -62,15 +90,15 @@ const getCommandList = function() {
     },
     match: {
       arguments: [],
-      function: function(req, res, args) {
+      function: function(req, res, args, userModel) {
       },
       success: function(args) {
-        return `Succesfully matched previous user.`;
+        return `Succesfully matched with previous user.`;
       },
     },
     skip: {
       arguments: [],
-      function: function(req, res, args) {
+      function: function(req, res, args, userModel) {
       },
       success: function(args) {
         return `Succesfully skipped previous user.`;
