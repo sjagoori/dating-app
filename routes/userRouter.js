@@ -119,7 +119,6 @@ router.get('/preferences', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  console.log(req.session.user.preferences.languages);
   return res.render('preferences', {query: req.session.user});
 });
 
@@ -154,22 +153,38 @@ router.post('/discover', (req, res) => {
         }
         if (!valueList.includes(argument)) {
           error = `Positional argument [${i + 1}] contains invalid value "${argument}". Valid values: ${valueList}`;
-          res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
+          res.render('discover', {
+            query: req.session.user,
+            message: {type: 'error', message: error},
+            commands: commandPrototypeList,
+            dummy: dummyContent});
         }
       };
       // If argument values are correct, run command function.
+      chosenCommand.function(req, res, args, User);
       const success = chosenCommand.success(args);
       if (command !== 'cd') {
-        res.render('discover', {query: req.session.user, message: {type: 'success', message: success}, commands: commandPrototypeList, dummy: dummyContent});
+        res.render('discover', {
+          query: req.session.user,
+          message: {type: 'success', message: success},
+          commands: commandPrototypeList,
+          dummy: dummyContent});
       }
-      chosenCommand.function(req, res, args);
     } else {
       error = `Command: "${command}" takes ${chosenCommand.arguments.length} arguments. Received: ${args.length}`;
-      res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
+      res.render('discover', {
+        query: req.session.user,
+        message: {type: 'error', message: error},
+        commands: commandPrototypeList,
+        dummy: dummyContent});
     }
   } else {
     error = `Command: "${command}" has not been found or does not exist`;
-    res.render('discover', {query: req.session.user, message: {type: 'error', message: error}, commands: commandPrototypeList, dummy: dummyContent});
+    res.render('discover', {
+      query: req.session.user,
+      message: {type: 'error', message: error},
+      commands: commandPrototypeList,
+      dummy: dummyContent});
   }
 });
 
@@ -383,7 +398,6 @@ router.post('/register/:step', (req, res)=>{
       break;
     case '3':
       req.session.register.personal = JSON.parse(JSON.stringify(req.body));
-      console.log('body stap 3', req.session.register);
       res.render('register3');
       break;
     case '4':
