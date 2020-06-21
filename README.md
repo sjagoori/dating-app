@@ -24,7 +24,7 @@ Nerdr.match() is designed with programmers in mind so apart from its nerdy desig
 ## ✍ Topics
 * [Helmet](https://github.com/sjagoori/dating-app/wiki/Topic:-Using-Helmet) - written by Sjors
 * [External APIs](https://github.com/sjagoori/dating-app/wiki/Topic:-External-API) - written by Shabier
-* [Shabier - Hashing](https://github.com/sjagoori/dating-app/wiki/Topic:-Password-hashing) - Written by Shabier
+* [Password Hashing](https://github.com/sjagoori/dating-app/wiki/Topic:-Password-hashing) - Written by Shabier
 * [#](#) - written by Sjoerd
 
 
