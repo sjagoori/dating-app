@@ -31,7 +31,7 @@ function validateForm() {
   });
 
   // if the error message doesn't already exist, add. Prevents duplicates.
-  if (cCounter > 0 && z == null || rCounter > 4 && z == null) {
+  if (cCounter > 0 && z == null && rCounter > 4 && z == null) {
     inputBox.after(errorMessage);
   }
 
