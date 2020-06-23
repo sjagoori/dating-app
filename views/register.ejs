@@ -18,19 +18,19 @@
           <% } %>
           <div class="c-login__input-container">
             <label for="fname">First name:</label>
-            <input type="text" name="fname" id="fname" autocomplete="off" required>
+            <input type="text" name="fname" id="fname" autocomplete="off" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
 
             <label for="lname">Last name:</label>
-            <input type="text" name="lname" id="lname" autocomplete="off" required>
+            <input type="text" name="lname" id="lname" autocomplete="off" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
 
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" autocomplete="off" required>
+            <input type="email" name="email" id="email" autocomplete="off" pattern="^\S+@\S+\.\S+$" required>
 
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" pattern="^[a-zA-Z0-9]+$" required>
 
             <label for="password">Repeat your password:</label>
-            <input type="password" name="rpassword" id="rpassword" required>
+            <input type="password" name="rpassword" id="rpassword" pattern="^[a-zA-Z0-9]+$" required>
           </div>
           <div class="c-login__button-container">
             <a class="button--secondary" href="/">Cancel</a>
