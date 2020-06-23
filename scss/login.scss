@@ -35,10 +35,19 @@ main {
     border: 0;
     resize: none;
     outline: none;
+    background-color: $color-grey;
 
     &[type="file"] {
       display: none;
     }
+  }
+
+  input:valid {
+    border-left: 3px solid #00e676;
+  }
+  
+  input:invalid {
+    border-left: 1.5px solid #FF0000;
   }
 }
 
