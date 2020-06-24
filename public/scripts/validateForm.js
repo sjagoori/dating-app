@@ -1,6 +1,18 @@
 /* eslint-disable no-unused-vars */
 
 /**
+ * Function assumes javascript is enabled and removes required attribute
+ * to prevent the 'An invalid form control with name='' is not focusable.' error
+ * which in turn makes appending new elements impossible.
+ */
+document.addEventListener('readystatechange', () => {
+  const radioButtons = document.querySelectorAll('input[type=radio]');
+  radioButtons.forEach((i) => {
+    i.removeAttribute('required');
+  });
+});
+
+/**
  * Function checks if there is at least one checkbox selected in the form.
  * @function
  * @return {bool} - true if at least one checkbox/radio is selected, else false
