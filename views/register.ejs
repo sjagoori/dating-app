@@ -3,13 +3,12 @@
 
   <%- include('partials/head', {
     title: "Register",
-    css: "login",
-    js: 'validatePasswords'
+    css: "login"
   })%>
 
   <body>
     <main>
-      <form action="/register/2" method="post" name="registerForm" onsubmit="return validatePasswords()" class="c-login">
+      <form action="/register/2" method="post" name="registerForm" class="c-login">
         <div class="c-login-container">
           <% if (typeof query !== 'undefined') { %>
             <h1 class="c-login__greeting warning"> <%= query.errorMessage %> </h1>
@@ -34,11 +33,12 @@
           </div>
           <div class="c-login__button-container">
             <a class="button--secondary" href="/">Cancel</a>
-            <button type="submit">Next</button>
+            <button id="submitButton" type="submit">Next</button>
           </div>
         </div>
       </form>
     </main>
+  <script src="/scripts/validatePasswords.js"></script>
 
   </body>
 

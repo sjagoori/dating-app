@@ -1,12 +1,16 @@
-/* eslint-disable no-unused-vars */
+const form = document.forms['registerForm'];
+form.addEventListener('submit', (e) =>{
+  validatePasswords(e);
+});
 
 /**
  * Function compares the values of two password input fields.
  * In the case both passwords match, the function returns true, if not a false.
  * @function
+ * @param {ClickEvent} event
  * @return {bool} - true if matches, else false.
  */
-function validatePasswords() {
+function validatePasswords(event) {
   const x = document.forms['registerForm']['password'];
   const y = document.forms['registerForm']['rpassword'];
   const z = document.getElementById('errorMessage');
@@ -18,6 +22,7 @@ function validatePasswords() {
   errorMessage.style.color = '#FF0000';
 
   if (x.value != y.value) {
+    event.preventDefault();
     // if the error message doesn't already exist, add. Prevents duplicates.
     if (z == null) {
       y.after(errorMessage);

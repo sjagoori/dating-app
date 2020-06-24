@@ -1,4 +1,7 @@
-/* eslint-disable no-unused-vars */
+const form = document.forms['registerForm'];
+form.addEventListener('submit', (e) =>{
+  validateForm(e);
+});
 
 /**
  * Function assumes javascript is enabled and removes required attribute
@@ -15,9 +18,10 @@ document.addEventListener('readystatechange', () => {
 /**
  * Function checks if there is at least one checkbox selected in the form.
  * @function
+ * @param {ClickEvent} event
  * @return {bool} - true if at least one checkbox/radio is selected, else false
  */
-function validateForm() {
+function validateForm(event) {
   const checkboxes = document.querySelectorAll('input[type=checkbox]');
   const radioButtons = document.querySelectorAll('input[type=radio]');
   const inputBox = document.getElementsByClassName('c-login__input-container')[0];
@@ -48,5 +52,5 @@ function validateForm() {
   }
 
   // if the counter is higher than 5, nothing is selected
-  return rCounter < 5 && cCounter < 5 ? true : false;
+  return rCounter < 5 && cCounter < 5 ? true : event.preventDefault();
 }

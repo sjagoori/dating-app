@@ -8,7 +8,7 @@
 
   <body>
     <main>
-      <form action="/register/3" method="post" name="registerForm" onsubmit="return validateForm()" class="c-login">
+      <form action="/register/3" method="post" name="registerForm" class="c-login">
         <div class="c-login-container">
         <% if (query) { %>
           <h1 class="c-login__greeting">Let's get to know you, <%= query.fname %></h1>
@@ -62,7 +62,7 @@
           </div>
           <div class="c-login__button-container">
             <a class="button--secondary" href="/register/1">Back</a>
-            <button type="submit">Next</button>
+            <button id="submitButton" type="submit">Next</button>
           </div>
         </div>
       </form>
