@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/head', {
+    title: "Matches",
+    css: "login"
+  })%>
+
+<body>
+  <header>
+    <a href="discover"><img src="icons/compass.svg">Discover</a>
+    <h1>Nerdr.preferences()</h1>
+    <a href="profile"><img src="icons/profile.svg">Profile</a>
+  </header>
+  <main>
+    
+    <section>
+        <label for="knownLanguageFilter">Filter known language</label>
+        <select name="knownLanguageFilter" id="knownLanguageFilter" onchange="updateKnownLanguageFilter()">
+            <option value="">No filter</option>
+            <option value="Javascript">Javascript</option>
+            <option value="Java">Java</option>
+            <option value="C">C</option>
+            <option value="Python">Python</option>
+            <option value=".NET">.NET</option>
+        </select>
+    </section>
+
+    <section>
+        <label for="interestLanguageFilter">Filter interest languages</label>
+        <select name="interestLanguageFilter" id="interestLanguageFilter" onchange="updateInterestLanguageFilter()">
+            <option value="">No filter</option>
+            <option value="Javascript">Javascript</option>
+            <option value="Java">Java</option>
+            <option value="C">C</option>
+            <option value="Python">Python</option>
+            <option value=".NET">.NET</option>
+        </select>
+    </section>
+
+    <section id="matches-container">
+        <% for (match of data) { %>
+            <article>
+                <h2><%= match.firstName %> <%= match.lastName %></h2>
+                  <p>
+                    <%= match.skillLevel %>
+                    <%= match.occupation %>
+                    Developer
+                  </p>
+                  <p>Languages <%= match.firstName %> knows:</p>
+                  <div class="language-container knownLanguages">
+                    <% for (language of match.knownLanguages) { %>
+                      <p<% if (query.preferences.languages.includes(language)) { %> class="language-match" <% } %>>
+                        <%= language %>
+                      </p>
+                    <% } %>
+                  </div>
+
+                  <p>Languages <%= match.firstName %> is interested in:</p>
+                  <div class="language-container interestLanguages">
+                  <% for (language of match.interestLanguages) { %>
+                    <p<% if (query.personal.languages.includes(language)) { %> class="language-match" <% } %>>
+                    <%= language %>
+                    </p>
+                  <% } %>
+                  </div>
+            </article>
+        <% } %>
+        
+    </section>
+  </main>
+  <script type="application/javascript" src="/scripts/filterMatches.js"></script>
+</body>
+
+</html>

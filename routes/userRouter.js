@@ -256,8 +256,12 @@ router.post('/update', function(req, res) {
     preferences: req.session.user.preferences,
   };
 
-  if (newPassword == '') {
-    buildBlock.password = bcrypt.hashSync(newPassword, salt);
+  try {
+    if (newPassword =! '') {
+      buildBlock.password = bcrypt.hashSync(newPassword, salt);
+    }
+  } catch(err) {
+    res.send('Oops, there was something wrong with updating your credentials. Please try again later'); // Error handling
   }
 
   if (languages != undefined) {
@@ -278,8 +282,8 @@ router.post('/update', function(req, res) {
     buildBlock.personal.occupation = req.session.user.personal.occupation;
   }
 
-
   // preferences
+
   if (prefSkill != undefined) {
     buildBlock.preferences.skillLevel = prefSkill;
   } else {
@@ -297,7 +301,6 @@ router.post('/update', function(req, res) {
   } else {
     buildBlock.preferences.languages = req.session.user.preferences.languages;
   }
-
 
   if (Object.keys(buildBlock.personal).length == 0) {
     delete buildBlock.personal;
@@ -466,6 +469,42 @@ router.get('/', async (req, res) => {
     return res.render('profile', {query: req.session.user});
   }
   return res.render('homepage');
+});
+
+const matchesData = [
+  {
+    skillLevel:"intermediate",
+    knownLanguages: ["C", ".NET", "Javascript"],
+    interestLanguages: ["Java", "Javascript"],
+    skillLevel: "expert",
+    occupation: "backend",
+    firstName: "Sjors",
+    lastName: "Wijsman",
+  },
+  {
+    skillLevel:"intermediate",
+    knownLanguages: ["C"],
+    interestLanguages: ["Java"],
+    skillLevel: "expert",
+    occupation: "backend",
+    firstName: "Sam",
+    lastName: "Hai",
+  }
+]
+
+/**
+ * Function renders preferences page,
+ * redirects to homepage if not logged in.
+ * @name get/matches
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/matches', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  return res.render('matches', {query: req.session.user, data: matchesData});
 });
 
 /**
