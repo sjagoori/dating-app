@@ -103,7 +103,14 @@
       </article>
     </section>
 
-    <form class="button-container">
+    <form  class="button-container" action="/postMatch" method="POST">
+      <input type="hidden" value="<%= firstName %>" name="firstName">
+      <input type="hidden" value="<%= lastName %>" name="lastName">
+      <input type="hidden" value="<%= skillLevel %>" name="skillLevel">
+      <input type="hidden" value="<%= occupation %>" name="occupation">
+      <input type="hidden" value="<%= knownLanguages %>" name="knownLanguages">
+      <input type="hidden" value="<%= interestLanguages %>" name="interestLanguages">
+
       <button class="button--secondary">/skip</button>
       <button class="button--primary">/match</button>
     </form>

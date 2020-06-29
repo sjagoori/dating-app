@@ -63,6 +63,7 @@ for (command of Object.entries(commandList)) {
  * Dummy content for discover page
  */
 const dummy = require('../public/dummyContent.js');
+const session = require('express-session');
 const dummyContent = dummy.getDummyContent();
 
 /**
@@ -471,26 +472,7 @@ router.get('/', async (req, res) => {
   return res.render('homepage');
 });
 
-const matchesData = [
-  {
-    skillLevel:"intermediate",
-    knownLanguages: ["C", ".NET", "Javascript"],
-    interestLanguages: ["Java", "Javascript"],
-    skillLevel: "expert",
-    occupation: "backend",
-    firstName: "Sjors",
-    lastName: "Wijsman",
-  },
-  {
-    skillLevel:"intermediate",
-    knownLanguages: ["C"],
-    interestLanguages: ["Java"],
-    skillLevel: "expert",
-    occupation: "backend",
-    firstName: "Sam",
-    lastName: "Hai",
-  }
-]
+
 
 /**
  * Function renders preferences page,
@@ -504,7 +486,27 @@ router.get('/matches', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  return res.render('matches', {query: req.session.user, data: matchesData});
+  return res.render('matches', {query: req.session.user, data: req.session.matches});
+});
+
+/**
+ * Function renders preferences page,
+ * redirects to homepage if not logged in.
+ * @name post/postMatch
+ * @function
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.post('/postMatch', (req, res) => {
+  req.body.knownLanguages = req.body.knownLanguages.split(",");
+  req.body.interestLanguages = req.body.interestLanguages.split(",");
+
+  if (req.session.matches) {
+    req.session.matches.push(req.body);
+  } else {
+    req.session.matches = [req.body];
+  }
+  return res.redirect('/discover');
 });
 
 /**

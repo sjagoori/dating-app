@@ -13,34 +13,46 @@
     <a href="profile"><img src="icons/profile.svg">Profile</a>
   </header>
   <main>
-    
-    <section>
-        <label for="knownLanguageFilter">Filter known language</label>
-        <select name="knownLanguageFilter" id="knownLanguageFilter" onchange="updateKnownLanguageFilter()">
-            <option value="">No filter</option>
-            <option value="Javascript">Javascript</option>
-            <option value="Java">Java</option>
-            <option value="C">C</option>
-            <option value="Python">Python</option>
-            <option value=".NET">.NET</option>
-        </select>
-    </section>
 
-    <section>
-        <label for="interestLanguageFilter">Filter interest languages</label>
-        <select name="interestLanguageFilter" id="interestLanguageFilter" onchange="updateInterestLanguageFilter()">
-            <option value="">No filter</option>
-            <option value="Javascript">Javascript</option>
-            <option value="Java">Java</option>
-            <option value="C">C</option>
-            <option value="Python">Python</option>
-            <option value=".NET">.NET</option>
-        </select>
+    <section class="dropdown-section">
+        <div class="dropdown">
+            <input type="checkbox" id="checkbox-toggle">
+            <label class="button-dropdown" for="checkbox-toggle">Click to Expand</label>
+            <div class="dropdown-container">
+
+                <article>
+                    <label for="knownLanguageFilter">Filter known language</label>
+                    <select name="knownLanguageFilter" id="knownLanguageFilter" onchange="updateKnownLanguageFilter()">
+                        <option value="">No filter</option>
+                        <option value="Javascript">Javascript</option>
+                        <option value="Java">Java</option>
+                        <option value="C">C</option>
+                        <option value="Python">Python</option>
+                        <option value=".NET">.NET</option>
+                    </select>
+                </article>
+            
+                <article>
+                    <label for="interestLanguageFilter">Filter interest languages</label>
+                    <select name="interestLanguageFilter" id="interestLanguageFilter" onchange="updateInterestLanguageFilter()">
+                        <option value="">No filter</option>
+                        <option value="Javascript">Javascript</option>
+                        <option value="Java">Java</option>
+                        <option value="C">C</option>
+                        <option value="Python">Python</option>
+                        <option value=".NET">.NET</option>
+                    </select>
+                </article>
+
+            </div>
+        </div>
     </section>
+    
+
 
     <section id="matches-container">
         <% for (match of data) { %>
-            <article>
+            <article class="match-container">
                 <h2><%= match.firstName %> <%= match.lastName %></h2>
                   <p>
                     <%= match.skillLevel %>

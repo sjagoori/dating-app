@@ -20,6 +20,11 @@
     </section>
 
     <section class="c-login-container">
+      <p class="c-login__subheader">Here you can find all the people you matched with. Find out here what you can do for each other. See who your matches are!</p>
+      <a href="matches" class="button--secondary">Find your matches</a>
+    </section>
+
+    <section class="c-login-container">
       <p class="c-login__subheader">You are a <span class="highlight"><%- query.personal.skillLevel %> <%- query.personal.occupation %></span> developer that writes in
         <% query.personal.languages.forEach(function(language){ %>
           <span class="highlight"><%= language %></span>
