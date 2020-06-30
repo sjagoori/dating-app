@@ -8,7 +8,6 @@ function updateKnownLanguageFilter() {
   for (const child of matchesContainer.children) {
     if (selectedValue !== "") {
       const knownLanguagesElement = child.getElementsByClassName("knownLanguages")[0].children;
-      // convert HTMLcollection to Array
       const knownLanguages = [].slice.call(knownLanguagesElement).map(language => language.textContent.trim());
 
       if (knownLanguages.includes(selectedValue)) {
