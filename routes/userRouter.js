@@ -29,7 +29,9 @@ const axios = require('axios');
  * @source https://www.npmjs.com/package/helmet
  */
 const helmet = require('helmet');
-router.use(helmet());
+router.use(helmet({
+  contentSecurityPolicy: true,
+}));
 
 /**
  * User module
