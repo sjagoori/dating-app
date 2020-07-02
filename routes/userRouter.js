@@ -248,6 +248,8 @@ router.post('/update', function(req, res) {
   const prefOccupation = req.body.prefOccupation;
   const prefLanguages = req.body.prefLanguages;
 
+  const matches = req.session.user.matches;
+
   if (!req.session.user) {
     return res.redirect('/');
   }
@@ -255,14 +257,15 @@ router.post('/update', function(req, res) {
   const buildBlock = {
     personal: {skillLevel: req.session.user.personal.skillLevel},
     preferences: req.session.user.preferences,
+    matches: matches,
   };
 
   try {
-    if (newPassword =! '') {
+    if (newPassword == '') {
       buildBlock.password = bcrypt.hashSync(newPassword, salt);
     }
   } catch(err) {
-    res.send('Oops, there was something wrong with updating your credentials. Please try again later'); // Error handling
+    res.send('Oops, there was something wrong with updating your credentials. Please try again later');
   }
 
   if (languages != undefined) {
@@ -486,7 +489,7 @@ router.get('/matches', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/');
   }
-  return res.render('matches', {query: req.session.user, data: req.session.matches});
+  return res.render('matches', {query: req.session.user, data: req.session.user.matches});
 });
 
 /**
@@ -501,10 +504,10 @@ router.post('/postMatch', (req, res) => {
   req.body.knownLanguages = req.body.knownLanguages.split(",");
   req.body.interestLanguages = req.body.interestLanguages.split(",");
 
-  if (req.session.matches) {
-    req.session.matches.push(req.body);
+  if (req.session.user.matches) {
+    req.session.user.matches.push(req.body);
   } else {
-    req.session.matches = [req.body];
+    req.session.user.matches = [req.body];
   }
   return res.redirect('/discover');
 });

@@ -33,6 +33,7 @@ const userScheme = new Schema({
     occupation: String,
     languages: [],
   },
+  matches: Array,
 });
 
 const User = mongoose.model('users', userScheme);
